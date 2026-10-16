@@ -118,7 +118,6 @@ fun TvSearchScreen(
                     BrowseType.ALBUM -> EntityType.ALBUM
                     BrowseType.ARTIST -> EntityType.ARTIST
                     BrowseType.PLAYLIST -> EntityType.PLAYLIST
-                    else -> EntityType.TRACK
                 },
             ),
         )
@@ -197,13 +196,11 @@ fun TvSearchScreen(
                             EntityType.ARTIST -> BrowseType.ARTIST
                             EntityType.PLAYLIST -> BrowseType.PLAYLIST
                             EntityType.TRACK -> null
-                            else -> BrowseType.OTHER
                         }
                         when {
                             type != null -> onNavigateToDetail(entity.id, entity.title, entity.subtitle, entity.artworkUrl, type)
                             // A typed query with nothing behind it: run it again.
                             entity.id.startsWith("q:") || entity.id.isBlank() -> viewModel.searchFor(entity.title)
-                            else -> playSong(
                                 Song(
                                     videoId = entity.id,
                                     title = entity.title,
@@ -464,7 +461,6 @@ private fun List<SearchResult>.deduplicated(): List<SearchResult> {
     return filter { result ->
         when (result) {
             is SearchResult.Browse -> result.item.browseId.isBlank() || ids.add("b:" + result.item.browseId)
-            else -> {
                 val song = result.song() ?: return@filter true
                 val name = song.title.trim().lowercase() + "|" + song.artist.trim().lowercase()
                 (song.videoId.isBlank() || ids.add("t:" + song.videoId)) && names.add(name)
