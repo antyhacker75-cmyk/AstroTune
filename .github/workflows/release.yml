@@ -41,6 +41,7 @@ jobs:
       - name: Write local.properties
         run: |
           echo "LASTFM_API_KEY=${{ secrets.LASTFM_API_KEY }}" > local.properties
+          echo "LISTEN_TOGETHER_SERVER=https://bitchord-b96t.onrender.com" >> local.properties
           echo "LASTFM_SECRET=${{ secrets.LASTFM_SECRET }}" >> local.properties
 
       - name: Packaging tools
@@ -125,6 +126,7 @@ jobs:
         shell: bash
         run: |
           echo "LASTFM_API_KEY=${{ secrets.LASTFM_API_KEY }}" > local.properties
+          echo "LISTEN_TOGETHER_SERVER=https://bitchord-b96t.onrender.com" >> local.properties
           echo "LASTFM_SECRET=${{ secrets.LASTFM_SECRET }}" >> local.properties
 
       - name: Tests
@@ -191,6 +193,7 @@ jobs:
       - name: Write local.properties
         run: |
           echo "LASTFM_API_KEY=${{ secrets.LASTFM_API_KEY }}" > local.properties
+          echo "LISTEN_TOGETHER_SERVER=https://bitchord-b96t.onrender.com" >> local.properties
           echo "LASTFM_SECRET=${{ secrets.LASTFM_SECRET }}" >> local.properties
 
       - run: chmod +x gradlew
