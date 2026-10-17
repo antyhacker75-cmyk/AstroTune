@@ -48,3 +48,7 @@ AGENTS.md
 # Built packages — release APKs/bundles are handed out, never committed
 *.apk
 *.aab
+
+bitchord-release.jks
+keystore.base64.txt
+*.patch
