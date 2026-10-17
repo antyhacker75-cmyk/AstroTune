@@ -1324,4 +1324,28 @@
     <string name="wear_os_unsupported">安装到手表需要这部手机运行 Android 11 或更高版本。</string>
     <string name="wear_os_code_hint">配对码</string>
     <string name="wear_os_done">完成</string>
+    <string name="KEY1">PLACEHOLDER</string>
+    <string name="KEY2">PLACEHOLDER</string>
+    <string name="KEY3">PLACEHOLDER</string>
+    <string name="search_source_youtube" translatable="false">YouTube</string>
+    <string name="app_icon_liquid_glass" translatable="false">Liquid Glass</string>
+    <string name="app_icon_liquid_glass_dark" translatable="false">Liquid Glass Dark</string>
+    <string name="app_icon_liquid_glass_clear" translatable="false">Liquid Glass Clear</string>
+    <string name="app_icon_liquid_glass_clear_dark" translatable="false">Liquid Glass Clear Dark</string>
+    <string name="app_icon_samsung_glass" translatable="false">Samsung Glass</string>
+    <string name="app_icon_samsung_glass_dark" translatable="false">Samsung Glass Dark</string>
+    <string name="app_icon_samsung_glass_clear" translatable="false">Samsung Glass Clear</string>
+    <string name="app_icon_samsung_glass_clear_dark" translatable="false">Samsung Glass Clear Dark</string>
+    <string name="app_icon_pixel_glass" translatable="false">Pixel Glass</string>
+    <string name="app_icon_pixel_glass_dark" translatable="false">Pixel Glass Dark</string>
+    <string name="app_icon_pixel_glass_clear" translatable="false">Pixel Glass Clear</string>
+    <string name="app_icon_pixel_glass_clear_dark" translatable="false">Pixel Glass Clear Dark</string>
+    <string name="artist_signatures">Artist signatures</string>
+    <string name="artist_signatures_subtitle">Shows a handwritten signature when Apple Music has no title logo</string>
+    <string name="artist_signatures_url">Signature API URL</string>
+    <string name="artist_signatures_url_hint">https://signatures.example.com</string>
+    <string name="artist_signatures_unconfigured">Not configured — tap to set the API URL</string>
+    <string name="artist_signatures_test_failed">Could not reach the API at that URL</string>
+    <string name="pipeline_pcm_data_rate" translatable="false">PCM Data Rate</string>
+    <string name="signed_by">Signed by %1$s</string>
 </resources>
