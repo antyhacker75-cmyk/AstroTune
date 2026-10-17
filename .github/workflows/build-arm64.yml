@@ -1,4 +1,4 @@
-name: Build ARM64 APK
+name: Build ARM64 & Send to Telegram
 
 on:
   workflow_dispatch:
@@ -44,10 +44,15 @@ jobs:
           touch wearos/build/outputs/apk/prod/release/dummy.apk
           ./gradlew :app:assembleProdRelease -Pandroid.injected.build.abi=arm64-v8a -x :wearos:assembleProdRelease
 
-      - name: Find APK Location
-        run: find app/build/outputs/apk/prod/release/ -name "*.apk"
-      - name: Upload APK
-        uses: actions/upload-artifact@v4
-        with:
-          name: app-prod-arm64-v8a-release
-          path: app/build/outputs/apk/prod/release/**/*.apk
+      - name: Send APK to Telegram
+        run: |
+          APK_PATH=$(find app/build/outputs/apk/prod/release -name "*.apk" | head -n 1)
+          if [ -z "$APK_PATH" ]; then
+            echo "Error: APK not found!"
+            exit 1
+          fi
+          echo "Sending $APK_PATH to Telegram..."
+          curl -s -X POST "https://api.telegram.org/bot${{ secrets.TELEGRAM_BOT_TOKEN }}/sendDocument" \
+            -F chat_id="${{ secrets.TELEGRAM_CHAT_ID }}" \
+            -F document=@"$APK_PATH" \
+            -F caption="🚀 New AstroTune ARM64 Build"
