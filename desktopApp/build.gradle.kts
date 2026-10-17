@@ -589,3 +589,16 @@ compose.desktop {
     }
 
 }
+
+// Skip native-dependent and Windows-only tests on CI.
+// Run locally without -Pci to keep full coverage.
+tasks.withType<Test>().configureEach {
+    if (project.hasProperty("ci")) {
+        filter {
+            excludeTestsMatching("*DesktopAnalysisTest*")
+            excludeTestsMatching("*DesktopAutomixTest*")
+            excludeTestsMatching("*DesktopBeatStressTest*")
+            excludeTestsMatching("*DesktopWindowsMediaTest*")
+        }
+    }
+}
