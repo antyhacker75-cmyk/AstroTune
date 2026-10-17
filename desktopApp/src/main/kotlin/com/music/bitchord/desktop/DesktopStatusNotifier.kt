@@ -1,4 +1,4 @@
-package com.music.bitchord.desktop
+package com.music.astrotune.desktop
 
 import org.jetbrains.skia.Bitmap
 import org.jetbrains.skia.ImageInfo
@@ -12,7 +12,7 @@ import org.freedesktop.dbus.annotations.Position
 import org.freedesktop.dbus.connections.impl.DBusConnection
 import org.freedesktop.dbus.connections.impl.DBusConnectionBuilder
 import org.freedesktop.dbus.interfaces.DBusInterface
-import com.music.bitchord.desktop.tray.DBusMenu
+import com.music.astrotune.desktop.tray.DBusMenu
 import org.freedesktop.dbus.interfaces.Properties
 import org.freedesktop.dbus.types.UInt32
 import org.freedesktop.dbus.types.Variant

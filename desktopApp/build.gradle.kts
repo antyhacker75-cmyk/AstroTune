@@ -489,7 +489,7 @@ val windowsPortable by tasks.registering(Zip::class) {
     doLast { logger.lifecycle("windowsPortable: ${archiveFile.get().asFile.absolutePath}") }
 }
 
-val composeMainClass = "com.music.bitchord.desktop.MainKt"
+val composeMainClass = "com.music.astrotune.desktop.MainKt"
 
 compose.desktop {
     application {
@@ -558,7 +558,7 @@ compose.desktop {
 
             macOS {
                 iconFile.set(project.file("packaging/icons/AppIcon.icns"))
-                bundleID = "com.music.bitchord"
+                bundleID = "com.music.astrotune"
                 appCategory = "public.app-category.music"
                 dockName = "BitChord"
                 infoPlist {

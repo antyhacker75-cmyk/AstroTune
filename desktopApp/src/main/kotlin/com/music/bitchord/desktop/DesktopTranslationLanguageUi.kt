@@ -1,7 +1,7 @@
-package com.music.bitchord.desktop
+package com.music.astrotune.desktop
 
-import com.music.bitchord.data.lyrics.TRANSLATION_LANGUAGES
-import com.music.bitchord.data.lyrics.translationLanguageName
+import com.music.astrotune.data.lyrics.TRANSLATION_LANGUAGES
+import com.music.astrotune.data.lyrics.translationLanguageName
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -32,7 +32,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import com.music.bitchord.ui.icons.BitChordIcons
+import com.music.astrotune.ui.icons.BitChordIcons
 import java.util.Locale
 
 /**

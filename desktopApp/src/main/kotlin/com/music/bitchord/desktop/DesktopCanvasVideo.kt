@@ -1,4 +1,4 @@
-package com.music.bitchord.desktop
+package com.music.astrotune.desktop
 
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
@@ -23,10 +23,10 @@ import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.graphics.toComposeImageBitmap
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.IntSize
-import com.music.bitchord.data.canvas.CanvasArtwork
-import com.music.bitchord.data.canvas.CanvasSource
-import com.music.bitchord.ui.player.CanvasContentMode
-import com.music.bitchord.ui.player.CanvasVideoSpec
+import com.music.astrotune.data.canvas.CanvasArtwork
+import com.music.astrotune.data.canvas.CanvasSource
+import com.music.astrotune.ui.player.CanvasContentMode
+import com.music.astrotune.ui.player.CanvasVideoSpec
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.NonCancellable
 import kotlinx.coroutines.delay

@@ -1,7 +1,7 @@
-package com.music.bitchord.desktop
+package com.music.astrotune.desktop
 
-import com.music.bitchord.playback.smart.AnalysisLog
-import com.music.bitchord.playback.smart.NativeAnalysisLibrary
+import com.music.astrotune.playback.smart.AnalysisLog
+import com.music.astrotune.playback.smart.NativeAnalysisLibrary
 import java.nio.file.Files
 import java.nio.file.Path
 import java.nio.file.StandardCopyOption

@@ -1,4 +1,4 @@
-package com.music.bitchord.desktop
+package com.music.astrotune.desktop
 
 /**
  * Windows' shared-mode WASAPI output.

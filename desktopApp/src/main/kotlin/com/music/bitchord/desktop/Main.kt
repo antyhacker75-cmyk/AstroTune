@@ -1,14 +1,14 @@
-package com.music.bitchord.desktop
+package com.music.astrotune.desktop
 
 import androidx.compose.runtime.CompositionLocalProvider
-import com.music.bitchord.ui.player.PlayerPlatform
-import com.music.bitchord.data.DebugLog
-import com.music.bitchord.data.TrackLog
-import com.music.bitchord.data.innertube.InnerTubeXResolver
-import com.music.bitchord.data.innertube.StreamResolver
-import com.music.bitchord.data.innertube.potoken.PoTokenGenerator
-import com.music.bitchord.data.lyrics.LyricsTranslation
-import com.music.bitchord.data.spotify.SpotifyLibrary
+import com.music.astrotune.ui.player.PlayerPlatform
+import com.music.astrotune.data.DebugLog
+import com.music.astrotune.data.TrackLog
+import com.music.astrotune.data.innertube.InnerTubeXResolver
+import com.music.astrotune.data.innertube.StreamResolver
+import com.music.astrotune.data.innertube.potoken.PoTokenGenerator
+import com.music.astrotune.data.lyrics.LyricsTranslation
+import com.music.astrotune.data.spotify.SpotifyLibrary
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -32,7 +32,7 @@ fun main() {
     DesktopWindowVisibility.install()
     // The player is the phone's, from the shared UI module; this is what it reads underneath.
     PlayerPlatform.install(DesktopPlayerHost)
-    com.music.bitchord.ui.AppUi.install(DesktopAppUiHost)
+    com.music.astrotune.ui.AppUi.install(DesktopAppUiHost)
     // The data layer both apps share logs through here, and keeps translated
     // lyrics beside the rest of the desktop's cache.
     DebugLog.sink = DebugLog.Sink { level, tag, message, error ->
@@ -44,7 +44,7 @@ fun main() {
         DesktopSpotifyToken.accessToken()?.let { SpotifyLibrary.Tokens(it, DesktopSpotifyToken.clientToken()) }
     }
     // Desktop follows its own language picker (zh-Hant / zh-Hans preserved).
-    com.music.bitchord.data.innertube.Innertube.appLanguage = { DesktopStrings.resolvedTag() }
+    com.music.astrotune.data.innertube.Innertube.appLanguage = { DesktopStrings.resolvedTag() }
     // YouTube playback is the phone's StreamResolver over InnerTubeX, with BotGuard PoTokens
     // minted in JavaFX's WebView where the phone uses Android's.
     TrackLog.echo = { level, tag, message, error ->

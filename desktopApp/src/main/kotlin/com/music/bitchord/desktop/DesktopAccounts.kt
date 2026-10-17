@@ -1,7 +1,7 @@
-package com.music.bitchord.desktop
+package com.music.astrotune.desktop
 
-import com.music.bitchord.data.model.Account
-import com.music.bitchord.data.model.AccountChannel
+import com.music.astrotune.data.model.Account
+import com.music.astrotune.data.model.AccountChannel
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonArray

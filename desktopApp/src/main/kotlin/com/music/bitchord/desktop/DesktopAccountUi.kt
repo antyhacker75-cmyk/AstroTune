@@ -1,4 +1,4 @@
-package com.music.bitchord.desktop
+package com.music.astrotune.desktop
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -48,7 +48,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import com.music.bitchord.ui.icons.BitChordIcons
+import com.music.astrotune.ui.icons.BitChordIcons
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 

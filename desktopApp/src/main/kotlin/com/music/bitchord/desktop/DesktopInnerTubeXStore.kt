@@ -1,6 +1,6 @@
-package com.music.bitchord.desktop
+package com.music.astrotune.desktop
 
-import com.music.bitchord.data.innertube.InnerTubeXResolver
+import com.music.astrotune.data.innertube.InnerTubeXResolver
 
 /** InnerTubeX's remote player config, kept in the desktop's preferences as the phone keeps it in its own. */
 internal object DesktopInnerTubeXStore : InnerTubeXResolver.ConfigStore {

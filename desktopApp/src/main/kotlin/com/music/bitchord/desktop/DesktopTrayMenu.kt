@@ -1,11 +1,11 @@
-package com.music.bitchord.desktop
+package com.music.astrotune.desktop
 
-import com.music.bitchord.desktop.tray.DBusMenu
-import com.music.bitchord.desktop.tray.DBusMenuEvent
-import com.music.bitchord.desktop.tray.DBusMenuItem
-import com.music.bitchord.desktop.tray.DBusMenuLayout
-import com.music.bitchord.desktop.tray.DBusMenuProperties
-import com.music.bitchord.desktop.tray.DBusMenuShowGroup
+import com.music.astrotune.desktop.tray.DBusMenu
+import com.music.astrotune.desktop.tray.DBusMenuEvent
+import com.music.astrotune.desktop.tray.DBusMenuItem
+import com.music.astrotune.desktop.tray.DBusMenuLayout
+import com.music.astrotune.desktop.tray.DBusMenuProperties
+import com.music.astrotune.desktop.tray.DBusMenuShowGroup
 import org.freedesktop.dbus.interfaces.Properties
 import org.freedesktop.dbus.types.UInt32
 import org.freedesktop.dbus.types.Variant

@@ -1,4 +1,4 @@
-package com.music.bitchord.desktop
+package com.music.astrotune.desktop
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -37,9 +37,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.music.bitchord.data.NerdStats
-import com.music.bitchord.data.model.Song
-import com.music.bitchord.ui.icons.BitChordIcons
+import com.music.astrotune.data.NerdStats
+import com.music.astrotune.data.model.Song
+import com.music.astrotune.ui.icons.BitChordIcons
 import java.util.Locale
 import kotlin.math.roundToInt
 

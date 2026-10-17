@@ -1,7 +1,7 @@
-package com.music.bitchord.desktop
+package com.music.astrotune.desktop
 
-import com.music.bitchord.data.presence.Presence
-import com.music.bitchord.data.presence.PresencePlatform
+import com.music.astrotune.data.presence.Presence
+import com.music.astrotune.data.presence.PresencePlatform
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -15,7 +15,7 @@ import java.util.prefs.Preferences
  */
 internal object DesktopPresence {
     private const val KEY_INSTALL_ID = "presence_install_id"
-    private val preferences = Preferences.userRoot().node("com.music.bitchord.desktop")
+    private val preferences = Preferences.userRoot().node("com.music.astrotune.desktop")
 
     fun install() {
         val presence = Presence(PresencePlatform.Pc, installId())

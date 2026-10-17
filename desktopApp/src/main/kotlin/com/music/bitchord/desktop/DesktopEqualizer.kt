@@ -1,9 +1,9 @@
-package com.music.bitchord.desktop
+package com.music.astrotune.desktop
 
-import com.music.bitchord.playback.EqCurve
-import com.music.bitchord.playback.EqLayout
-import com.music.bitchord.playback.FilterKind
-import com.music.bitchord.playback.PeakLimiter
+import com.music.astrotune.playback.EqCurve
+import com.music.astrotune.playback.EqLayout
+import com.music.astrotune.playback.FilterKind
+import com.music.astrotune.playback.PeakLimiter
 import kotlin.math.PI
 import kotlin.math.abs
 import kotlin.math.exp

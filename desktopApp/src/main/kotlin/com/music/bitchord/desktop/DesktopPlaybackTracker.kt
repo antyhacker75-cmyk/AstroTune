@@ -1,12 +1,12 @@
-package com.music.bitchord.desktop
+package com.music.astrotune.desktop
 
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.cio.CIO
 import io.ktor.client.request.get
 import io.ktor.client.request.header
 import io.ktor.client.request.parameter
-import com.music.bitchord.data.innertube.Innertube
-import com.music.bitchord.data.innertube.StreamResolver
+import com.music.astrotune.data.innertube.Innertube
+import com.music.astrotune.data.innertube.StreamResolver
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers

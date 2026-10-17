@@ -1,4 +1,4 @@
-package com.music.bitchord.desktop
+package com.music.astrotune.desktop
 
 /**
  * Where in the playing track the listener is, read off the sink's played-frame count.

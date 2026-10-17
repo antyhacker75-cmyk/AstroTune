@@ -1,4 +1,4 @@
-package com.music.bitchord.desktop
+package com.music.astrotune.desktop
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -66,12 +66,12 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
-import com.music.bitchord.data.model.PlaylistPrivacy
-import com.music.bitchord.data.model.Song
-import com.music.bitchord.data.model.UiState
-import com.music.bitchord.data.model.UserPlaylist
-import com.music.bitchord.ui.components.contextClick
-import com.music.bitchord.ui.icons.BitChordIcons
+import com.music.astrotune.data.model.PlaylistPrivacy
+import com.music.astrotune.data.model.Song
+import com.music.astrotune.data.model.UiState
+import com.music.astrotune.data.model.UserPlaylist
+import com.music.astrotune.ui.components.contextClick
+import com.music.astrotune.ui.icons.BitChordIcons
 
 /** Where a track goes: one of the account's playlists, a local one, or a new one. */
 @Composable

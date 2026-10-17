@@ -1,8 +1,8 @@
-package com.music.bitchord.desktop
+package com.music.astrotune.desktop
 
-import com.music.bitchord.data.discord.DiscordApplication
-import com.music.bitchord.data.model.Song
-import com.music.bitchord.data.model.artworkAt
+import com.music.astrotune.data.discord.DiscordApplication
+import com.music.astrotune.data.model.Song
+import com.music.astrotune.data.model.artworkAt
 import com.my.kizzy.rpc.KizzyRPC
 import com.my.kizzy.rpc.RpcImage
 import com.my.kizzy.rpc.UserInfo

@@ -1,4 +1,4 @@
-package com.music.bitchord.desktop
+package com.music.astrotune.desktop
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -47,7 +47,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
-import com.music.bitchord.ui.icons.BitChordIcons
+import com.music.astrotune.ui.icons.BitChordIcons
 import kotlin.math.abs
 
 /** Which lyric databases the player may ask, and in what order. */

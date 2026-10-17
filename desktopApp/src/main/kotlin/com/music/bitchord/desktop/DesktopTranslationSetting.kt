@@ -1,7 +1,7 @@
-package com.music.bitchord.desktop
+package com.music.astrotune.desktop
 
-import com.music.bitchord.data.lyrics.TRANSLATION_LANGUAGES
-import com.music.bitchord.data.lyrics.translationLanguageName
+import com.music.astrotune.data.lyrics.TRANSLATION_LANGUAGES
+import com.music.astrotune.data.lyrics.translationLanguageName
 
 import java.util.Locale
 import kotlinx.coroutines.flow.MutableStateFlow

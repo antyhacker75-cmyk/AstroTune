@@ -1,9 +1,9 @@
-package com.music.bitchord.desktop
+package com.music.astrotune.desktop
 
-import com.music.bitchord.playback.EqLayout
-import com.music.bitchord.playback.EqualizerPreset
-import com.music.bitchord.playback.manualCurve
-import com.music.bitchord.playback.toneCurve
+import com.music.astrotune.playback.EqLayout
+import com.music.astrotune.playback.EqualizerPreset
+import com.music.astrotune.playback.manualCurve
+import com.music.astrotune.playback.toneCurve
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 

@@ -1,8 +1,8 @@
-package com.music.bitchord.desktop
+package com.music.astrotune.desktop
 
-import com.music.bitchord.data.model.Song
-import com.music.bitchord.playback.smart.CrossfadeMode
-import com.music.bitchord.playback.smart.planTransition
+import com.music.astrotune.data.model.Song
+import com.music.astrotune.playback.smart.CrossfadeMode
+import com.music.astrotune.playback.smart.planTransition
 import kotlinx.coroutines.runBlocking
 import java.io.ByteArrayInputStream
 import java.io.File
@@ -125,7 +125,7 @@ class DesktopAutomixTest {
         id: String,
         bpm: Double,
         seconds: Double,
-    ): com.music.bitchord.playback.smart.TrackAnalysis {
+    ): com.music.astrotune.playback.smart.TrackAnalysis {
         val file = clickTrackFile(bpm, seconds)
         analyzer.request(
             song = Song(id, id, "Artist", null),

@@ -1,6 +1,6 @@
-package com.music.bitchord.desktop
+package com.music.astrotune.desktop
 
-import com.music.bitchord.desktop.secrets.SecretServiceApi
+import com.music.astrotune.desktop.secrets.SecretServiceApi
 import org.freedesktop.dbus.DBusPath
 import org.freedesktop.dbus.connections.impl.DBusConnection
 import org.freedesktop.dbus.connections.impl.DBusConnectionBuilder

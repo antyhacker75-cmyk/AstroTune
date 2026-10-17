@@ -1,4 +1,4 @@
-package com.music.bitchord.desktop
+package com.music.astrotune.desktop
 
 import kotlin.test.Test
 import kotlin.test.assertTrue

@@ -1,4 +1,4 @@
-package com.music.bitchord.desktop
+package com.music.astrotune.desktop
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -10,7 +10,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.Dp
-import com.music.bitchord.ui.icons.BitChordIcons
+import com.music.astrotune.ui.icons.BitChordIcons
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -41,10 +41,10 @@ import androidx.compose.ui.input.pointer.PointerEventPass
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
-import com.music.bitchord.data.model.SearchHistoryEntity
-import com.music.bitchord.data.settings.LibrarySort
-import com.music.bitchord.data.settings.LibraryViewType
-import com.music.bitchord.ui.AppUiHost
+import com.music.astrotune.data.model.SearchHistoryEntity
+import com.music.astrotune.data.settings.LibrarySort
+import com.music.astrotune.data.settings.LibraryViewType
+import com.music.astrotune.ui.AppUiHost
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.serialization.builtins.ListSerializer

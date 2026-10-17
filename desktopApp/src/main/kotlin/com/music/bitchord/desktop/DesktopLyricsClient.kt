@@ -1,12 +1,12 @@
-package com.music.bitchord.desktop
+package com.music.astrotune.desktop
 
-import com.music.bitchord.data.lyrics.LrcLib
-import com.music.bitchord.data.lyrics.LyricLine
-import com.music.bitchord.data.lyrics.LyricsRepository
-import com.music.bitchord.data.lyrics.LyricsSource
-import com.music.bitchord.data.lyrics.withBackgroundVocals
-import com.music.bitchord.data.model.Song
-import com.music.bitchord.data.model.durationMillis
+import com.music.astrotune.data.lyrics.LrcLib
+import com.music.astrotune.data.lyrics.LyricLine
+import com.music.astrotune.data.lyrics.LyricsRepository
+import com.music.astrotune.data.lyrics.LyricsSource
+import com.music.astrotune.data.lyrics.withBackgroundVocals
+import com.music.astrotune.data.model.Song
+import com.music.astrotune.data.model.durationMillis
 import java.util.concurrent.ConcurrentHashMap
 
 /** A track's lyrics and which provider they came from, by its label. */

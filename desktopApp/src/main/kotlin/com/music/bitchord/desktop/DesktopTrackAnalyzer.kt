@@ -1,13 +1,13 @@
-package com.music.bitchord.desktop
+package com.music.astrotune.desktop
 
-import com.music.bitchord.data.model.Song
-import com.music.bitchord.data.settings.AutomixPerformanceMode
-import com.music.bitchord.data.settings.TrackAnalysisState
-import com.music.bitchord.playback.smart.AnalysisStore
-import com.music.bitchord.playback.smart.BeatTracker
-import com.music.bitchord.playback.smart.MelSpectrogram
-import com.music.bitchord.playback.smart.TrackAnalysis
-import com.music.bitchord.playback.smart.TrackFeatures
+import com.music.astrotune.data.model.Song
+import com.music.astrotune.data.settings.AutomixPerformanceMode
+import com.music.astrotune.data.settings.TrackAnalysisState
+import com.music.astrotune.playback.smart.AnalysisStore
+import com.music.astrotune.playback.smart.BeatTracker
+import com.music.astrotune.playback.smart.MelSpectrogram
+import com.music.astrotune.playback.smart.TrackAnalysis
+import com.music.astrotune.playback.smart.TrackFeatures
 import java.util.concurrent.ConcurrentHashMap
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
@@ -286,7 +286,7 @@ internal class DesktopTrackAnalyzer(
 }
 
 /** The queue facts the shared planner needs, from a [Song]. */
-internal fun Song.transitionInfo(durationMs: Long) = com.music.bitchord.playback.smart.TransitionTrackInfo(
+internal fun Song.transitionInfo(durationMs: Long) = com.music.astrotune.playback.smart.TransitionTrackInfo(
     id = videoId,
     durationMs = durationMs,
     title = title,

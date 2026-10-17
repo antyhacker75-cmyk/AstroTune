@@ -1,6 +1,6 @@
-package com.music.bitchord.desktop
+package com.music.astrotune.desktop
 
-import com.music.bitchord.data.model.Song
+import com.music.astrotune.data.model.Song
 import java.nio.file.Files
 import kotlin.test.AfterTest
 import kotlin.test.Test

@@ -1,10 +1,10 @@
-package com.music.bitchord.desktop
+package com.music.astrotune.desktop
 
-import com.music.bitchord.playback.EqLayout
-import com.music.bitchord.playback.EqualizerPreset
-import com.music.bitchord.playback.PeakLimiter
-import com.music.bitchord.playback.manualCurve
-import com.music.bitchord.playback.toneCurve
+import com.music.astrotune.playback.EqLayout
+import com.music.astrotune.playback.EqualizerPreset
+import com.music.astrotune.playback.PeakLimiter
+import com.music.astrotune.playback.manualCurve
+import com.music.astrotune.playback.toneCurve
 import kotlin.math.PI
 import kotlin.math.abs
 import kotlin.math.cos

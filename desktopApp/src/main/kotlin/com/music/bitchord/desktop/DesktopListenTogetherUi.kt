@@ -1,4 +1,4 @@
-package com.music.bitchord.desktop
+package com.music.astrotune.desktop
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -56,10 +56,10 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.music.bitchord.data.listentogether.JamInvite
-import com.music.bitchord.data.listentogether.PartyActivity
-import com.music.bitchord.data.listentogether.PartyMember
-import com.music.bitchord.data.listentogether.PartyPreview
+import com.music.astrotune.data.listentogether.JamInvite
+import com.music.astrotune.data.listentogether.PartyActivity
+import com.music.astrotune.data.listentogether.PartyMember
+import com.music.astrotune.data.listentogether.PartyPreview
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.Date

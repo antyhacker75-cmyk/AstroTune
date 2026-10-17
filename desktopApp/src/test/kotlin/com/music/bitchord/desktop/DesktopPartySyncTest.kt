@@ -1,11 +1,11 @@
-package com.music.bitchord.desktop
+package com.music.astrotune.desktop
 
-import com.music.bitchord.desktop.DesktopPartySync.Companion.decideSeek
-import com.music.bitchord.desktop.DesktopPartySync.Companion.queueForPartyPublish
-import com.music.bitchord.data.listentogether.PartyMember
-import com.music.bitchord.data.listentogether.PartyTrack
-import com.music.bitchord.data.model.QueueTier
-import com.music.bitchord.data.model.Song
+import com.music.astrotune.desktop.DesktopPartySync.Companion.decideSeek
+import com.music.astrotune.desktop.DesktopPartySync.Companion.queueForPartyPublish
+import com.music.astrotune.data.listentogether.PartyMember
+import com.music.astrotune.data.listentogether.PartyTrack
+import com.music.astrotune.data.model.QueueTier
+import com.music.astrotune.data.model.Song
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFalse

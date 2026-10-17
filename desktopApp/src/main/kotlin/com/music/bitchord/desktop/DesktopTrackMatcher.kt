@@ -1,7 +1,7 @@
-package com.music.bitchord.desktop
+package com.music.astrotune.desktop
 
-import com.music.bitchord.data.model.Song
-import com.music.bitchord.data.model.durationMillis
+import com.music.astrotune.data.model.Song
+import com.music.astrotune.data.model.durationMillis
 import java.util.Locale
 import kotlin.math.abs
 

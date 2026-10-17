@@ -1,6 +1,6 @@
-package com.music.bitchord.desktop
+package com.music.astrotune.desktop
 
-import com.music.bitchord.data.NerdStats
+import com.music.astrotune.data.NerdStats
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertNull

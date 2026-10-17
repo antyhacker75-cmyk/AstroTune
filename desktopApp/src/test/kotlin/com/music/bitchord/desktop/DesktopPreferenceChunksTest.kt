@@ -1,4 +1,4 @@
-package com.music.bitchord.desktop
+package com.music.astrotune.desktop
 
 import java.util.prefs.Preferences
 import kotlin.test.AfterTest
@@ -13,7 +13,7 @@ import kotlin.test.assertTrue
  */
 class DesktopPreferenceChunksTest {
 
-    private val node: Preferences = Preferences.userRoot().node("com.music.bitchord.desktop.test.chunks")
+    private val node: Preferences = Preferences.userRoot().node("com.music.astrotune.desktop.test.chunks")
 
     @AfterTest
     fun tearDown() {

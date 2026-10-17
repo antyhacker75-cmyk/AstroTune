@@ -1,7 +1,7 @@
-package com.music.bitchord.desktop
+package com.music.astrotune.desktop
 
-import com.music.bitchord.data.innertube.Innertube
-import com.music.bitchord.data.innertube.StreamResolver
+import com.music.astrotune.data.innertube.Innertube
+import com.music.astrotune.data.innertube.StreamResolver
 import java.security.MessageDigest
 import java.util.Locale
 

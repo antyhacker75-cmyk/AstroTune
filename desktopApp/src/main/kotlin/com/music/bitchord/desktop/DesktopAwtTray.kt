@@ -1,4 +1,4 @@
-package com.music.bitchord.desktop
+package com.music.astrotune.desktop
 
 import java.awt.EventQueue
 import java.awt.SystemTray

@@ -1,9 +1,9 @@
-package com.music.bitchord.desktop
+package com.music.astrotune.desktop
 
-import com.music.bitchord.data.model.QueueTier
-import com.music.bitchord.data.model.Song
-import com.music.bitchord.playback.QueueTimeline
-import com.music.bitchord.playback.QueueTimeline.asQueueEntry
+import com.music.astrotune.data.model.QueueTier
+import com.music.astrotune.data.model.Song
+import com.music.astrotune.playback.QueueTimeline
+import com.music.astrotune.playback.QueueTimeline.asQueueEntry
 
 /**
  * The live queue: what is playing, what played before it, and what is next.

@@ -1,4 +1,4 @@
-package com.music.bitchord.desktop
+package com.music.astrotune.desktop
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -67,10 +67,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Popup
 import androidx.compose.ui.window.PopupPositionProvider
 import androidx.compose.ui.window.PopupProperties
-import com.music.bitchord.data.model.LikeStatus
-import com.music.bitchord.data.model.Song
-import com.music.bitchord.ui.LyricsProviderState
-import com.music.bitchord.ui.icons.BitChordIcons
+import com.music.astrotune.data.model.LikeStatus
+import com.music.astrotune.data.model.Song
+import com.music.astrotune.ui.LyricsProviderState
+import com.music.astrotune.ui.icons.BitChordIcons
 import java.util.Locale
 
 /** The verbs the song menu needs that the player does not otherwise know about. */

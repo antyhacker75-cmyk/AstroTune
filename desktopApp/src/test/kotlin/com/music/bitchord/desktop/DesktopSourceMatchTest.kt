@@ -1,7 +1,7 @@
-package com.music.bitchord.desktop
+package com.music.astrotune.desktop
 
-import com.music.bitchord.data.model.SearchResult
-import com.music.bitchord.data.model.Song
+import com.music.astrotune.data.model.SearchResult
+import com.music.astrotune.data.model.Song
 import com.sun.net.httpserver.HttpServer
 import kotlinx.coroutines.runBlocking
 import java.net.InetSocketAddress

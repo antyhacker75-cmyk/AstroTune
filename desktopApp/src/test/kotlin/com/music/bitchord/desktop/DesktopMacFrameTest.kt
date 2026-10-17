@@ -1,4 +1,4 @@
-package com.music.bitchord.desktop
+package com.music.astrotune.desktop
 
 import com.sun.jna.NativeLibrary
 import com.sun.jna.Pointer

@@ -1,6 +1,6 @@
-package com.music.bitchord.desktop
+package com.music.astrotune.desktop
 
-import com.music.bitchord.data.innertube.StreamResolver
+import com.music.astrotune.data.innertube.StreamResolver
 import java.net.URI
 import java.net.http.HttpClient
 import java.net.http.HttpRequest

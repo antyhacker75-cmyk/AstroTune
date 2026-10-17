@@ -1,9 +1,9 @@
-package com.music.bitchord.desktop
+package com.music.astrotune.desktop
 
-import com.music.bitchord.playback.TransitionFilter
-import com.music.bitchord.playback.smart.TransitionPlan
-import com.music.bitchord.playback.smart.TransitionStyle
-import com.music.bitchord.playback.smart.FilterTransitionVariant
+import com.music.astrotune.playback.TransitionFilter
+import com.music.astrotune.playback.smart.TransitionPlan
+import com.music.astrotune.playback.smart.TransitionStyle
+import com.music.astrotune.playback.smart.FilterTransitionVariant
 import kotlin.math.PI
 import kotlin.math.abs
 import kotlin.math.sin

@@ -1,4 +1,4 @@
-package com.music.bitchord.desktop
+package com.music.astrotune.desktop
 
 /** What this build is made of, and on what terms. */
 internal data class DesktopLicense(

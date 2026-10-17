@@ -1,4 +1,4 @@
-package com.music.bitchord.desktop
+package com.music.astrotune.desktop
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -46,9 +46,9 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import com.music.bitchord.data.model.Song
-import com.music.bitchord.data.spotify.SpotifyImportTrack
-import com.music.bitchord.data.spotify.SpotifyImporter
+import com.music.astrotune.data.model.Song
+import com.music.astrotune.data.spotify.SpotifyImportTrack
+import com.music.astrotune.data.spotify.SpotifyImporter
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.launch
 

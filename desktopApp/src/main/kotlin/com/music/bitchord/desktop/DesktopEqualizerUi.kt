@@ -1,4 +1,4 @@
-package com.music.bitchord.desktop
+package com.music.astrotune.desktop
 
 import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.animateFloatAsState
@@ -50,9 +50,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.toSize
-import com.music.bitchord.playback.EqLayout
-import com.music.bitchord.playback.EqualizerPreset
-import com.music.bitchord.ui.icons.BitChordIcons
+import com.music.astrotune.playback.EqLayout
+import com.music.astrotune.playback.EqualizerPreset
+import com.music.astrotune.ui.icons.BitChordIcons
 import java.util.Locale
 import kotlin.math.abs
 import kotlin.math.roundToInt

@@ -1,7 +1,7 @@
-package com.music.bitchord.desktop
+package com.music.astrotune.desktop
 
-import com.music.bitchord.data.model.QueueTier
-import com.music.bitchord.data.model.Song
+import com.music.astrotune.data.model.QueueTier
+import com.music.astrotune.data.model.Song
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFalse

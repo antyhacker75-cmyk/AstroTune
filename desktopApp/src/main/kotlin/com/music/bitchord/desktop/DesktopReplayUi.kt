@@ -1,6 +1,6 @@
-package com.music.bitchord.desktop
+package com.music.astrotune.desktop
 
-import com.music.bitchord.ui.replay.ReplayCreditCard
+import com.music.astrotune.ui.replay.ReplayCreditCard
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Canvas
@@ -56,9 +56,9 @@ import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.music.bitchord.data.model.Song
-import com.music.bitchord.data.model.artworkAt
-import com.music.bitchord.ui.icons.BitChordIcons
+import com.music.astrotune.data.model.Song
+import com.music.astrotune.data.model.artworkAt
+import com.music.astrotune.ui.icons.BitChordIcons
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.util.Locale

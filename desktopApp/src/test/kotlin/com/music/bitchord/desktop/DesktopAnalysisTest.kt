@@ -1,7 +1,7 @@
-package com.music.bitchord.desktop
+package com.music.astrotune.desktop
 
-import com.music.bitchord.playback.smart.MelSpectrogram
-import com.music.bitchord.playback.smart.TrackFeatures
+import com.music.astrotune.playback.smart.MelSpectrogram
+import com.music.astrotune.playback.smart.TrackFeatures
 import kotlin.math.PI
 import kotlin.math.abs
 import kotlin.math.exp

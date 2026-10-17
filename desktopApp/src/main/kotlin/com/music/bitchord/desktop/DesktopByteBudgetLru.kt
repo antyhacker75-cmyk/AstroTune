@@ -1,4 +1,4 @@
-package com.music.bitchord.desktop
+package com.music.astrotune.desktop
 
 /**
  * A least-recently-used cache held to a budget of bytes rather than a count of entries.

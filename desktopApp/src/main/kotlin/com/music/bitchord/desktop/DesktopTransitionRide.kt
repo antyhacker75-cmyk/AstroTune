@@ -1,9 +1,9 @@
-package com.music.bitchord.desktop
+package com.music.astrotune.desktop
 
-import com.music.bitchord.playback.TransitionFilter
-import com.music.bitchord.playback.smart.FilterTransitionVariant
-import com.music.bitchord.playback.smart.TransitionPlan
-import com.music.bitchord.playback.smart.TransitionStyle
+import com.music.astrotune.playback.TransitionFilter
+import com.music.astrotune.playback.smart.FilterTransitionVariant
+import com.music.astrotune.playback.smart.TransitionPlan
+import com.music.astrotune.playback.smart.TransitionStyle
 import kotlin.math.pow
 
 /** Aims the two transition filters as a mix runs, ported from Android's `CrossfadeController`. */

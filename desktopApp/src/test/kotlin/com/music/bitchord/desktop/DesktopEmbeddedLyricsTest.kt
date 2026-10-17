@@ -1,4 +1,4 @@
-package com.music.bitchord.desktop
+package com.music.astrotune.desktop
 
 import java.io.ByteArrayOutputStream
 import java.nio.charset.StandardCharsets

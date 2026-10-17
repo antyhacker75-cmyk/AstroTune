@@ -1,4 +1,4 @@
-package com.music.bitchord.desktop
+package com.music.astrotune.desktop
 
 import kotlinx.serialization.json.buildJsonObject
 import kotlinx.serialization.json.put

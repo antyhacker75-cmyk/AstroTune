@@ -1,7 +1,7 @@
-package com.music.bitchord.desktop
+package com.music.astrotune.desktop
 
-import com.music.bitchord.data.model.HomeShelf
-import com.music.bitchord.data.model.ShelfItem
+import com.music.astrotune.data.model.HomeShelf
+import com.music.astrotune.data.model.ShelfItem
 import java.nio.file.Files
 import kotlin.test.AfterTest
 import kotlin.test.Test
