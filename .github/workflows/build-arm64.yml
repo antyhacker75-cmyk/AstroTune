@@ -1,7 +1,7 @@
 name: Build ARM64 APK
 
 on:
-  workflow_dispatch: # Allows you to run it manually from the Actions tab
+  workflow_dispatch:
   push:
     branches: [ main ]
 
@@ -39,7 +39,10 @@ jobs:
           echo "LISTEN_TOGETHER_SERVER=https://bitchord-b96t.onrender.com" >> local.properties
 
       - name: Build Only ARM64 Release APK
-        run: ./gradlew :wearos:clean :app:assembleProdRelease -Pandroid.injected.build.abi=arm64-v8a -x bundleWearApkProdRelease
+        run: |
+          mkdir -p wearos/build/outputs/apk/prod/release
+          touch wearos/build/outputs/apk/prod/release/dummy.apk
+          ./gradlew :app:assembleProdRelease -Pandroid.injected.build.abi=arm64-v8a -x :wearos:assembleProdRelease
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
