@@ -487,6 +487,7 @@ func TestInviteLanding(t *testing.T) {
 // a WebSocket). The server answers with the protocol name alone, never the token.
 func TestWebSocketTokenAsSubprotocol(t *testing.T) {
 	ts := setupTestServer()
+	createLimiter = newIPRateLimiter(time.Minute, config.CreateRatePerMinute, config.RateLimitMaxEntries)
 	defer ts.Close()
 
 	b, _ := json.Marshal(map[string]string{"userId": "u1", "deviceId": "d1", "displayName": "Host"})
