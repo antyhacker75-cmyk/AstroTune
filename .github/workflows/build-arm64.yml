@@ -39,7 +39,7 @@ jobs:
           echo "LISTEN_TOGETHER_SERVER=https://bitchord-b96t.onrender.com" >> local.properties
 
       - name: Build Only ARM64 Release APK
-        run: ./gradlew :wearos:clean :app:assembleProdRelease -Pandroid.injected.build.abi=arm64-v8a
+        run: ./gradlew :wearos:clean :app:assembleProdRelease -Pandroid.injected.build.abi=arm64-v8a -x bundleWearApkProdRelease
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
