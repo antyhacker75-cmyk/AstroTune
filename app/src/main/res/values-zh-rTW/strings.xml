@@ -1324,9 +1324,6 @@
     <string name="wear_os_code_hint">配對碼</string>
     <string name="wear_os_done">完成</string>
     <string name="spotify_use_spdc_token">使用 sp_dc 權杖</string>
-    <string name="KEY1">PLACEHOLDER</string>
-    <string name="KEY2">PLACEHOLDER</string>
-    <string name="KEY3">PLACEHOLDER</string>
     <string name="search_source_youtube" translatable="false">YouTube</string>
     <string name="app_icon_liquid_glass" translatable="false">Liquid Glass</string>
     <string name="app_icon_liquid_glass_dark" translatable="false">Liquid Glass Dark</string>
