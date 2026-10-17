@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Live Parties · AstroTune</title>
+<link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+<div class="wrap">
+  <h1>🎵 Live Listening Parties</h1>
+  <p class="sub">Tap a code to join — updates every 5s</p>
+  <div id="grid" class="grid"></div>
+</div>
+<script>
+async function load() {
+  try {
+    const r = await fetch('/api/parties');
+    const list = await r.json();
+    const g = document.getElementById('grid');
+    if (!list || list.length === 0) {
+      g.innerHTML = '<div class="empty">No active parties right now</div>';
+      return;
+    }
+    g.innerHTML = list.map(p => `
+      <a class="card" href="/invite/${encodeURIComponent(p.code)}">
+        <div class="label">Party Code</div>
+        <div class="code">${p.code}</div>
+        <div class="members"><span class="dot"></span>${p.members} listening</div>
+        ${p.nowPlaying ? `<div class="track">▶ ${p.nowPlaying}</div>` : ''}
+      </a>
+    `).join('');
+  } catch(e) { console.error(e); }
+}
+load();
+setInterval(load, 5000);
+</script>
+</body>
+</html>

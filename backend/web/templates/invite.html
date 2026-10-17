@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Party {{.Code}} · AstroTune</title>
+<link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+<div class="wrap" style="max-width:480px;text-align:center;padding-top:4rem">
+  <div class="label">Party Code</div>
+  <div class="code" style="font-size:3rem;margin:1rem 0">{{.Code}}</div>
+  <div class="members" style="font-size:1.5rem;padding:.75rem 1.5rem"><span class="dot"></span>{{.Members}}</div>
+  <div class="sub" style="margin-top:.5rem">listeners</div>
+  {{if .NowPlaying}}
+  <div class="card" style="margin-top:2rem;text-align:left">
+    <div class="label">Now Playing</div>
+    <div class="track" style="border:none;padding:0;margin-top:.5rem;font-size:1rem;color:#f0f0f5">▶ {{.NowPlaying}}</div>
+  </div>
+  {{end}}
+</div>
+</body>
+</html>

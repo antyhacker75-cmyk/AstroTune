@@ -73,6 +73,7 @@ func main() {
 
 	// WebSocket endpoint
 	mux.HandleFunc("GET /ws/parties/{code}", handleWebSocket)
+	registerWebUI(mux)
 
 	handler := corsMiddleware(mux)
 
