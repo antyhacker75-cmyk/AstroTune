@@ -266,7 +266,7 @@ object ListenTogether {
      * will ever show back, because it is the only one the user typed.
      */
     fun parseAndNormalizeServerUrl(raw: String): ServerUrlValidationResult {
-        val trimmed = raw.trim()
+        val trimmed = raw.trim().replace("/api/parties", "").replace("/api/presence", "").trimEnd('/')
         if (trimmed.isEmpty()) return ServerUrlValidationResult.Valid("")
         if (trimmed.any { it.isWhitespace() }) return ServerUrlValidationResult.Invalid(ServerUrlError.Whitespace)
 
