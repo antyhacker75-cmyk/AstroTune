@@ -13,10 +13,10 @@ import (
 
 	"github.com/gorilla/websocket"
 
-	"github.com/KabirSinghBhatia/BitChord/backend/clock"
-	"github.com/KabirSinghBhatia/BitChord/backend/config"
-	"github.com/KabirSinghBhatia/BitChord/backend/presence"
-	"github.com/KabirSinghBhatia/BitChord/backend/protocol"
+	"github.com/antyhacker75-cmyk/BitChord/backend/clock"
+	"github.com/antyhacker75-cmyk/BitChord/backend/config"
+	"github.com/antyhacker75-cmyk/BitChord/backend/presence"
+	"github.com/antyhacker75-cmyk/BitChord/backend/protocol"
 )
 
 func setupTestServer() *httptest.Server {

@@ -18,13 +18,13 @@ import (
 
 	"github.com/gorilla/websocket"
 
-	"github.com/KabirSinghBhatia/BitChord/backend/clock"
-	"github.com/KabirSinghBhatia/BitChord/backend/codes"
-	"github.com/KabirSinghBhatia/BitChord/backend/config"
-	"github.com/KabirSinghBhatia/BitChord/backend/hub"
-	"github.com/KabirSinghBhatia/BitChord/backend/party"
-	"github.com/KabirSinghBhatia/BitChord/backend/presence"
-	"github.com/KabirSinghBhatia/BitChord/backend/protocol"
+	"github.com/antyhacker75-cmyk/BitChord/backend/clock"
+	"github.com/antyhacker75-cmyk/BitChord/backend/codes"
+	"github.com/antyhacker75-cmyk/BitChord/backend/config"
+	"github.com/antyhacker75-cmyk/BitChord/backend/hub"
+	"github.com/antyhacker75-cmyk/BitChord/backend/party"
+	"github.com/antyhacker75-cmyk/BitChord/backend/presence"
+	"github.com/antyhacker75-cmyk/BitChord/backend/protocol"
 )
 
 var (
