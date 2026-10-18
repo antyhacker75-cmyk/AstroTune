@@ -69,7 +69,7 @@ jobs:
 
       - name: Build the AppImage
         run: |
-          desktopApp/packaging/appimage.sh \
+          bash desktopApp/packaging/appimage.sh \
             desktopApp/build/compose/binaries/main/app/BitChord \
             dist/BitChord-${{ steps.version.outputs.value }}-linux-x86_64.AppImage \
             "$PWD/appimagetool.AppImage"
