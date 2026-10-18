@@ -779,11 +779,11 @@ var inviteTemplate = template.Must(template.New("invite").Parse(`<!DOCTYPE html>
 </html>`))
 
 func requestOrigin(r *http.Request) string {
-	if proto := r.Header.Get("X-Forwarded-Proto"); proto != "" {
-		return proto + "://" + r.Host
-	}
 	if config.PublicOrigin != "" {
 		return config.PublicOrigin
+	}
+	if proto := r.Header.Get("X-Forwarded-Proto"); proto != "" {
+		return proto + "://" + r.Host
 	}
 	proto := "http"
 	if r.TLS != nil {
