@@ -27,7 +27,7 @@ func registerWebUI(mux *http.ServeMux) {
 
 type partyView struct {
 	Code       string `json:"code"`
-	Members    int    `json:"members"`
+	Members    int    `json:"users"`
 	NowPlaying string `json:"nowPlaying"`
 }
 

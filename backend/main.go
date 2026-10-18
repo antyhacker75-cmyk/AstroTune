@@ -252,7 +252,7 @@ func handleRoot(w http.ResponseWriter, r *http.Request) {
 	}
 	jsonResponse(w, http.StatusOK, map[string]interface{}{
 		"service":    "bitchord-listen-together",
-		"members":    store.MemberCount(),
+		"users":    store.MemberCount(),
 		"parties":    store.Len(),
 		"serverMs":   clock.NowMs(),
 	})
@@ -498,7 +498,7 @@ func handlePreviewParty(w http.ResponseWriter, r *http.Request) {
 		"memberCount": len(p.Members),
 		"maxMembers":  p.MaxMembers,
 		"isFull":      len(p.Members) >= p.MaxMembers,
-		"members":     members,
+		"users":     members,
 	}
 	p.Unlock()
 
@@ -1257,7 +1257,7 @@ func membersFrame(p *party.Party) map[string]interface{} {
 	}
 	return map[string]interface{}{
 		"type":            protocol.FrameMembers,
-		"members":         membersList,
+		"users":         membersList,
 		"maxMembers":      p.MaxMembers,
 		"hostOnlyControl": p.HostOnlyControl,
 		"serverMs":        clock.NowMs(),
