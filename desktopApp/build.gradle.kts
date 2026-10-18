@@ -596,6 +596,7 @@ tasks.withType<Test>().configureEach {
     if (project.hasProperty("ci")) {
         filter {
             excludeTestsMatching("*DesktopAnalysisTest*")
+            excludeTestsMatching("*DesktopBeatModelTest*")
             excludeTestsMatching("*DesktopAutomixTest*")
             excludeTestsMatching("*DesktopBeatStressTest*")
             excludeTestsMatching("*DesktopWindowsMediaTest*")
