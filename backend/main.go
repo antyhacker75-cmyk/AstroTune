@@ -427,7 +427,10 @@ func handleJoinParty(w http.ResponseWriter, r *http.Request) {
 	youWire := m.ToWire()
 	token := m.Token
 	pCode := p.Code
+	membersF := membersFrame(p)
 	p.Unlock()
+
+	hubInst.Broadcast(pCode, membersF, "")
 
 	jsonResponse(w, http.StatusOK, map[string]interface{}{
 		"code":  pCode,
