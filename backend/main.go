@@ -199,20 +199,6 @@ func decodeJSONBody(w http.ResponseWriter, r *http.Request, dst interface{}) boo
 
 func jsonResponse(w http.ResponseWriter, status int, data interface{}) {
 	w.Header().Set("Content-Type", "application/json")
-	art := ""
-	var duration int64 = 0
-	var progress int64 = 0
-	p.Lock()
-	if p.Playback != nil && p.Playback.Track != nil {
-		if p.Playback.Track.ThumbnailUrl != nil { art = *p.Playback.Track.ThumbnailUrl }
-		if p.Playback.Track.DurationMs != nil { duration = *p.Playback.Track.DurationMs / 1000 }
-		progress = p.Playback.PositionMs / 1000
-		if p.Playback.IsPlaying && p.Playback.AnchorMs > 0 {
-			progress += (clock.NowMs() - p.Playback.AnchorMs) / 1000
-		}
-		if progress > duration && duration > 0 { progress = duration }
-	}
-	p.Unlock()
 
 	w.WriteHeader(status)
 	_ = json.NewEncoder(w).Encode(data)
