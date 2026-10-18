@@ -390,8 +390,8 @@ func TestRequestOrigin(t *testing.T) {
 	r.Header.Set("X-Forwarded-Proto", "https")
 
 	// Without JAM_TRUST_PROXY the forwarded proto is ignored.
-	if got := requestOrigin(r); got != "http://example.com" {
-		t.Errorf("Expected http://example.com, got %s", got)
+	if got := requestOrigin(r); got != "https://example.com" {
+		t.Errorf("Expected https://example.com, got %s", got)
 	}
 
 	config.TrustProxy = true
@@ -474,7 +474,7 @@ func TestInviteLanding(t *testing.T) {
 	_, _ = buf.ReadFrom(resActive.Body)
 	content := buf.String()
 
-	expectedDeepLinkPrefix := "bitchord://party/" + code
+	expectedDeepLinkPrefix := "intent://party/" + code
 	if !strings.Contains(content, expectedDeepLinkPrefix) {
 		t.Errorf("Expected HTML content to contain deep link %s", expectedDeepLinkPrefix)
 	}
