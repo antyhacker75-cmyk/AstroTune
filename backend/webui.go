@@ -26,7 +26,8 @@ func registerWebUI(mux *http.ServeMux) {
 }
 
 type partyView struct {
-	Code       string `json:"code"`
+	Code string `json:"code"`
+	Host string `json:"host"`
 	Members    int    `json:"users"`
 	NowPlaying string `json:"nowPlaying"`
 }
@@ -53,6 +54,7 @@ func handlePartiesAPI(w http.ResponseWriter, r *http.Request) {
 		views = append(views, partyView{
 			Code:       p.Code,
 			Members:    len(p.Members),
+			Host: func() string { if h := p.Host(); h != nil { return h.DisplayName }; return "Unknown" }(),
 			NowPlaying: nowPlaying,
 		})
 		p.Unlock()

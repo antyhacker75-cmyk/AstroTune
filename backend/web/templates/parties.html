@@ -4,36 +4,136 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Live Parties · AstroTune</title>
-<link rel="stylesheet" href="/static/style.css">
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+  @keyframes spin-slow { 100% { transform: rotate(360deg); } }
+  .spin-music { animation: spin-slow 4s linear infinite; }
+  .fade-in { animation: fadeIn 0.3s ease-in-out; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+</style>
 </head>
-<body>
-<div class="wrap">
-  <h1>🎵 Live Listening Parties</h1>
-  <p class="sub">Tap a code to join — updates every 5s</p>
-  <div id="grid" class="grid"></div>
-</div>
+<body class="bg-[#0a0a0f] text-gray-100 font-sans min-h-screen p-6">
+  <div class="max-w-4xl mx-auto">
+    <header class="mb-8 flex flex-col md:flex-row md:items-center justify-between gap-4">
+      <div>
+        <h1 class="text-3xl font-extrabold tracking-tight flex items-center gap-3">
+          <svg class="w-8 h-8 text-indigo-500" fill="currentColor" viewBox="0 0 24 24"><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/></svg>
+          Live Listening Parties
+        </h1>
+        <p class="text-gray-400 mt-1">Join a party to listen together in real time.</p>
+      </div>
+      <div class="relative w-full md:w-72">
+        <svg class="w-5 h-5 absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+        <input type="text" id="search" placeholder="Search host, code, or track..." class="w-full bg-[#14141c] border border-gray-700 text-white rounded-lg pl-10 pr-4 py-2 focus:outline-none focus:border-indigo-500 transition-colors">
+      </div>
+    </header>
+
+    <div id="grid" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
+    <div id="empty" class="text-center text-gray-500 mt-12 hidden">
+      <svg class="w-16 h-16 mx-auto mb-4 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+      <p class="text-lg">No active parties found</p>
+    </div>
+  </div>
+
 <script>
-async function load() {
-  try {
-    const r = await fetch('/api/parties');
-    const list = await r.json();
-    const g = document.getElementById('grid');
-    if (!list || list.length === 0) {
-      g.innerHTML = '<div class="empty">No active parties right now</div>';
-      return;
-    }
-    g.innerHTML = list.map(p => `
-      <a class="card" href="/invite/${encodeURIComponent(p.code)}">
-        <div class="label">Party Code</div>
-        <div class="code">${p.code}</div>
-        <div class="members"><span class="dot"></span>${p.users} listening</div>
-        ${p.nowPlaying ? `<div class="track">▶ ${p.nowPlaying}</div>` : ''}
-      </a>
-    `).join('');
-  } catch(e) { console.error(e); }
+let allParties = [];
+
+function createCard(p) {
+  const a = document.createElement('a');
+  a.href = `/invite/${p.code}`;
+  a.className = 'card fade-in block bg-[#14141c] border border-[#2a2a3a] rounded-xl p-5 hover:border-indigo-500 transition-colors group';
+  a.id = `card-${p.code}`;
+  a.innerHTML = `
+    <div class="flex justify-between items-start mb-3">
+      <div>
+        <div class="text-xs text-gray-500 font-semibold tracking-wider uppercase mb-1">Host</div>
+        <div class="font-semibold text-lg text-white group-hover:text-indigo-400 transition-colors" id="host-${p.code}">${p.host}</div>
+      </div>
+      <div class="bg-indigo-500/10 text-indigo-400 px-3 py-1 rounded-full text-sm font-mono font-bold tracking-widest border border-indigo-500/20">
+        ${p.code}
+      </div>
+    </div>
+    
+    <div class="flex items-center gap-2 text-sm text-green-400 bg-green-400/10 w-fit px-3 py-1 rounded-full mb-4">
+      <span class="relative flex h-2 w-2">
+        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+        <span class="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
+      </span>
+      <span id="users-${p.code}">${p.users} listening</span>
+    </div>
+
+    <div class="border-t border-gray-800 pt-3 flex items-center gap-3 text-gray-400 text-sm overflow-hidden">
+      <svg class="w-5 h-5 shrink-0 text-indigo-500 spin-music" id="icon-${p.code}" fill="currentColor" viewBox="0 0 24 24"><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/></svg>
+      <span class="truncate" id="track-${p.code}">${p.nowPlaying || 'Nothing playing'}</span>
+    </div>
+  `;
+  return a;
 }
-load();
-setInterval(load, 5000);
+
+function updateCard(el, p) {
+  const trackEl = el.querySelector(`#track-${p.code}`);
+  const usersEl = el.querySelector(`#users-${p.code}`);
+  
+  usersEl.innerText = `${p.users} listening`;
+  
+  const newTrack = p.nowPlaying || 'Nothing playing';
+  if (trackEl.innerText !== newTrack) {
+      trackEl.innerText = newTrack;
+      // Smoothly flash the track text when it changes
+      trackEl.classList.remove('fade-in');
+      void trackEl.offsetWidth; 
+      trackEl.classList.add('fade-in');
+  }
+}
+
+function render() {
+  const q = document.getElementById('search').value.toLowerCase();
+  const filtered = allParties.filter(p => 
+    (p.code && p.code.toLowerCase().includes(q)) || 
+    (p.host && p.host.toLowerCase().includes(q)) || 
+    (p.nowPlaying && p.nowPlaying.toLowerCase().includes(q))
+  );
+
+  const grid = document.getElementById('grid');
+  const empty = document.getElementById('empty');
+
+  if (filtered.length === 0) {
+    grid.innerHTML = '';
+    empty.classList.remove('hidden');
+    return;
+  }
+  
+  empty.classList.add('hidden');
+  const currentIds = new Set(filtered.map(p => `card-${p.code}`));
+  
+  // Remove missing cards
+  Array.from(grid.children).forEach(child => {
+    if (!currentIds.has(child.id)) child.remove();
+  });
+  
+  // Add new or update existing
+  filtered.forEach(p => {
+    let existing = document.getElementById(`card-${p.code}`);
+    if (existing) {
+       updateCard(existing, p);
+    } else {
+       grid.appendChild(createCard(p));
+    }
+  });
+}
+
+async function fetchParties() {
+  try {
+    const res = await fetch('/api/parties');
+    allParties = await res.json();
+    render();
+  } catch (e) { console.error(e); }
+}
+
+document.getElementById('search').addEventListener('input', render);
+fetchParties();
+// Update every 2 seconds smoothly without destroying the DOM
+setInterval(fetchParties, 2000);
 </script>
 </body>
 </html>
