@@ -54,7 +54,7 @@ jobs:
       - run: chmod +x gradlew
 
       - name: Tests
-        run: ./gradlew :shared:jvmTest :desktopUi:jvmTest :desktopApp:test -Pci -Pbitchord.version=${{ steps.version.outputs.value }}
+        run: xvfb-run ./gradlew :shared:jvmTest :desktopUi:jvmTest :desktopApp:test -Pci -Pbitchord.version=${{ steps.version.outputs.value }}
 
       - name: Build deb, rpm and the app image
         run: |
@@ -69,6 +69,7 @@ jobs:
 
       - name: Build the AppImage
         run: |
+          chmod +x desktopApp/packaging/appimage.sh
           desktopApp/packaging/appimage.sh \
             desktopApp/build/compose/binaries/main/app/BitChord \
             dist/BitChord-${{ steps.version.outputs.value }}-linux-x86_64.AppImage \
@@ -196,7 +197,7 @@ jobs:
       - run: chmod +x gradlew
 
       - name: Tests
-        run: ./gradlew :shared:jvmTest :desktopUi:jvmTest :desktopApp:test -Pci -Pbitchord.version=${{ steps.version.outputs.value }}
+        run: xvfb-run ./gradlew :shared:jvmTest :desktopUi:jvmTest :desktopApp:test -Pci -Pbitchord.version=${{ steps.version.outputs.value }}
 
       - name: Build DMG, PKG and the app bundle
         run: |
