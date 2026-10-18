@@ -95,7 +95,7 @@ class DiscordRPC(
                 button2Text.ifEmpty { DEFAULT_BUTTON_2 },
                 song,
             )
-            buttonsList.add(resolvedText to PROJECT_URL)
+            buttonsList.add(resolvedText to resolveVariables(AppSettings.discordButton2Url.get().ifEmpty { PROJECT_URL }, song))
         }
 
         val type = when (activityType) {
@@ -169,6 +169,8 @@ class DiscordRPC(
                 .replace("{song_name}", song.title)
                 .replace("{artist_name}", song.artist)
                 .replace("{album_name}", song.albumName ?: "")
+                .replace("{song_url}", watchUrl(song))
+                .replace("{invite_url}", "https://bitchord-b96t.onrender.com")
         }
     }
 }
