@@ -246,16 +246,7 @@ func parseSocketToken(r *http.Request) string {
 // REST Handlers
 
 func handleRoot(w http.ResponseWriter, r *http.Request) {
-	if r.URL.Path != "/" {
-		http.NotFound(w, r)
-		return
-	}
-	jsonResponse(w, http.StatusOK, map[string]interface{}{
-		"service":    "bitchord-listen-together",
-		"users":    store.MemberCount(),
-		"parties":    store.Len(),
-		"serverMs":   clock.NowMs(),
-	})
+	http.ServeFileFS(w, r, webAssets, "web/templates/index.html")
 }
 
 func handleHealthz(w http.ResponseWriter, r *http.Request) {
