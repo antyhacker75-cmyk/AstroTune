@@ -805,7 +805,7 @@ func handleInviteLanding(w http.ResponseWriter, r *http.Request) {
 
 	if len(code) != codes.CodeLength {
 		w.WriteHeader(http.StatusBadRequest)
-		_ = inviteTemplate.Execute(w, invitePageData{
+		_ = inviteTmpl.Execute(w, invitePageData{
 			Code:     html.EscapeString(r.PathValue("code")),
 			IsActive: false,
 		})
@@ -815,7 +815,7 @@ func handleInviteLanding(w http.ResponseWriter, r *http.Request) {
 	p := store.Find(code)
 	if p == nil {
 		w.WriteHeader(http.StatusNotFound)
-		_ = inviteTemplate.Execute(w, invitePageData{
+		_ = inviteTmpl.Execute(w, invitePageData{
 			Code:     code,
 			IsActive: false,
 		})
@@ -836,7 +836,7 @@ func handleInviteLanding(w http.ResponseWriter, r *http.Request) {
 	p.Unlock()
 
 	w.WriteHeader(http.StatusOK)
-	_ = inviteTemplate.Execute(w, invitePageData{
+	_ = inviteTmpl.Execute(w, invitePageData{
 		Code:              code,
 		DeepLink:          deepLink,
 		IntentURI:         template.URL(intentURI),

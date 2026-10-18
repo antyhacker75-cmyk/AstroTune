@@ -12,6 +12,8 @@ import (
 //go:embed web/templates/* web/static/*
 var webAssets embed.FS
 
+var inviteTmpl = template.Must(template.ParseFS(webAssets, "web/templates/invite.html"))
+
 var partiesTmpl = template.Must(
 	template.ParseFS(webAssets, "web/templates/parties.html"),
 )
