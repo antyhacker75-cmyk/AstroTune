@@ -95,7 +95,7 @@ class DiscordRPC(
                 button2Text.ifEmpty { DEFAULT_BUTTON_2 },
                 song,
             )
-            buttonsList.add(resolvedText to resolveVariables(AppSettings.discordButton2Url.get().ifEmpty { PROJECT_URL }, song))
+            buttonsList.add(resolvedText to (if (resolvedText.startsWith("http")) resolvedText else PROJECT_URL))
         }
 
         val type = when (activityType) {
