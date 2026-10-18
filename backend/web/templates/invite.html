@@ -26,10 +26,11 @@
 
     <div class="bg-[#0a0a0f] rounded-xl p-4 mb-8 text-left">
       <div class="flex items-center gap-4 mb-3">
-        <!-- Album Art with fallback animation -->
+        <!-- Album Artwork with Fallback SVG Icon -->
         <div class="relative w-14 h-14 shrink-0">
           <img id="artwork" src="https://ui-avatars.com/api/?name=Music&background=1f2937&color=818cf8" class="w-full h-full rounded-lg object-cover shadow-lg absolute inset-0" alt="Artwork">
           <div id="spinner" class="w-full h-full rounded-lg bg-indigo-500/20 flex items-center justify-center absolute inset-0">
+            <!-- Modern Music Icon -->
             <svg class="w-6 h-6 text-indigo-500 spin-music" fill="currentColor" viewBox="0 0 24 24"><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/></svg>
           </div>
         </div>
@@ -39,7 +40,7 @@
         </div>
       </div>
       
-      <!-- Progress Bar -->
+      <!-- Progress Bar & Time -->
       <div class="flex justify-between text-xs text-gray-500 mb-1 font-mono">
         <span id="current-time">0:00</span>
         <span id="total-time">0:00</span>
@@ -64,15 +65,15 @@
     return `${m}:${s.toString().padStart(2, '0')}`;
   }
 
+  // Update every 1 second
   setInterval(async () => {
     try {
-      // Fetch all parties and find this specific one
       const res = await fetch('/api/parties');
       if (!res.ok) return;
       const list = await res.json();
       const data = list.find(p => p.code === '{{.Code}}');
       
-      if (!data) return; // Party ended
+      if (!data) return; // Party might have ended
 
       document.getElementById('member-count').innerText = data.users;
       document.getElementById('now-playing').innerText = data.nowPlaying || 'Nothing playing';
@@ -88,7 +89,7 @@
         document.getElementById('progress-bar').style.width = `${percent}%`;
       }
 
-      // Update Artwork (and hide the spinner)
+      // Update Artwork and hide the spinner
       if (data.artwork && data.artwork !== "") {
         const artImg = document.getElementById('artwork');
         if (artImg.src !== data.artwork) {
@@ -96,6 +97,7 @@
         }
         document.getElementById('spinner').style.display = 'none';
       } else {
+        // Show spinner if no artwork exists
         document.getElementById('spinner').style.display = 'flex';
       }
     } catch (e) { console.error(e); }
