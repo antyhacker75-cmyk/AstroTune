@@ -69,7 +69,6 @@ jobs:
 
       - name: Build the AppImage
         run: |
-      chmod +x desktopApp/packaging/appimage.sh
           desktopApp/packaging/appimage.sh \
             desktopApp/build/compose/binaries/main/app/BitChord \
             dist/BitChord-${{ steps.version.outputs.value }}-linux-x86_64.AppImage \
