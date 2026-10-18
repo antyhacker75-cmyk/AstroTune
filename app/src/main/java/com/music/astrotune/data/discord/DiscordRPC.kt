@@ -105,7 +105,7 @@ class DiscordRPC(
             else -> Type.LISTENING
         }
 
-        val name = activityName.ifEmpty { appName() }
+        val name = resolveVariables(activityName.ifEmpty { appName() }, song)
 
         setActivity(
             name = name,
