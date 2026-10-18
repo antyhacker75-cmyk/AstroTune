@@ -57,6 +57,9 @@ val listenTogetherServer: String = (
 val betaSuffix = rootProject.extra["bitchordBetaSuffix"] as String
 
 android {
+    defaultConfig {
+        setProperty("archivesBaseName", "AstroTune")
+    }
     namespace = "com.music.astrotune"
     // InnerTubeX's AAR requires compiling against 37; targetSdk (runtime behaviour) stays 36.
     compileSdk = 37

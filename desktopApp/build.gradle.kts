@@ -526,7 +526,7 @@ compose.desktop {
                 TargetFormat.Deb,
                 TargetFormat.Rpm,
             )
-            packageName = "BitChord"
+            packageName = "AstroTune"
             packageVersion = nativePackageVersion
             description = if (targetOs == "windows") "BitChord" else "Aesthetic YouTube Music client"
             vendor = "BitChord contributors"

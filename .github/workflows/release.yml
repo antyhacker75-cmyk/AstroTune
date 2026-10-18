@@ -281,7 +281,7 @@ jobs:
         uses: softprops/action-gh-release@v2
         with:
           tag_name: ${{ github.ref_name }}
-          name: BitChord ${{ github.ref_name }}
+          name: AstroTune ${{ github.ref_name }}
           draft: true
           files: dist/**/*
         env:
