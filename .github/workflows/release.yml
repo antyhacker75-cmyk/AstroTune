@@ -244,7 +244,15 @@ jobs:
           echo "LISTEN_TOGETHER_SERVER=https://bitchord-b96t.onrender.com" >> local.properties
       - name: Decode Keystore
         run: echo "${{ secrets.KEYSTORE_BASE64 }}" | base64 -d > app/bitchord-release.jks
+      - name: Create keystore.properties
+        run: |
+          echo "storeFile=bitchord-release.jks" > keystore.properties
+          echo "storePassword=${{ secrets.KEYSTORE_PASSWORD }}" >> keystore.properties
+          echo "keyAlias=${{ secrets.KEY_ALIAS }}" >> keystore.properties
+          echo "keyPassword=${{ secrets.KEY_PASSWORD }}" >> keystore.properties
+
       - name: Build APKs
+
         run: bash ./gradlew :app:assembleProdRelease
       - name: Upload APKs
         uses: actions/upload-artifact@v4
