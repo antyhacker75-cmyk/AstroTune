@@ -667,7 +667,7 @@ private fun RichPresencePreview(
         }
         if (button2Visible) {
             Spacer(Modifier.height(8.dp))
-            val partyCode = com.music.astrotune.data.listenertogether.ListenTogether.state.value.code
+            val partyCode = com.music.astrotune.data.listentogether.ListenTogether.state.value.code
             val isPartyActive = partyCode != null
             PresenceButton(
                 label = if (isPartyActive) "Join Party" else resolved(button2Text, DiscordRPC.DEFAULT_BUTTON_2),
