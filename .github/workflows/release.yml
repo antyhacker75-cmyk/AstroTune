@@ -245,7 +245,7 @@ jobs:
       - name: Decode Keystore
         run: echo "${{ secrets.KEYSTORE_BASE64 }}" | base64 -d > app/bitchord-release.jks
       - name: Build APKs
-        run: ./gradlew :app:assembleProdRelease
+        run: bash ./gradlew :app:assembleProdRelease
       - name: Upload APKs
         uses: actions/upload-artifact@v4
         with:
