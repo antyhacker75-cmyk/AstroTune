@@ -8,7 +8,7 @@ import (
 	"net/http"
 )
 
-//go:embed web/templates/parties.html web/static/*
+//go:embed web/templates/* web/static/*
 var webAssets embed.FS
 
 var partiesTmpl = template.Must(
