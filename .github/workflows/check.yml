@@ -32,12 +32,7 @@ jobs:
       - run: chmod +x gradlew
 
       - name: Tests
-        run: |
-        if [ "$RUNNER_OS" == "Linux" ]; then
-          ./gradlew :shared:jvmTest :desktopUi:jvmTest :desktopApp:test -Pci
-        else
-          ./gradlew :shared:jvmTest :desktopUi:jvmTest :desktopApp:test -Pci
-        fi
+        run: ./gradlew :shared:jvmTest :desktopUi:jvmTest :desktopApp:test -Pci
 
       - name: Build the distributable
         run: ./gradlew :desktopApp:createDistributable
@@ -126,12 +121,7 @@ jobs:
       - run: chmod +x gradlew
 
       - name: Tests
-        run: |
-        if [ "$RUNNER_OS" == "Linux" ]; then
-          ./gradlew :shared:jvmTest :desktopUi:jvmTest :desktopApp:test -Pci
-        else
-          ./gradlew :shared:jvmTest :desktopUi:jvmTest :desktopApp:test -Pci
-        fi
+        run: ./gradlew :shared:jvmTest :desktopUi:jvmTest :desktopApp:test -Pci
 
       - name: Build the distributable
         run: ./gradlew :desktopApp:createDistributable

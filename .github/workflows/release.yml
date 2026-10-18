@@ -54,12 +54,7 @@ jobs:
       - run: chmod +x gradlew
 
       - name: Tests
-        run: |
-        if [ "$RUNNER_OS" == "Linux" ]; then
-          ./gradlew :shared:jvmTest :desktopUi:jvmTest :desktopApp:test -Pci
-        else
-          ./gradlew :shared:jvmTest :desktopUi:jvmTest :desktopApp:test -Pci
-        fi -Pbitchord.version=${{ steps.version.outputs.value }}
+        run: ./gradlew :shared:jvmTest :desktopUi:jvmTest :desktopApp:test -Pci -Pbitchord.version=${{ steps.version.outputs.value }}
 
       - name: Build deb, rpm and the app image
         run: |
@@ -74,7 +69,7 @@ jobs:
 
       - name: Build the AppImage
         run: |
-          chmod +x desktopApp/packaging/appimage.sh
+      chmod +x desktopApp/packaging/appimage.sh
           desktopApp/packaging/appimage.sh \
             desktopApp/build/compose/binaries/main/app/BitChord \
             dist/BitChord-${{ steps.version.outputs.value }}-linux-x86_64.AppImage \
@@ -202,12 +197,7 @@ jobs:
       - run: chmod +x gradlew
 
       - name: Tests
-        run: |
-        if [ "$RUNNER_OS" == "Linux" ]; then
-          ./gradlew :shared:jvmTest :desktopUi:jvmTest :desktopApp:test -Pci
-        else
-          ./gradlew :shared:jvmTest :desktopUi:jvmTest :desktopApp:test -Pci
-        fi -Pbitchord.version=${{ steps.version.outputs.value }}
+        run: ./gradlew :shared:jvmTest :desktopUi:jvmTest :desktopApp:test -Pci -Pbitchord.version=${{ steps.version.outputs.value }}
 
       - name: Build DMG, PKG and the app bundle
         run: |
