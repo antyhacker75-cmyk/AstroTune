@@ -47,6 +47,7 @@ This list is automatically generated from GitHub repository contributor data.
 - [@santhoshg-io](https://github.com/santhoshg-io)
 - [@nxfu](https://github.com/nxfu)
 - [@jackychan4891](https://github.com/jackychan4891)
+- [@antyhacker75-cmyk](https://github.com/antyhacker75-cmyk)
 - [@mmw1984](https://github.com/mmw1984)
 - [@Sourabhnamdev9981](https://github.com/Sourabhnamdev9981)
 - [@SHUBH-snippet](https://github.com/SHUBH-snippet)
