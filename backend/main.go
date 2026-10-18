@@ -1255,7 +1255,7 @@ func membersFrame(p *party.Party) map[string]interface{} {
 	}
 	return map[string]interface{}{
 		"type":            protocol.FrameMembers,
-		"users":         membersList,
+		"members":       membersList,
 		"maxMembers":      p.MaxMembers,
 		"hostOnlyControl": p.HostOnlyControl,
 		"serverMs":        clock.NowMs(),
