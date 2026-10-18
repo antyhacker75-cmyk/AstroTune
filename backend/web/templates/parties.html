@@ -26,7 +26,7 @@ async function load() {
       <a class="card" href="/invite/${encodeURIComponent(p.code)}">
         <div class="label">Party Code</div>
         <div class="code">${p.code}</div>
-        <div class="members"><span class="dot"></span>${p.members} listening</div>
+        <div class="members"><span class="dot"></span>${p.users} listening</div>
         ${p.nowPlaying ? `<div class="track">▶ ${p.nowPlaying}</div>` : ''}
       </a>
     `).join('');

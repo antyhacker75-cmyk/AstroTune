@@ -784,6 +784,8 @@ var inviteTemplate = template.Must(template.New("invite").Parse(`<!DOCTYPE html>
 </html>`))
 
 func requestOrigin(r *http.Request) string {
+	scheme := r.Header.Get("X-Forwarded-Proto")
+	if scheme == "" {
 	if config.PublicOrigin != "" {
 		return config.PublicOrigin
 	}
