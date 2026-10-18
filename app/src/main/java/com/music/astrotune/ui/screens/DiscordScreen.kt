@@ -672,7 +672,7 @@ private fun RichPresencePreview(
                 enabled = true,
                 onClick = {
                     context.startActivity(
-                        Intent(Intent.ACTION_VIEW, DiscordRPC.resolveVariables(AppSettings.discordButton2Url.get().ifEmpty { DiscordRPC.PROJECT_URL }, currentSong).toUri()),
+                    Intent(Intent.ACTION_VIEW, DiscordRPC.PROJECT_URL.toUri()),
                     )
                 },
             )
