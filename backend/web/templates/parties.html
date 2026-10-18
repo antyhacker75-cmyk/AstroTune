@@ -5,12 +5,6 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Live Parties · AstroTune</title>
 <script src="https://cdn.tailwindcss.com"></script>
-<style>
-  @keyframes spin-slow { 100% { transform: rotate(360deg); } }
-  .spin-music { animation: spin-slow 4s linear infinite; }
-  .fade-in { animation: fadeIn 0.3s ease-in-out; }
-  @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
-</style>
 </head>
 <body class="bg-[#0a0a0f] text-gray-100 font-sans min-h-screen p-6">
   <div class="max-w-4xl mx-auto">
@@ -18,7 +12,7 @@
       <div>
         <h1 class="text-3xl font-extrabold tracking-tight flex items-center gap-3">
           <svg class="w-8 h-8 text-indigo-500" fill="currentColor" viewBox="0 0 24 24"><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/></svg>
-          Live Listening Parties
+          AstroTune Parties
         </h1>
         <p class="text-gray-400 mt-1">Join a party to listen together in real time.</p>
       </div>
@@ -30,13 +24,19 @@
 
     <div id="grid" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
     <div id="empty" class="text-center text-gray-500 mt-12 hidden">
-      <svg class="w-16 h-16 mx-auto mb-4 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
       <p class="text-lg">No active parties found</p>
     </div>
   </div>
 
 <script>
 let allParties = [];
+
+function formatTime(seconds) {
+  if (!seconds || isNaN(seconds)) return "0:00";
+  const m = Math.floor(seconds / 60);
+  const s = Math.floor(seconds % 60);
+  return `${m}:${s.toString().padStart(2, '0')}`;
+}
 
 function createCard(p) {
   const a = document.createElement('a');
@@ -47,7 +47,7 @@ function createCard(p) {
     <div class="flex justify-between items-start mb-3">
       <div>
         <div class="text-xs text-gray-500 font-semibold tracking-wider uppercase mb-1">Host</div>
-        <div class="font-semibold text-lg text-white group-hover:text-indigo-400 transition-colors" id="host-${p.code}">${p.host}</div>
+        <div class="font-semibold text-lg text-white group-hover:text-indigo-400 transition-colors">${p.host}</div>
       </div>
       <div class="bg-indigo-500/10 text-indigo-400 px-3 py-1 rounded-full text-sm font-mono font-bold tracking-widest border border-indigo-500/20">
         ${p.code}
@@ -63,25 +63,30 @@ function createCard(p) {
     </div>
 
     <div class="border-t border-gray-800 pt-3 flex items-center gap-3 text-gray-400 text-sm overflow-hidden">
-      <svg class="w-5 h-5 shrink-0 text-indigo-500 spin-music" id="icon-${p.code}" fill="currentColor" viewBox="0 0 24 24"><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/></svg>
-      <span class="truncate" id="track-${p.code}">${p.nowPlaying || 'Nothing playing'}</span>
+      <img id="art-${p.code}" src="https://ui-avatars.com/api/?name=Music&background=1f2937&color=818cf8" class="w-10 h-10 rounded object-cover">
+      <div class="flex-1 min-w-0">
+        <div class="truncate text-white font-medium mb-1" id="track-${p.code}">${p.nowPlaying || 'Nothing playing'}</div>
+        <div class="w-full bg-gray-800 rounded-full h-1">
+          <div id="prog-${p.code}" class="bg-indigo-500 h-1 rounded-full transition-all duration-1000" style="width: 0%"></div>
+        </div>
+      </div>
     </div>
   `;
   return a;
 }
 
 function updateCard(el, p) {
+  el.querySelector(`#users-${p.code}`).innerText = `${p.users} listening`;
+  
   const trackEl = el.querySelector(`#track-${p.code}`);
-  const usersEl = el.querySelector(`#users-${p.code}`);
-  
-  usersEl.innerText = `${p.users} listening`;
-  
   const newTrack = p.nowPlaying || 'Nothing playing';
-  if (trackEl.innerText !== newTrack) {
-      trackEl.innerText = newTrack;
-      trackEl.classList.remove('fade-in');
-      void trackEl.offsetWidth; 
-      trackEl.classList.add('fade-in');
+  if (trackEl.innerText !== newTrack) trackEl.innerText = newTrack;
+  
+  if (p.artwork) el.querySelector(`#art-${p.code}`).src = p.artwork;
+  
+  if (p.duration > 0) {
+    const percent = Math.min((p.progress / p.duration) * 100, 100);
+    el.querySelector(`#prog-${p.code}`).style.width = `${percent}%`;
   }
 }
 
@@ -103,19 +108,10 @@ function render() {
   }
   
   empty.classList.add('hidden');
-  const currentIds = new Set(filtered.map(p => `card-${p.code}`));
-  
-  Array.from(grid.children).forEach(child => {
-    if (!currentIds.has(child.id)) child.remove();
-  });
-  
   filtered.forEach(p => {
     let existing = document.getElementById(`card-${p.code}`);
-    if (existing) {
-       updateCard(existing, p);
-    } else {
-       grid.appendChild(createCard(p));
-    }
+    if (existing) updateCard(existing, p);
+    else grid.appendChild(createCard(p));
   });
 }
 

@@ -6,6 +6,7 @@ import (
 	"html/template"
 	"io/fs"
 	"net/http"
+	"github.com/antyhacker75-cmyk/BitChord/backend/clock"
 )
 
 //go:embed web/templates/* web/static/*
@@ -15,8 +16,6 @@ var partiesTmpl = template.Must(
 	template.ParseFS(webAssets, "web/templates/parties.html"),
 )
 
-// registerWebUI mounts /parties, /api/parties, and /static/.
-// Call from setupTestServer() and main() after the other mux.HandleFunc calls.
 func registerWebUI(mux *http.ServeMux) {
 	mux.HandleFunc("GET /parties", handlePartiesPage)
 	mux.HandleFunc("GET /api/parties", handlePartiesAPI)
@@ -26,10 +25,13 @@ func registerWebUI(mux *http.ServeMux) {
 }
 
 type partyView struct {
-	Code string `json:"code"`
-	Host string `json:"host"`
+	Code       string `json:"code"`
+	Host       string `json:"host"`
 	Members    int    `json:"users"`
 	NowPlaying string `json:"nowPlaying"`
+	Artwork    string `json:"artwork"`
+	Progress   int64  `json:"progress"`
+	Duration   int64  `json:"duration"`
 }
 
 func handlePartiesPage(w http.ResponseWriter, r *http.Request) {
@@ -45,17 +47,43 @@ func handlePartiesAPI(w http.ResponseWriter, r *http.Request) {
 	for _, p := range store.All() {
 		p.Lock()
 		nowPlaying := ""
+		art := ""
+		var duration int64 = 0
+		var progress int64 = 0
+		
+		host := "Unknown"
+		if h := p.Host(); h != nil {
+			host = h.DisplayName
+		}
+
 		if p.Playback != nil && p.Playback.Track != nil {
 			nowPlaying = p.Playback.Track.Title
 			if p.Playback.Track.Artist != "" {
 				nowPlaying += " — " + p.Playback.Track.Artist
 			}
+			if p.Playback.Track.ThumbnailUrl != nil {
+				art = *p.Playback.Track.ThumbnailUrl
+			}
+			if p.Playback.Track.DurationMs != nil {
+				duration = *p.Playback.Track.DurationMs / 1000
+			}
+			progress = p.Playback.PositionMs / 1000
+			if p.Playback.IsPlaying && p.Playback.AnchorMs > 0 {
+				progress += (clock.NowMs() - p.Playback.AnchorMs) / 1000
+			}
+			if progress > duration && duration > 0 {
+				progress = duration
+			}
 		}
+		
 		views = append(views, partyView{
 			Code:       p.Code,
+			Host:       host,
 			Members:    len(p.Members),
-			Host: func() string { if h := p.Host(); h != nil { return h.DisplayName }; return "Unknown" }(),
 			NowPlaying: nowPlaying,
+			Artwork:    art,
+			Progress:   progress,
+			Duration:   duration,
 		})
 		p.Unlock()
 	}
