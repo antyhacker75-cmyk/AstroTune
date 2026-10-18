@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>AstroTune · Listen Together</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+  @keyframes float { 0% { transform: translateY(0px); } 50% { transform: translateY(-10px); } 100% { transform: translateY(0px); } }
+  .animate-float { animation: float 4s ease-in-out infinite; }
+</style>
+</head>
+<body class="bg-[#0a0a0f] text-white font-sans min-h-screen flex flex-col items-center justify-center p-6 relative overflow-hidden">
+  <!-- Background Gradient -->
+  <div class="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-indigo-600/20 blur-[120px] rounded-full"></div>
+  <div class="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-purple-600/20 blur-[120px] rounded-full"></div>
+
+  <main class="z-10 text-center max-w-2xl mx-auto">
+    <div class="mb-6 flex justify-center animate-float">
+      <div class="p-4 bg-gradient-to-tr from-indigo-500 to-purple-500 rounded-3xl shadow-lg shadow-indigo-500/30">
+        <svg class="w-16 h-16 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/></svg>
+      </div>
+    </div>
+    <h1 class="text-5xl md:text-6xl font-extrabold tracking-tight mb-4 bg-clip-text text-transparent bg-gradient-to-r from-indigo-400 to-purple-400">
+      AstroTune
+    </h1>
+    <p class="text-xl text-gray-400 mb-10">Listen together. Sync playback in real-time, wherever you are.</p>
+    
+    <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+      <a href="/parties" class="w-full sm:w-auto px-8 py-4 bg-indigo-600 hover:bg-indigo-500 text-white font-semibold rounded-xl transition-all shadow-lg shadow-indigo-600/30 flex items-center justify-center gap-2">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
+        Browse Live Parties
+      </a>
+      <a href="https://github.com/antyhacker75-cmyk/BitChord/releases" target="_blank" class="w-full sm:w-auto px-8 py-4 bg-[#14141c] hover:bg-[#1a1a24] border border-gray-700 text-white font-semibold rounded-xl transition-all flex items-center justify-center gap-2">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+        Download App
+      </a>
+    </div>
+  </main>
+
+  <footer class="absolute bottom-6 text-gray-600 text-sm">
+    &copy; 2026 AstroTune. All rights reserved.
+  </footer>
+</body>
+</html>

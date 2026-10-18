@@ -18,6 +18,9 @@ var partiesTmpl = template.Must(
 // registerWebUI mounts /parties, /api/parties, and /static/.
 // Call from setupTestServer() and main() after the other mux.HandleFunc calls.
 func registerWebUI(mux *http.ServeMux) {
+	mux.HandleFunc("GET /{$}", func(w http.ResponseWriter, r *http.Request) {
+		http.ServeFileFS(w, r, webAssets, "web/templates/index.html")
+	})
 	mux.HandleFunc("GET /parties", handlePartiesPage)
 	mux.HandleFunc("GET /api/parties", handlePartiesAPI)
 

@@ -79,7 +79,6 @@ function updateCard(el, p) {
   const newTrack = p.nowPlaying || 'Nothing playing';
   if (trackEl.innerText !== newTrack) {
       trackEl.innerText = newTrack;
-      // Smoothly flash the track text when it changes
       trackEl.classList.remove('fade-in');
       void trackEl.offsetWidth; 
       trackEl.classList.add('fade-in');
@@ -106,12 +105,10 @@ function render() {
   empty.classList.add('hidden');
   const currentIds = new Set(filtered.map(p => `card-${p.code}`));
   
-  // Remove missing cards
   Array.from(grid.children).forEach(child => {
     if (!currentIds.has(child.id)) child.remove();
   });
   
-  // Add new or update existing
   filtered.forEach(p => {
     let existing = document.getElementById(`card-${p.code}`);
     if (existing) {
@@ -132,7 +129,6 @@ async function fetchParties() {
 
 document.getElementById('search').addEventListener('input', render);
 fetchParties();
-// Update every 2 seconds smoothly without destroying the DOM
 setInterval(fetchParties, 2000);
 </script>
 </body>
