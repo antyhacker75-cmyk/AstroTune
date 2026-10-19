@@ -19,24 +19,12 @@ import kotlinx.serialization.json.jsonPrimitive
 import okhttp3.Request
 import java.io.File
 
-/**
- * BitChord ships as a sideloaded APK off GitHub Releases rather than through
- * a store, so there's nothing to push an update notice on its own — this
- * polls the repo's "latest release" once per launch and compares its tag
- * against the running build.
- *
- * The update itself is also handled here: the release's `.apk` asset is
- * downloaded into the app's cache and handed to the system package installer,
- * so the whole round trip stays inside the app instead of bouncing out to a
- * browser.
- */
 object AppUpdateChecker {
 
     data class UpdateInfo(
         val version: String,
         val releaseUrl: String,
         val apkUrl: String?,
-        /** The release's own Markdown body, shown as this update's "what's new". */
         val notes: String?,
     )
 
@@ -50,7 +38,6 @@ object AppUpdateChecker {
     private val _available = MutableStateFlow<UpdateInfo?>(null)
     val available = _available.asStateFlow()
 
-    /** Where this update's APK download currently stands, for the dialog's progress row. */
     sealed interface DownloadState {
         data object Idle : DownloadState
         data class Downloading(val fraction: Float) : DownloadState
@@ -61,7 +48,6 @@ object AppUpdateChecker {
     private val _download = MutableStateFlow<DownloadState>(DownloadState.Idle)
     val download = _download.asStateFlow()
 
-    /** Set from the UI thread when the user cancels; polled between network reads. */
     @Volatile
     private var downloadCancelled = false
 
@@ -83,73 +69,35 @@ object AppUpdateChecker {
         }
     }
 
-    /**
-     * Wipes any APK left over from a previous run. Called once at cold start
-     * so a downloaded update is only ever "Install Now" for the session that
-     * downloaded it — the next launch starts clean rather than trying to work
-     * out whether a leftover file is still good.
-     */
     suspend fun clearCache(context: Context) = withContext(Dispatchers.IO) {
         File(context.cacheDir, CACHE_SUBDIR).listFiles()?.forEach { it.delete() }
     }
 
-    /**
-     * One release carries the phone app and the TV app, each as a universal
-     * APK plus per-ABI splits:
-     *
-     *     BitChord-v1.8.apk     BitChord-v1.8_arm64-v8a.apk     ...
-     *     BitChordTV-v1.8.apk   BitChordTV-v1.8_arm64-v8a.apk   ...
-     *
-     * so this app's APKs are the ones named with its own
-     * [BuildConfig.UPDATE_APK_PREFIX] — "BitChord-" never matches a TV file,
-     * since the prefix ends at the hyphen. The universal build (no `_ABI`
-     * suffix) is taken first, as it installs anywhere; failing that, the split
-     * for this device's ABI. A release with neither leaves
-     * [UpdateInfo.apkUrl] null and the UI falls back to opening the releases
-     * page.
-     */
-    
     private fun apkAssetUrl(release: JsonObject): String? = runCatching {
         val apks = release["assets"]?.jsonArray
             ?.mapNotNull { it as? JsonObject }
             ?.mapNotNull { asset ->
                 val name = asset["name"]?.jsonPrimitive?.contentOrNull ?: return@mapNotNull null
                 val url = asset["browser_download_url"]?.jsonPrimitive?.contentOrNull ?: return@mapNotNull null
-                
-                // ONLY check that it's an APK. We removed the "state" check because
-                // the GitHub API sometimes omits or delays it, causing the app to
-                // think the file doesn't exist.
                 if (name.endsWith(".apk", ignoreCase = true)) name to url else null
             }
             .orEmpty()
 
-        // 1. Try to find a universal build first
         apks.firstOrNull { (name, _) -> name.contains("universal", ignoreCase = true) }?.second
-            // 2. Otherwise, find the build matching the device's ABI (e.g., arm64-v8a)
             ?: Build.SUPPORTED_ABIS.firstNotNullOfOrNull { abi ->
                 apks.firstOrNull { (name, _) -> name.contains(abi, ignoreCase = true) }?.second
             }
-            // 3. Fallback to the first APK found
             ?: apks.firstOrNull()?.second
     }.getOrNull()
-    
 
-    /**
-     * Streams the current update's APK into the app cache, reporting progress
-     * through [download]. A finished file survives a cancelled dialog: until
-     * the state is reset, "Install Now" comes straight back without a second
-     * download.
-     */
     suspend fun downloadApk(context: Context): Unit = withContext(Dispatchers.IO) {
         val info = _available.value ?: return@withContext
-        // If apkUrl is null, build the fallback URL directly
         val url = info.apkUrl ?: "https://github.com/antyhacker75-cmyk/BitChord/releases/download/v${info.version}/AstroTune-prod-arm64-v8a-release.apk"
         downloadCancelled = false
         _download.value = DownloadState.Downloading(0f)
 
         runCatching {
             val dir = File(context.cacheDir, CACHE_SUBDIR).apply { mkdirs() }
-            // Drop anything left over from an earlier attempt.
             dir.listFiles()?.forEach { it.delete() }
             val target = File(dir, "astrotune-${info.version}.apk")
 
@@ -191,25 +139,14 @@ object AppUpdateChecker {
         }
     }
 
-    /** Stops an in-flight download; the next read loop sees this and bails. */
     fun cancelDownload() {
         downloadCancelled = true
     }
 
-    /** Back to square one after a failure, so the dialog offers Download again. */
     fun resetDownload() {
         _download.value = DownloadState.Idle
     }
 
-    /**
-     * Hands a downloaded APK to the system installer.
-     *
-     * Sideloaded apps need the user's blessing per app ("install unknown apps");
-     * without it the installer intent silently does nothing on most ROMs, so
-     * the user is sent to that one switch first and taps Install again after.
-     * Some TV builds have no such settings screen; there the installer is
-     * launched anyway and shows its own "not allowed" prompt with a way in.
-     */
     fun installApk(context: Context, file: File) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O &&
             !context.packageManager.canRequestPackageInstalls()
@@ -236,7 +173,6 @@ object AppUpdateChecker {
         )
     }
 
-    /** A version split into its numeric dotted parts and whether it carries a "-suffix" (e.g. "-beta2"). */
     private data class ParsedVersion(val parts: List<Int>, val isPreRelease: Boolean)
 
     private fun parseVersion(raw: String): ParsedVersion {
@@ -245,14 +181,6 @@ object AppUpdateChecker {
         return ParsedVersion(base.split(".").map { it.toIntOrNull() ?: 0 }, dash >= 0)
     }
 
-    /**
-     * Numeric, dot-separated comparison — "1.10" outranks "1.9" — with one
-     * extra rule: a "-betaN" build (see the debug build type's
-     * `versionNameSuffix` in app/build.gradle.kts) is treated as older than a
-     * plain release of the same numbers, since the beta by definition predates
-     * the tag it was testing toward. Without this, a beta and the release it
-     * matches compare equal and testers never get nudged onto the real build.
-     */
     private fun isNewer(latest: String, current: String): Boolean {
         val l = parseVersion(latest)
         val c = parseVersion(current)
