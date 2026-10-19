@@ -933,6 +933,7 @@ private fun InAParty(
 
     PartyChat(
         messages = com.music.astrotune.data.listentogether.ListenTogether.messages.collectAsStateWithLifecycle().value,
+        currentUser = state.you?.displayName ?: "",
         onSendMessage = { com.music.astrotune.data.listentogether.ListenTogether.sendChatMessage(it) },
         modifier = Modifier.padding(horizontal = 16.dp, vertical = 16.dp)
     )
