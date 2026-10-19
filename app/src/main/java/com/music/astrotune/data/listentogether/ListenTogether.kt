@@ -1315,7 +1315,7 @@ object ListenTogether {
             "chat" -> {
                 val sender = frame["sender"]?.jsonPrimitive?.content ?: "Unknown"
                 val text = frame["text"]?.jsonPrimitive?.content ?: ""
-                val timestamp = frame["timestamp"]?.jsonPrimitive?.longOrNull ?: System.currentTimeMillis()
+                val timestamp = frame["timestamp"]?.jsonPrimitive?.content?.toLongOrNull() ?: System.currentTimeMillis()
                 _messages.update { it + ChatMessage(sender, text, timestamp) }
             }
             
