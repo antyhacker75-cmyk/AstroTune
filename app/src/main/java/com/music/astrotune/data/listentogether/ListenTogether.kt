@@ -1315,7 +1315,7 @@ object ListenTogether {
             "chat" -> {
                 val sender = frame["sender"]?.jsonPrimitive?.content ?: "Unknown"
                 val text = frame["text"]?.jsonPrimitive?.content ?: ""
-                val timestamp = frame["timestamp"]?.jsonPrimitive?.long ?: System.currentTimeMillis()
+                val timestamp = frame["timestamp"]?.jsonPrimitive?.longOrNull ?: System.currentTimeMillis()
                 _messages.update { it + ChatMessage(sender, text, timestamp) }
             }
             
@@ -1733,7 +1733,12 @@ object ListenTogether {
     fun sendChatMessage(text: String) {
         if (text.isBlank()) return
         val msg = mapOf("type" to "chat", "text" to text)
-        scope.launch { socket?.send(Frame.Text(json.encodeToString(msg))) }
+        scope.launch {
+            try {
+                // Use the correct socket variable (usually 'session' or 'ws')
+                session?.send(Frame.Text(json.encodeToString(msg)))
+            } catch (e: Exception) { e.printStackTrace() }
+        }
     }
 
 }
