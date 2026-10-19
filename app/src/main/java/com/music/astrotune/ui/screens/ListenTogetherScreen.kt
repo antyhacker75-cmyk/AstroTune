@@ -486,7 +486,13 @@ fun ListenTogetherScreen(
 
         if (!signedIn) {
             SettingsGroup(footer = stringResource(R.string.listen_together_sign_in_footer)) {
-                SettingsRow(
+                PartyChat(
+            messages = com.music.astrotune.data.listentogether.ListenTogether.messages.collectAsStateWithLifecycle().value,
+            onSendMessage = { com.music.astrotune.data.listentogether.ListenTogether.sendChatMessage(it) },
+            modifier = Modifier.padding(top = 16.dp)
+        )
+        
+        SettingsRow(
                     icon = Icons.Rounded.Login,
                     title = stringResource(R.string.sign_in),
                     subtitle = stringResource(R.string.not_signed_in),
