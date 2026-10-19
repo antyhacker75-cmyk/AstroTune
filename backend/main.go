@@ -930,7 +930,8 @@ func handleWebSocket(w http.ResponseWriter, r *http.Request) {
 		hubInst.Broadcast(p.Code, mFrame, "")
 	}()
 
-	for {
+        for {
+                _ = conn.SetReadDeadline(time.Now().Add(time.Duration(config.ConnectionIdleMs) * time.Millisecond))
 		var raw map[string]interface{}
 		if err := conn.ReadJSON(&raw); err != nil {
 			break
