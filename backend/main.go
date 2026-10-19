@@ -839,6 +839,12 @@ func handleInviteLanding(w http.ResponseWriter, r *http.Request) {
 		currentSongArtist = p.Playback.Track.Artist
 	}
 	memberCount := len(p.Members)
+		msgCount := p.MessageCount
+		hostOnly := p.HostOnlyControl
+		var memberNames []string
+		for _, m := range p.Members {
+			memberNames = append(memberNames, m.DisplayName)
+		}
 	p.Unlock()
 
 	w.WriteHeader(http.StatusOK)
