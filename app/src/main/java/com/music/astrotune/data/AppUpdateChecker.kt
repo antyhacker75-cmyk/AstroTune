@@ -74,7 +74,7 @@ object AppUpdateChecker {
             val release = json.parseToJsonElement(body) as? JsonObject ?: return@runCatching
             val tag = release["tag_name"]?.jsonPrimitive?.contentOrNull ?: return@runCatching
             val url = release["html_url"]?.jsonPrimitive?.contentOrNull ?: return@runCatching
-            val apkUrl = apkAssetUrl(release)
+            val apkUrl = apkAssetUrl(release) ?: "https://github.com/antyhacker75-cmyk/BitChord/releases/download/$tag/AstroTune-prod-arm64-v8a-release.apk"
             val notes = release["body"]?.jsonPrimitive?.contentOrNull
             val latest = tag.removePrefix("v")
             if (isNewer(latest, BuildConfig.VERSION_NAME)) {
@@ -142,7 +142,8 @@ object AppUpdateChecker {
      */
     suspend fun downloadApk(context: Context): Unit = withContext(Dispatchers.IO) {
         val info = _available.value ?: return@withContext
-        val url = info.apkUrl ?: return@withContext
+        // If apkUrl is null, build the fallback URL directly
+        val url = info.apkUrl ?: "https://github.com/antyhacker75-cmyk/BitChord/releases/download/v${info.version}/AstroTune-prod-arm64-v8a-release.apk"
         downloadCancelled = false
         _download.value = DownloadState.Downloading(0f)
 

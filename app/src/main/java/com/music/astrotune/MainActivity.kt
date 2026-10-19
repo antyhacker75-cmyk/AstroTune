@@ -5017,12 +5017,8 @@ private fun BitChordApp(
                     // update icon reopens it onto whatever state it reached.
                     onDismiss = { showUpdateDialog = false },
                     onDownload = {
-                        if (update.apkUrl != null) {
-                            scope.launch { AppUpdateChecker.downloadApk(context) }
-                        } else {
-                            context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(update.releaseUrl)))
-                            showUpdateDialog = false
-                        }
+                        // Always attempt to download the APK directly
+                        scope.launch { AppUpdateChecker.downloadApk(context) }
                     },
                     onCancelDownload = {
                         AppUpdateChecker.cancelDownload()
