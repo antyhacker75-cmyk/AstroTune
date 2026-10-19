@@ -355,6 +355,14 @@ internal fun shouldSkipAfterDislike(
 
 
 class MainActivity : AppCompatActivity() {
+    override fun onResume() {
+        super.onResume()
+        val code = com.music.astrotune.data.listentogether.ListenTogether.state.value.code
+        if (code != null) {
+            com.music.astrotune.data.listentogether.ListenTogether.reconnect()
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()

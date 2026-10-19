@@ -232,6 +232,7 @@ object ListenTogether {
                 readTimeout(0, TimeUnit.MILLISECONDS)
                 connectTimeout(15, TimeUnit.SECONDS)
                 pingInterval(20, TimeUnit.SECONDS)
+                timeoutMillis = 30_000L
                 retryOnConnectionFailure(true)
             }
         }
@@ -1198,6 +1199,10 @@ object ListenTogether {
     }
 
     // ------------------------------------------------------------- socket --
+
+    fun reconnect() {
+        connect()
+    }
 
     private fun connect() {
         socketJob?.cancel()
