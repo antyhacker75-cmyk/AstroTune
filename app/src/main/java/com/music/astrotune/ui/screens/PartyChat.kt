@@ -47,8 +47,8 @@ fun PartyChat(
     Column(
         modifier = modifier
             .fillMaxWidth()
-            .clip(RoundedCornerShape(24.dp))
-            .background(MaterialTheme.colorScheme.surfaceContainer)
+            .clip(RoundedCornerShape(16.dp)) // Matches native settings cards
+            .background(MaterialTheme.colorScheme.surfaceVariant) // Matches native settings background
             .padding(16.dp)
     ) {
         Row(
@@ -76,7 +76,7 @@ fun PartyChat(
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(80.dp),
+                    .height(40.dp), // Reduced height so it doesn't look empty
                 contentAlignment = Alignment.Center
             ) {
                 Text(
@@ -118,10 +118,10 @@ fun PartyChat(
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .clip(RoundedCornerShape(24.dp))
-                .background(MaterialTheme.colorScheme.surfaceVariant)
-                .border(1.dp, MaterialTheme.colorScheme.outlineVariant, RoundedCornerShape(24.dp))
-                .padding(horizontal = 16.dp, vertical = 4.dp),
+                .clip(RoundedCornerShape(12.dp)) // Smaller radius for input
+                .background(MaterialTheme.colorScheme.surface)
+                .border(1.dp, MaterialTheme.colorScheme.outlineVariant, RoundedCornerShape(12.dp))
+                .padding(horizontal = 12.dp, vertical = 2.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
             BasicTextField(
@@ -158,11 +158,13 @@ fun PartyChat(
                         input = ""
                     }
                 },
-                enabled = input.isNotBlank()
+                enabled = input.isNotBlank(),
+                modifier = Modifier.size(40.dp) // Make button smaller
             ) {
                 Icon(
                     imageVector = Icons.AutoMirrored.Rounded.Send,
                     contentDescription = "Send",
+                    modifier = Modifier.size(20.dp),
                     tint = if (input.isNotBlank()) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.5f)
                 )
             }
