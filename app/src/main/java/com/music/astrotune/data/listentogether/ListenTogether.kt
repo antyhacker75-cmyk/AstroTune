@@ -1424,16 +1424,16 @@ object ListenTogether {
             }
 
             "activity" -> {
-                val sender = frame["sender"]?.jsonPrimitive?.content ?: ""
-                val detail = frame["detail"]?.jsonPrimitive?.content ?: ""
-                if (detail.isNotEmpty()) {
-                    _messages.update { it + ChatMessage("SYSTEM", text, System.currentTimeMillis()) }
-                }
-                
                 val action = frame["action"]?.jsonPrimitive?.content ?: return
                 val by = frame["by"]?.jsonPrimitive?.content?.takeIf { it.isNotBlank() } ?: return
                 val atMs = frame["atMs"]?.jsonPrimitive?.content?.toLongOrNull() ?: received
                 val detail = frame["detail"]?.jsonPrimitive?.content.orEmpty()
+                
+                if (detail.isNotEmpty()) {
+                    val text = if (detail.startsWith(by)) detail else "$by $detail"
+                    _messages.update { it + ChatMessage("SYSTEM", text, System.currentTimeMillis()) }
+                }
+                
                 recordActivity(PartyActivity(action, by, atMs, detail))
             }
 
