@@ -1234,10 +1234,11 @@ object ListenTogether {
                     }
                 }
             } catch (cancelled: CancellationException) {
-                throw cancelled
+                Log.w(TAG, "party socket cancelled by system while scope is active, restarting...")
             } catch (failure: Exception) {
                 Log.w(TAG, "party socket dropped: ${redact(failure.message)}")
             } finally {
+                runCatching { session?.close() }
                 session = null
             }
             if (!currentScopeActive()) return
