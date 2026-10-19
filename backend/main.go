@@ -431,6 +431,14 @@ func handleJoinParty(w http.ResponseWriter, r *http.Request) {
 	p.Unlock()
 
 	hubInst.Broadcast(pCode, membersF, "")
+	
+	joinFrame := map[string]interface{}{
+		"type":     protocol.FrameActivity,
+		"sender":   m.DisplayName,
+		"detail":   "joined the party",
+		"serverMs": clock.NowMs(),
+	}
+	hubInst.Broadcast(pCode, joinFrame, "")
 
 	jsonResponse(w, http.StatusOK, map[string]interface{}{
 		"code":  pCode,
@@ -578,6 +586,14 @@ func handleLeaveParty(w http.ResponseWriter, r *http.Request) {
 	hubInst.Broadcast(p.Code, membersFrame, memberId)
 
 	jsonResponse(w, http.StatusOK, map[string]bool{"ok": true})
+	leaveFrame := map[string]interface{}{
+		"type":     protocol.FrameActivity,
+		"sender":   req.UserId, // Or member.DisplayName if available
+		"detail":   "left the party",
+		"serverMs": clock.NowMs(),
+	}
+	hubInst.Broadcast(p.Code, leaveFrame, "")
+
 }
 
 // Web Invite Landing Handler
