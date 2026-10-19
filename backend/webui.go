@@ -34,6 +34,8 @@ type partyView struct {
 	Artwork    string `json:"artwork"`
 	Progress   int64  `json:"progress"`
 	Duration   int64  `json:"duration"`
+	Messages   int    `json:"messages"`
+	HostOnly   bool   `json:"hostOnly"`
 }
 
 func handlePartiesPage(w http.ResponseWriter, r *http.Request) {
@@ -48,6 +50,8 @@ func handlePartiesAPI(w http.ResponseWriter, r *http.Request) {
 	views := make([]partyView, 0, len(store.All()))
 	for _, p := range store.All() {
 		p.Lock()
+		msgCount := p.MessageCount
+		hostOnly := p.HostOnlyControl
 		nowPlaying := ""
 		art := ""
 		var duration int64 = 0
@@ -86,6 +90,8 @@ func handlePartiesAPI(w http.ResponseWriter, r *http.Request) {
 			Artwork:    art,
 			Progress:   progress,
 			Duration:   duration,
+			Messages:   msgCount,
+			HostOnly:   hostOnly,
 		})
 		p.Unlock()
 	}

@@ -521,6 +521,7 @@ func (m *Member) ToWire() map[string]interface{} {
 
 // Party holds members and playback state for a single room code.
 type Party struct {
+	MessageCount int `json:"messageCount"`
 	mu         sync.Mutex
 	Code       string
 	Members    map[string]*Member

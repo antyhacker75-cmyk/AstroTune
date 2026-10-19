@@ -591,6 +591,9 @@ type invitePageData struct {
 	CurrentSongTitle  string
 	CurrentSongArtist string
 	MemberCount       int
+	MessageCount      int
+	HostOnlyControl   bool
+	MemberNames       []string
 	IsActive          bool
 }
 
@@ -848,6 +851,9 @@ func handleInviteLanding(w http.ResponseWriter, r *http.Request) {
 		CurrentSongTitle:  currentSongTitle,
 		CurrentSongArtist: currentSongArtist,
 		MemberCount:       memberCount,
+		MessageCount:      msgCount,
+		HostOnlyControl:   hostOnly,
+		MemberNames:       memberNames,
 		IsActive:          true,
 	})
 }
@@ -949,6 +955,7 @@ func handleSocketFrame(p *party.Party, member *party.Member, sc *hub.SafeConn, f
 		case "chat":
 			text, _ := frame["text"].(string)
 			if text != "" {
+				p.MessageCount++
 				chatFrame := map[string]interface{}{
 					"type":      protocol.FrameChat,
 					"senderId":  member.MemberId,
