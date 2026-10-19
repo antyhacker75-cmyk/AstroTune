@@ -16,6 +16,7 @@ import io.ktor.client.plugins.HttpTimeout
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.client.plugins.timeout
 import io.ktor.client.plugins.websocket.DefaultClientWebSocketSession
+import io.ktor.websocket.close
 import io.ktor.client.plugins.websocket.WebSockets
 import io.ktor.client.plugins.websocket.webSocket
 import io.ktor.client.request.get
@@ -1238,7 +1239,7 @@ object ListenTogether {
             } catch (failure: Exception) {
                 Log.w(TAG, "party socket dropped: ${redact(failure.message)}")
             } finally {
-                runCatching { session?.close() }
+                try { session?.close() } catch (e: Exception) { /* ignore */ }
                 session = null
             }
             if (!currentScopeActive()) return
