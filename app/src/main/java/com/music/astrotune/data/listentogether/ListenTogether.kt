@@ -1414,6 +1414,11 @@ object ListenTogether {
             }
 
             "activity" -> {
+                val activityText = frame["detail"]?.jsonPrimitive?.content ?: ""
+                if (activityText.isNotEmpty()) {
+                    _messages.update { it + ChatMessage("SYSTEM", activityText, System.currentTimeMillis()) }
+                }
+                
                 val action = frame["action"]?.jsonPrimitive?.content ?: return
                 val by = frame["by"]?.jsonPrimitive?.content?.takeIf { it.isNotBlank() } ?: return
                 val atMs = frame["atMs"]?.jsonPrimitive?.content?.toLongOrNull() ?: received
