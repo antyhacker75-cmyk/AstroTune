@@ -486,11 +486,7 @@ fun ListenTogetherScreen(
 
         if (!signedIn) {
             SettingsGroup(footer = stringResource(R.string.listen_together_sign_in_footer)) {
-                PartyChat(
-            messages = com.music.astrotune.data.listentogether.ListenTogether.messages.collectAsStateWithLifecycle().value,
-            onSendMessage = { com.music.astrotune.data.listentogether.ListenTogether.sendChatMessage(it) },
-            modifier = Modifier.padding(top = 16.dp)
-        )
+                
         
         SettingsRow(
                     icon = Icons.Rounded.Login,
@@ -934,6 +930,12 @@ private fun InAParty(
             MemberRow(member = member, isYou = member.memberId == state.you?.memberId, canKick = state.you?.isHost == true && !member.isHost, onKick = { onKick(member.memberId) })
         }
     }
+
+    PartyChat(
+        messages = com.music.astrotune.data.listentogether.ListenTogether.messages.collectAsStateWithLifecycle().value,
+        onSendMessage = { com.music.astrotune.data.listentogether.ListenTogether.sendChatMessage(it) },
+        modifier = Modifier.padding(top = 16.dp, bottom = 16.dp)
+    )
 
     SettingsGroup {
         SettingsRow(
