@@ -109,26 +109,30 @@ object AppUpdateChecker {
      * page.
      */
     
+    private fun apkAssetUrl(release: JsonObject): String? = runCatching {
         val apks = release["assets"]?.jsonArray
             ?.mapNotNull { it as? JsonObject }
             ?.mapNotNull { asset ->
                 val name = asset["name"]?.jsonPrimitive?.contentOrNull ?: return@mapNotNull null
                 val url = asset["browser_download_url"]?.jsonPrimitive?.contentOrNull ?: return@mapNotNull null
-                val ours = name.startsWith(BuildConfig.UPDATE_APK_PREFIX, ignoreCase = true) &&
-                    name.endsWith(".apk", ignoreCase = true) &&
-                    asset["state"]?.jsonPrimitive?.contentOrNull == "uploaded"
-                if (ours) name to url else null
+                
+                // Bypass the BuildConfig prefix entirely to ensure it matches AstroTune APKs
+                val isApk = name.endsWith(".apk", ignoreCase = true)
+                val isUploaded = asset["state"]?.jsonPrimitive?.contentOrNull == "uploaded"
+                
+                if (isApk && isUploaded) name to url else null
             }
             .orEmpty()
 
         // 1. Try to find a universal build first
         apks.firstOrNull { (name, _) -> name.contains("universal", ignoreCase = true) }?.second
-            // 2. Otherwise, find the build matching the device's ABI
+            // 2. Otherwise, find the build matching the device's ABI (e.g., arm64-v8a)
             ?: Build.SUPPORTED_ABIS.firstNotNullOfOrNull { abi ->
                 apks.firstOrNull { (name, _) -> name.contains(abi, ignoreCase = true) }?.second
             }
             // 3. Fallback to the first APK found
             ?: apks.firstOrNull()?.second
+    }.getOrNull()
     
 
     /**
