@@ -116,11 +116,10 @@ object AppUpdateChecker {
                 val name = asset["name"]?.jsonPrimitive?.contentOrNull ?: return@mapNotNull null
                 val url = asset["browser_download_url"]?.jsonPrimitive?.contentOrNull ?: return@mapNotNull null
                 
-                // Bypass the BuildConfig prefix entirely to ensure it matches AstroTune APKs
-                val isApk = name.endsWith(".apk", ignoreCase = true)
-                val isUploaded = asset["state"]?.jsonPrimitive?.contentOrNull == "uploaded"
-                
-                if (isApk && isUploaded) name to url else null
+                // ONLY check that it's an APK. We removed the "state" check because
+                // the GitHub API sometimes omits or delays it, causing the app to
+                // think the file doesn't exist.
+                if (name.endsWith(".apk", ignoreCase = true)) name to url else null
             }
             .orEmpty()
 
