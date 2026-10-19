@@ -108,7 +108,7 @@ object AppUpdateChecker {
      * [UpdateInfo.apkUrl] null and the UI falls back to opening the releases
      * page.
      */
-    private fun apkAssetUrl(release: JsonObject): String? = runCatching {
+    
         val apks = release["assets"]?.jsonArray
             ?.mapNotNull { it as? JsonObject }
             ?.mapNotNull { asset ->
@@ -117,14 +117,19 @@ object AppUpdateChecker {
                 val ours = name.startsWith(BuildConfig.UPDATE_APK_PREFIX, ignoreCase = true) &&
                     name.endsWith(".apk", ignoreCase = true) &&
                     asset["state"]?.jsonPrimitive?.contentOrNull == "uploaded"
-                if (ours) name.removeSuffix(".apk").removeSuffix(".APK") to url else null
+                if (ours) name to url else null
             }
             .orEmpty()
-        apks.firstOrNull { (name, _) -> '_' !in name }?.second
+
+        // 1. Try to find a universal build first
+        apks.firstOrNull { (name, _) -> name.contains("universal", ignoreCase = true) }?.second
+            // 2. Otherwise, find the build matching the device's ABI
             ?: Build.SUPPORTED_ABIS.firstNotNullOfOrNull { abi ->
-                apks.firstOrNull { (name, _) -> name.endsWith("_$abi") }?.second
+                apks.firstOrNull { (name, _) -> name.contains(abi, ignoreCase = true) }?.second
             }
-    }.getOrNull()
+            // 3. Fallback to the first APK found
+            ?: apks.firstOrNull()?.second
+    
 
     /**
      * Streams the current update's APK into the app cache, reporting progress
