@@ -1200,11 +1200,15 @@ object ListenTogether {
     // ------------------------------------------------------------- socket --
 
     fun reconnect() {
+        if (_state.value.connection == Connection.LIVE) return
         connect()
     }
 
     private fun connect() {
         socketJob?.cancel()
+        scope.launch {
+            try { session?.close() } catch (e: Exception) {}
+        }
         socketJob = scope.launch { runSocketLoop() }
     }
 
@@ -1747,7 +1751,7 @@ object ListenTogether {
         scope.launch {
             try {
                 // Use the correct socket variable (usually 'session' or 'ws')
-                session?.send(Frame.Text(json.encodeToString(msg)))
+                session?.send(Frame.Text(kotlinx.serialization.json.Json.encodeToString(msg)))
             } catch (e: Exception) { e.printStackTrace() }
         }
     }
