@@ -4038,12 +4038,11 @@ private fun BitChordApp(
                         )
                         Spacer(Modifier.height(8.dp))
                     }
-                    GlassNavBar(
+                    FloatingBottomBar(
                         tabs = tabs,
                         selectedIndex = selectedTab,
                         hazeState = hazeState,
                         onTabSelected = onTabSelected,
-                        navBarScroll = navBarScroll,
                     )
                 }
             }
