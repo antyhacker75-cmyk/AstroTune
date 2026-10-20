@@ -239,6 +239,7 @@ import com.music.astrotune.ui.components.BottomTab
 import com.music.astrotune.ui.components.FLOATING_BAR_MAX_WIDTH
 import com.music.astrotune.ui.components.FloatingBottomBar
 import com.music.astrotune.ui.components.GlassNavBar
+import com.music.astrotune.ui.components.rememberFloatingTabBarScrollConnection
 import com.music.astrotune.ui.components.floatingtabbar.rememberFloatingTabBarScrollConnection
 import com.music.astrotune.ui.components.FrostedTopBar
 import com.music.astrotune.ui.components.LastfmLoginAlert
@@ -4037,11 +4038,12 @@ private fun BitChordApp(
                         )
                         Spacer(Modifier.height(8.dp))
                     }
-                    FloatingBottomBar(
+                    GlassNavBar(
                         tabs = tabs,
                         selectedIndex = selectedTab,
                         hazeState = hazeState,
                         onTabSelected = onTabSelected,
+                        navBarScroll = navBarScroll,
                     )
                 }
             }
