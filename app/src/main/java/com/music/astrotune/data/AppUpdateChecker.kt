@@ -14,7 +14,6 @@ import kotlinx.coroutines.withContext
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.contentOrNull
-import kotlinx.serialization.json.jsonArray
 import kotlinx.serialization.json.jsonPrimitive
 import okhttp3.Request
 import java.io.File
@@ -24,7 +23,7 @@ object AppUpdateChecker {
     data class UpdateInfo(
         val version: String,
         val releaseUrl: String,
-        val apkUrl: String?,
+        val apkUrl: String,
         val notes: String?,
     )
 
@@ -60,10 +59,12 @@ object AppUpdateChecker {
             val release = json.parseToJsonElement(body) as? JsonObject ?: return@runCatching
             val tag = release["tag_name"]?.jsonPrimitive?.contentOrNull ?: return@runCatching
             val url = release["html_url"]?.jsonPrimitive?.contentOrNull ?: return@runCatching
-            val apkUrl = apkAssetUrl(release) ?: "https://github.com/antyhacker75-cmyk/BitChord/releases/download/$tag/AstroTune-prod-universal-release.apk"
             val notes = release["body"]?.jsonPrimitive?.contentOrNull
             val latest = tag.removePrefix("v")
+            
             if (isNewer(latest, BuildConfig.VERSION_NAME)) {
+                // ALWAYS construct the direct download URL. No API parsing.
+                val apkUrl = "https://github.com/antyhacker75-cmyk/BitChord/releases/download/$tag/AstroTune-prod-universal-release.apk"
                 _available.value = UpdateInfo(latest, url, apkUrl, notes)
             }
         }
@@ -73,26 +74,9 @@ object AppUpdateChecker {
         File(context.cacheDir, CACHE_SUBDIR).listFiles()?.forEach { it.delete() }
     }
 
-    private fun apkAssetUrl(release: JsonObject): String? = runCatching {
-        val apks = release["assets"]?.jsonArray
-            ?.mapNotNull { it as? JsonObject }
-            ?.mapNotNull { asset ->
-                val name = asset["name"]?.jsonPrimitive?.contentOrNull ?: return@mapNotNull null
-                val url = asset["browser_download_url"]?.jsonPrimitive?.contentOrNull ?: return@mapNotNull null
-                if (name.endsWith(".apk", ignoreCase = true)) name to url else null
-            }
-            .orEmpty()
-
-        apks.firstOrNull { (name, _) -> name.contains("universal", ignoreCase = true) }?.second
-            ?: Build.SUPPORTED_ABIS.firstNotNullOfOrNull { abi ->
-                apks.firstOrNull { (name, _) -> name.contains(abi, ignoreCase = true) }?.second
-            }
-            ?: apks.firstOrNull()?.second
-    }.getOrNull()
-
     suspend fun downloadApk(context: Context): Unit = withContext(Dispatchers.IO) {
         val info = _available.value ?: return@withContext
-        val url = info.apkUrl ?: "https://github.com/antyhacker75-cmyk/BitChord/releases/download/v${info.version}/AstroTune-prod-universal-release.apk"
+        val url = info.apkUrl
         downloadCancelled = false
         _download.value = DownloadState.Downloading(0f)
 
