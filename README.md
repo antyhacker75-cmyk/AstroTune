@@ -125,9 +125,11 @@ We welcome contributions to AstroTune! Please review our [Contributing Guide](CO
 
 AstroTune is free and always will be — if it's earned a spot in your rotation, you can chip in here:
 
-<a href="https://ko-fi.com/kushagrasinghx" target="_blank" rel="noopener noreferrer"><img src="https://cdn.jsdelivr.net/gh/JMcrafter26/badges@main/src/assets/donate/kofi-singular-alt/cozy.svg" alt="Support me on Ko-fi" height="55"/></a>
-<a href="https://paypal.me/kuxhagrasingh" target="_blank" rel="noopener noreferrer"><img src="https://cdn.jsdelivr.net/gh/JMcrafter26/badges@main/src/assets/donate/paypal-plural/cozy.svg" alt="Support us on PayPal" height="55"/></a>
+<a href="https://sociabuzz.com/astrostarrenz/tribe" target="_blank" rel="noopener noreferrer">
+  <img src="https://img.shields.io/badge/Support%20me-Sociabuzz-blue?style=for-the-badge&logo=buymeacoffee&logoColor=white" alt="Support me on Sociabuzz" height="55" />
+</a>
 
+<br/>
 <br/>
 <img src="upi_support.jpg" alt="UPI Support" width="250" />
 
@@ -157,3 +159,6 @@ AstroTune is an independent, community-driven third-party audio player and clien
 This project is licensed under the **GNU General Public License v3.0 (GPLv3)**. See the [LICENSE](LICENSE) file for details.
 
 </div>
+
+
+that should be sociobuzz
