@@ -238,9 +238,7 @@ import com.music.astrotune.ui.components.FloatingBarsTapGuard
 import com.music.astrotune.ui.components.BottomTab
 import com.music.astrotune.ui.components.FLOATING_BAR_MAX_WIDTH
 import com.music.astrotune.ui.components.FloatingBottomBar
-import com.music.astrotune.ui.components.GlassNavBar
 import com.music.astrotune.ui.components.rememberFloatingTabBarScrollConnection
-import com.music.astrotune.ui.components.floatingtabbar.rememberFloatingTabBarScrollConnection
 import com.music.astrotune.ui.components.FrostedTopBar
 import com.music.astrotune.ui.components.LastfmLoginAlert
 import com.music.astrotune.ui.components.LocalAppBackdrop
@@ -506,7 +504,6 @@ private fun BitChordApp(
     // What folds [GlassNavBar] between its expanded and inline shapes. Held here
     // rather than inside the bar because the page's scroll is what drives it,
     // and the page is a sibling of the bar rather than a child.
-    val navBarScroll = rememberFloatingTabBarScrollConnection()
     var selectedTab by rememberSaveable { mutableIntStateOf(0) }
     /**
      * Whether the player's sheet is up. The player is always a full-screen
@@ -3975,16 +3972,12 @@ private fun BitChordApp(
                     // component they are stacked to imitate: the now playing
                     // controls dock into the tab bar rather than riding above it,
                     // and the pair folds together on scroll. See [GlassNavBar].
-                    GlassNavBar(
+                    FloatingBottomBar(
                         tabs = tabs,
                         selectedIndex = selectedTab,
+                        hazeState = hazeState,
                         onTabSelected = onTabSelected,
-                        scrollConnection = navBarScroll,
-                        song = player.song,
-                        isPlaying = player.isPlaying,
-                        isLoading = playPauseBusy,
-                        onPlayPause = {
-                            togglePlayPause()
+                    )
                         },
                         onNext = { controller?.seekToNextMediaItem() },
                         onPrevious = { controller?.seekToPrevious() },
