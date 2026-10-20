@@ -12,8 +12,8 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.withContext
 import kotlinx.serialization.json.Json
-import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.JsonArray
+import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.contentOrNull
 import kotlinx.serialization.json.jsonPrimitive
 import okhttp3.Request
@@ -62,10 +62,19 @@ object AppUpdateChecker {
             val url = release["html_url"]?.jsonPrimitive?.contentOrNull ?: return@runCatching
             val notes = release["body"]?.jsonPrimitive?.contentOrNull
             val latest = tag.removePrefix("v")
-            
+
             if (isNewer(latest, BuildConfig.VERSION_NAME)) {
-                // ALWAYS construct the direct download URL. No API parsing.
-                val apkUrl = "https://github.com/antyhacker75-cmyk/BitChord/releases/download/$tag/AstroTune-prod-universal-release.apk"
+                val assets = release["assets"] as? JsonArray ?: return@runCatching
+                
+                // Find the exact APK asset from the GitHub release
+                val apkAsset = assets
+                    .mapNotNull { it as? JsonObject }
+                    .firstOrNull { asset ->
+                        val name = asset["name"]?.jsonPrimitive?.contentOrNull ?: return@firstOrNull false
+                        name.endsWith(".apk", ignoreCase = true)
+                    } ?: return@runCatching
+
+                val apkUrl = apkAsset["browser_download_url"]?.jsonPrimitive?.contentOrNull ?: return@runCatching
                 _available.value = UpdateInfo(latest, url, apkUrl, notes)
             }
         }
