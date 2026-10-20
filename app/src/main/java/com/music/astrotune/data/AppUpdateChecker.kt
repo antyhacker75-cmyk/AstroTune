@@ -83,16 +83,19 @@ object AppUpdateChecker {
             }
             .orEmpty()
 
+        // 1. Try to find a universal build first
         apks.firstOrNull { (name, _) -> name.contains("universal", ignoreCase = true) }?.second
+            // 2. Otherwise, find the build matching the device's ABI
             ?: Build.SUPPORTED_ABIS.firstNotNullOfOrNull { abi ->
                 apks.firstOrNull { (name, _) -> name.contains(abi, ignoreCase = true) }?.second
             }
+            // 3. Fallback to the first APK found
             ?: apks.firstOrNull()?.second
     }.getOrNull()
 
     suspend fun downloadApk(context: Context): Unit = withContext(Dispatchers.IO) {
         val info = _available.value ?: return@withContext
-        val url = info.apkUrl ?: "https://github.com/antyhacker75-cmyk/BitChord/releases/download/v${info.version}/AstroTune-prod-arm64-v8a-release.apk"
+        val url = info.apkUrl ?: "https://github.com/antyhacker75-cmyk/BitChord/releases/download/v${info.version}/AstroTune-prod-universal-release.apk"
         downloadCancelled = false
         _download.value = DownloadState.Downloading(0f)
 
