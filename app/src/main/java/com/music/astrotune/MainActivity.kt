@@ -3998,20 +3998,6 @@ private fun BitChordApp(
                         pull = playerSheetMotion.takeIf { !reducePlayerMotion },
                         modifier = Modifier.fillMaxWidth(),
                     )
-                        },
-                        onNext = { controller?.seekToNextMediaItem() },
-                        onPrevious = { controller?.seekToPrevious() },
-                        onExpand = if (reducePlayerMotion) {
-                            { showNowPlaying = true }
-                        } else {
-                            playerSheetMotion::open
-                        },
-                        controlsLocked = controlsLocked,
-                        onBlockedControl = showHostOnlyNotice,
-                        dock = activeDock,
-                        pull = playerSheetMotion.takeIf { !reducePlayerMotion },
-                        modifier = Modifier.fillMaxWidth(),
-                    )
                 } else Column(
                     modifier = Modifier
                         .align(Alignment.BottomCenter)
@@ -4051,29 +4037,11 @@ private fun BitChordApp(
                         )
                         Spacer(Modifier.height(8.dp))
                     }
-                    GlassNavBar(
+                    FloatingBottomBar(
                         tabs = tabs,
                         selectedIndex = selectedTab,
+                        hazeState = hazeState,
                         onTabSelected = onTabSelected,
-                        scrollConnection = navBarScroll,
-                        song = player.song,
-                        isPlaying = player.isPlaying,
-                        isLoading = playPauseBusy,
-                        onPlayPause = {
-                            togglePlayPause()
-                        },
-                        onNext = { controller?.seekToNextMediaItem() },
-                        onPrevious = { controller?.seekToPrevious() },
-                        onExpand = if (reducePlayerMotion) {
-                            { showNowPlaying = true }
-                        } else {
-                            playerSheetMotion::open
-                        },
-                        controlsLocked = controlsLocked,
-                        onBlockedControl = showHostOnlyNotice,
-                        dock = activeDock,
-                        pull = playerSheetMotion.takeIf { !reducePlayerMotion },
-                        modifier = Modifier.fillMaxWidth(),
                     )
                 }
             }
@@ -5049,8 +5017,12 @@ private fun BitChordApp(
                     // update icon reopens it onto whatever state it reached.
                     onDismiss = { showUpdateDialog = false },
                     onDownload = {
-                        // Always attempt to download the APK directly
-                        scope.launch { AppUpdateChecker.downloadApk(context) }
+                        if (update.apkUrl != null) {
+                            scope.launch { AppUpdateChecker.downloadApk(context) }
+                        } else {
+                            context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(update.releaseUrl)))
+                            showUpdateDialog = false
+                        }
                     },
                     onCancelDownload = {
                         AppUpdateChecker.cancelDownload()
@@ -5058,6 +5030,11 @@ private fun BitChordApp(
                     onInstall = {
                         val ready = AppUpdateChecker.download.value as? AppUpdateChecker.DownloadState.Ready
                         ready?.let { AppUpdateChecker.installApk(context, it.file) }
+                    },
+                    onOpenReleasePage = {
+                        AppUpdateChecker.resetDownload()
+                        context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(update.releaseUrl)))
+                        showUpdateDialog = false
                     },
                 )
             }
