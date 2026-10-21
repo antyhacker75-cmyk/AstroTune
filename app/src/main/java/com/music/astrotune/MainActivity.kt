@@ -238,6 +238,8 @@ import com.music.astrotune.ui.components.FloatingBarsTapGuard
 import com.music.astrotune.ui.components.BottomTab
 import com.music.astrotune.ui.components.FLOATING_BAR_MAX_WIDTH
 import com.music.astrotune.ui.components.FloatingBottomBar
+import com.music.astrotune.ui.components.GlassNavBar
+import com.music.astrotune.ui.components.floatingtabbar.rememberFloatingTabBarScrollConnection
 import com.music.astrotune.ui.components.FrostedTopBar
 import com.music.astrotune.ui.components.LastfmLoginAlert
 import com.music.astrotune.ui.components.LocalAppBackdrop
@@ -488,7 +490,8 @@ private fun BitChordApp(
 ) {
     val context = LocalContext.current
     val clipboard = LocalClipboardManager.current
-    val    // Recording the backdrop layer costs a draw pass, so it only runs when a
+    val hazeState = remember { HazeState() }
+    // Recording the backdrop layer costs a draw pass, so it only runs when a
     // liquid-glass surface (the nav bar or artwork-page back button) can sample it.
     val glassActive = LocalLiquidGlassEnabled.current && isGlassSupported()
     // "Reduce dynamic blur" keeps the glass bar's *shape* — the folding
@@ -502,6 +505,7 @@ private fun BitChordApp(
     // What folds [GlassNavBar] between its expanded and inline shapes. Held here
     // rather than inside the bar because the page's scroll is what drives it,
     // and the page is a sibling of the bar rather than a child.
+    val navBarScroll = rememberFloatingTabBarScrollConnection()
     var selectedTab by rememberSaveable { mutableIntStateOf(0) }
     /**
      * Whether the player's sheet is up. The player is always a full-screen
@@ -2691,6 +2695,7 @@ private fun BitChordApp(
                                     // Every page's scroll passes through here, so
                                     // the glass bar collapses on all of them
                                     // without each one having to know about it.
+                                    .nestedScroll(navBarScroll)
                             } else {
                                 Modifier
                             },
@@ -3969,12 +3974,16 @@ private fun BitChordApp(
                     // component they are stacked to imitate: the now playing
                     // controls dock into the tab bar rather than riding above it,
                     // and the pair folds together on scroll. See [GlassNavBar].
-                    FloatingBottomBar(
+                    GlassNavBar(
                         tabs = tabs,
                         selectedIndex = selectedTab,
-
                         onTabSelected = onTabSelected,
-                    )
+                        scrollConnection = navBarScroll,
+                        song = player.song,
+                        isPlaying = player.isPlaying,
+                        isLoading = playPauseBusy,
+                        onPlayPause = {
+                            togglePlayPause()
                         },
                         onNext = { controller?.seekToNextMediaItem() },
                         onPrevious = { controller?.seekToPrevious() },
@@ -4009,7 +4018,7 @@ private fun BitChordApp(
                             song = song,
                             isPlaying = player.isPlaying,
                             isLoading = playPauseBusy,
-
+                            hazeState = hazeState,
                             onPlayPause = {
                                 togglePlayPause()
                             },
@@ -4031,7 +4040,7 @@ private fun BitChordApp(
                     FloatingBottomBar(
                         tabs = tabs,
                         selectedIndex = selectedTab,
-
+                        hazeState = hazeState,
                         onTabSelected = onTabSelected,
                     )
                 }
@@ -4524,7 +4533,7 @@ private fun BitChordApp(
         HeldContextMenu(
             item = songActions,
             held = songMenuOrigin,
-
+            hazeState = hazeState,
             onDismiss = { songActions = null },
             // Tapping the lifted track opens its album, as Apple Music's does.
             onPreviewClick = { song ->
@@ -4613,7 +4622,7 @@ private fun BitChordApp(
         if (showSpotifyImportDialog) {
             BackHandler { showSpotifyImportDialog = false }
             SpotifyImportAlert(
-
+                hazeState = hazeState,
                 signedIn = signedIn,
                 onImported = { title, privacy, songs ->
                     viewModel.createPlaylistWithVideoIds(
@@ -4820,7 +4829,7 @@ private fun BitChordApp(
         HeldContextMenu(
             item = browseActions,
             held = browseMenuOrigin,
-
+            hazeState = hazeState,
             onDismiss = { browseActions = null },
             // Tapping the lifted card opens it, as a tap on it in the list
             // would have. Not for a Local Music grouping, which has no page.
@@ -5002,7 +5011,7 @@ private fun BitChordApp(
                 UpdateAvailableDialog(
                     version = update.version,
                     notes = update.notes,
-
+                    hazeState = hazeState,
                     // A download in progress keeps running behind the closed
                     // sheet — only the sheet itself goes away. The top bar's
                     // update icon reopens it onto whatever state it reached.
@@ -5025,7 +5034,7 @@ private fun BitChordApp(
         if (showLyricsSources) {
             BackHandler { showLyricsSources = false }
             LyricsSourcesDialog(
-
+                hazeState = hazeState,
                 onDismiss = { showLyricsSources = false },
             )
         }
@@ -5033,7 +5042,7 @@ private fun BitChordApp(
         if (songSortMenuOpen) {
             BackHandler { songSortMenuOpen = false }
             FrostedSortMenu(
-
+                hazeState = hazeState,
                 selected = songSort,
                 onSelect = { option ->
                     detail?.browseId?.let { AppSettings.setDetailSongSort(it, option) }
@@ -5063,7 +5072,7 @@ private fun BitChordApp(
             val downloadsFolder = menuFolder == "local:downloads"
             val viewType = folderViewTypeOf(menuFolder)
             FrostedFolderMenu(
-
+                hazeState = hazeState,
                 sort = folderSortOf(menuFolder),
                 viewType = viewType,
                 onSort = { option ->
@@ -5087,7 +5096,7 @@ private fun BitChordApp(
                 accounts = googleAccounts,
                 activeAccountId = activeAccountId,
                 activeProfileId = activeProfileId,
-
+                hazeState = hazeState,
                 onSelect = { selected, profile -> viewModel.selectProfile(selected.accountId, profile.profileId) },
                 onAddAccount = {
                     showAccountSelector = false
@@ -5108,7 +5117,7 @@ private fun BitChordApp(
         if (showAppLanguage) {
             BackHandler { showAppLanguage = false }
             AppLanguageDialog(
-
+                hazeState = hazeState,
                 onDismiss = { showAppLanguage = false },
             )
         }
@@ -5116,7 +5125,7 @@ private fun BitChordApp(
         if (showTranslationLanguage) {
             BackHandler { showTranslationLanguage = false }
             TranslationLanguageDialog(
-
+                hazeState = hazeState,
                 onDismiss = { showTranslationLanguage = false },
             )
         }
@@ -5124,7 +5133,7 @@ private fun BitChordApp(
         if (showListenBrainzLogin) {
             var tokenInput by remember { mutableStateOf(listenBrainzToken) }
             ListenBrainzTokenAlert(
-
+                hazeState = hazeState,
                 tokenInput = tokenInput,
                 onTokenInputChange = { tokenInput = it },
                 onSave = {
@@ -5141,7 +5150,7 @@ private fun BitChordApp(
             var lastfmError by remember { mutableStateOf<String?>(null) }
             var lastfmLoading by remember { mutableStateOf(false) }
             LastfmLoginAlert(
-
+                hazeState = hazeState,
                 usernameInput = usernameInput,
                 onUsernameInputChange = { usernameInput = it },
                 passwordInput = passwordInput,
@@ -5181,7 +5190,7 @@ private fun BitChordApp(
         if (showWebDavEditor) {
             BackHandler { showWebDavEditor = false }
             ServerEditorHost(
-
+                hazeState = hazeState,
                 title = stringResource(R.string.webdav),
                 description = stringResource(R.string.webdav_description),
                 fields = listOf(
@@ -5223,7 +5232,7 @@ private fun BitChordApp(
         if (showSmbEditor) {
             BackHandler { showSmbEditor = false }
             ServerEditorHost(
-
+                hazeState = hazeState,
                 title = stringResource(R.string.smb),
                 description = stringResource(R.string.smb_description),
                 fields = listOf(
@@ -5288,7 +5297,7 @@ private fun BitChordApp(
             }
             BackHandler { answer(com.music.astrotune.data.webdav.WebDavUploads.Choice.SKIP) }
             WebDavConflictAlert(
-
+                hazeState = hazeState,
                 fileName = req.fileName,
                 showApplyToAll = req.remaining > 0,
                 applyToAll = applyToAll,
@@ -5383,7 +5392,7 @@ private fun BitChordApp(
         discordDialog?.let { which ->
             DiscordDialogHost(
                 which = which,
-
+                hazeState = hazeState,
                 onDismiss = { discordDialog = null },
             )
         }
@@ -5393,21 +5402,21 @@ private fun BitChordApp(
         // and a full-window scrim that has to be full-window.
         if (editingPartyServer) {
             PartyServerEditor(
-
+                hazeState = hazeState,
                 onDismiss = { editingPartyServer = false },
             )
         }
 
         if (editingSignatureApi) {
             SignatureApiEditor(
-
+                hazeState = hazeState,
                 onDismiss = { editingSignatureApi = false },
             )
         }
 
         editingSource?.let { config ->
             SourceEditorAlert(
-
+                hazeState = hazeState,
                 config = config,
                 onDismiss = { editingSource = null },
                 onSaved = { editingSource = null },
@@ -5421,7 +5430,7 @@ private fun BitChordApp(
 
         if (confirmJioSaavn) {
             ConfirmationAlert(
-
+                hazeState = hazeState,
                 title = stringResource(R.string.enable_jiosaavn),
                 description = stringResource(R.string.jiosaavn_mismatch_warning),
                 confirmLabel = stringResource(R.string.enable_anyway),
@@ -5466,7 +5475,7 @@ private fun FrostedSortMenu(
     onFlipDateDirection: () -> Unit,
     onDismiss: () -> Unit,
 ) {
-    FrostedMenuPanel( onDismiss = onDismiss) {
+    FrostedMenuPanel(hazeState = hazeState, onDismiss = onDismiss) {
         // Date added is one row, Spotify-style: the arrow on it shows
         // the direction — up for newest first, down for oldest — and
         // tapping flips it, the rotation animating the flip. Up is
@@ -5526,7 +5535,7 @@ private fun FrostedFolderMenu(
     onToggleViewType: () -> Unit,
     onDismiss: () -> Unit,
 ) {
-    FrostedMenuPanel( onDismiss = onDismiss) {
+    FrostedMenuPanel(hazeState = hazeState, onDismiss = onDismiss) {
         val grid = viewType == LibraryViewType.GRID
         FrostedMenuRow(
             label = stringResource(if (grid) R.string.switch_to_list_view else R.string.switch_to_grid_view),
