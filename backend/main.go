@@ -586,13 +586,6 @@ func handleLeaveParty(w http.ResponseWriter, r *http.Request) {
 	hubInst.Broadcast(p.Code, membersFrame, memberId)
 
 	jsonResponse(w, http.StatusOK, map[string]bool{"ok": true})
-	leaveFrame := map[string]interface{}{
-		"type":     protocol.FrameActivity,
-		"sender":   req.UserId, // Or member.DisplayName if available
-		"detail":   "left the party",
-		"serverMs": clock.NowMs(),
-	}
-	hubInst.Broadcast(p.Code, leaveFrame, "")
 
 }
 
