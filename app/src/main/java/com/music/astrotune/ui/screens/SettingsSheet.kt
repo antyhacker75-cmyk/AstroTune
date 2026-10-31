@@ -33,6 +33,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.foundation.ScrollState
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.Info
 import androidx.compose.material.icons.automirrored.rounded.Notes
 import androidx.compose.material.icons.automirrored.rounded.VolumeOff
 import androidx.compose.material.icons.rounded.Animation
@@ -174,6 +175,7 @@ import java.util.Locale
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SettingsScreen(
+    onShowNews: () -> Unit,
     /** The window's width, for the gates that depend on it. */
     windowWidth: Dp,
     signedIn: Boolean,
@@ -831,6 +833,16 @@ fun SettingsScreen(
                         )
                     },
                     onClick = { AppSettings.setLiquidGlass(!liquidGlass) },
+                )
+            }
+
+            val newsTitle = "What's New"
+            row(newsTitle, "news", "changelog", "updates", "release") {
+                SettingsRow(
+                    icon = Icons.Rounded.Info,
+                    title = newsTitle,
+                    subtitle = "See what changed in this version",
+                    onClick = onShowNews,
                 )
             }
             // Left out where the player won't honour it: a window too wide for

@@ -2864,6 +2864,7 @@ private fun BitChordApp(
                     } else if (key == "settings") {
                         SettingsScreen(
                             windowWidth = windowWidth,
+                            onShowNews = { showUpdateDialog = true },
                             signedIn = signedIn,
                             account = account,
                             onSignIn = {
