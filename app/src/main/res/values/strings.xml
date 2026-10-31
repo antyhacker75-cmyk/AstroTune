@@ -1204,4 +1204,6 @@
     <string name="wear_os_code_hint">Pairing code</string>
     <string name="wear_os_done">Done</string>
     <string name="signed_by">Signed by %1$s</string>
+    <string name="font_footer">Legacy brings back the heavier, tighter type the app used before it was matched to Apple Music.</string>
+    <string name="source_downloads_on">Downloads allowed</string>
 </resources>
