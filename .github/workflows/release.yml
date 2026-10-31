@@ -15,7 +15,6 @@ permissions:
   contents: write
 
 jobs:
-
   android:
     name: Android APK
     runs-on: ubuntu-latest
