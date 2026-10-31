@@ -1,9 +1,5 @@
 package com.music.astrotune.ui.screens
 
-import com.music.astrotune.ui.components.trackArtSize
-import androidx.compose.ui.layout.ContentScale
-import com.music.astrotune.data.model.toSong
-import com.music.astrotune.ui.components.SwipeToQueueBox
 import com.music.astrotune.ui.components.contextClick
 import androidx.compose.ui.unit.Dp
 import com.music.astrotune.sharedui.resources.*
@@ -16,8 +12,8 @@ import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import com.music.astrotune.ui.components.PillSegmentedControl
 import com.music.astrotune.ui.components.longPressMenuClickable
+import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -35,6 +31,7 @@ import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
@@ -58,7 +55,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.style.TextOverflow
@@ -81,12 +77,15 @@ import com.music.astrotune.data.model.EntityType
 import com.music.astrotune.ui.components.MessageState
 import com.music.astrotune.ui.components.PAGE_GUTTER
 import com.music.astrotune.ui.components.RowMoreButton
+import com.music.astrotune.ui.components.PlayingAccent
 import com.music.astrotune.ui.components.ROW_DIVIDER_INSET
 import com.music.astrotune.ui.components.SearchField
 import com.music.astrotune.ui.components.SongRow
 import com.music.astrotune.ui.components.SearchPlayingBars
 import com.music.astrotune.ui.components.thumbnailBorder
 import com.music.astrotune.ui.components.songListSkeleton
+import com.music.astrotune.ui.haptics.Haptic
+import com.music.astrotune.ui.haptics.rememberHaptics
 import java.util.Locale
 
 @Composable
@@ -147,13 +146,6 @@ fun SearchScreen(
     searchingAddons: Boolean = false,
     /** The Addons source's tracks for the submitted query; null until one is submitted. */
     addonResults: UiState<List<Song>>? = null,
-    /**
-     * Addon rows the connection's quality setting won't play. Shown dimmed,
-     * kept out of the queue a tap builds, and answered by [onBlockedSongClick]
-     * instead of being played.
-     */
-    isBlocked: (Song) -> Boolean = { false },
-    onBlockedSongClick: (Song) -> Unit = {},
     /** Words searched in the Addons tab before, newest first; shown while the field is empty. */
     addonHistory: List<String> = emptyList(),
     onAddonHistoryClick: (String) -> Unit = {},
@@ -246,15 +238,8 @@ fun SearchScreen(
             // they stay up for an empty or failed search too, or picking a filter
             // that finds nothing would take away the control needed to leave it.
             // They are YouTube's categories, so the Library source has none.
-            // The same selector as the sources above it and a folder's tabs, so
-            // the app has one look for "pick one of these".
             if (results != null && !suggesting && !searchingLibrary && !searchingAddons) {
-                PillSegmentedControl(
-                    options = SearchFilter.entries.map { it.label },
-                    selectedIndex = filter.ordinal,
-                    onSelect = { onFilterChange(SearchFilter.entries[it]) },
-                    modifier = Modifier.padding(start = PAGE_GUTTER, end = PAGE_GUTTER, bottom = 6.dp),
-                )
+                SearchFilterTabs(filter = filter, onFilterChange = onFilterChange)
             }
         }
 
@@ -277,8 +262,6 @@ fun SearchScreen(
                     onSongClick = onLibrarySongClick,
                     onSongLongPress = onSongLongPress,
                     onSongSwipe = onSongSwipe,
-                    isBlocked = if (searchingAddons) isBlocked else { _ -> false },
-                    onBlockedSongClick = onBlockedSongClick,
                 )
                 suggesting -> {
                     searchSuggestions(
@@ -312,10 +295,8 @@ fun SearchScreen(
                         currentSong = currentSong,
                         isPlaying = isPlaying,
                         onClick = onHistoryClick,
-                        onSongLongPress = onSongLongPress,
                         onRemove = onHistoryRemove,
                         onClear = onHistoryClear,
-                        onSongSwipe = onSongSwipe,
                     )
                 }
                 results is UiState.Loading -> songListSkeleton(circular = filter == SearchFilter.ARTISTS)
@@ -332,17 +313,12 @@ fun SearchScreen(
                     val topResult = results.data.filterIsInstance<SearchResult.TopTrack>().firstOrNull()
                     if (filter == SearchFilter.ALL && topResult != null) {
                         item(key = "search:top-result:${topResult.song.videoId}") {
-                            SwipeToQueueBox(
-                                onSwipeToQueue = { onSongSwipe(topResult.song) },
-                                modifier = Modifier.fillMaxWidth(),
-                            ) {
-                                TopResultCard(
-                                    song = topResult.song,
-                                    onPlay = { onTopResultPlay(topResult.song) },
-                                    onPlaylist = { onTopResultPlaylist(topResult.song) },
-                                    onLongPress = { onSongLongPress(topResult.song) },
-                                )
-                            }
+                            TopResultCard(
+                                song = topResult.song,
+                                onPlay = { onTopResultPlay(topResult.song) },
+                                onPlaylist = { onTopResultPlaylist(topResult.song) },
+                                onLongPress = { onSongLongPress(topResult.song) },
+                            )
                         }
                     }
                     searchSections(results.data, filter).forEach { section ->
@@ -383,6 +359,7 @@ fun SearchScreen(
                                     isCurrent = isCurrentRow(row.song),
                                     isPlaying = isPlaying && isCurrentRow(row.song),
                                     searchPlayingStyle = true,
+                                    activeTint = PlayingAccent,
                                 )
                                 is SearchResult.Browse -> BrowseRow(
                                     item = row.item,
@@ -444,8 +421,6 @@ private fun LazyListScope.librarySearchResults(
     onSongClick: (List<Song>, Int) -> Unit,
     onSongLongPress: (Song) -> Unit,
     onSongSwipe: (Song) -> Unit,
-    isBlocked: (Song) -> Boolean,
-    onBlockedSongClick: (Song) -> Unit,
 ) {
     when (results) {
         null -> if (addons && query.isEmpty() && addonHistory.isNotEmpty()) {
@@ -471,27 +446,15 @@ private fun LazyListScope.librarySearchResults(
             val tracks = results.data
             val isCurrentRow = playingRowMatcher(tracks, currentSong)
             itemsIndexed(tracks, key = { index, song -> "${if (addons) "addon" else "library"}_${song.videoId}_$index" }) { index, song ->
-                val blocked = isBlocked(song)
                 SongRow(
                     song = song,
-                    // Dimmed rather than hidden, so the listener can see the
-                    // addon has the song and tap to learn why it won't play.
-                    modifier = if (blocked) Modifier.alpha(BLOCKED_ROW_ALPHA) else Modifier,
-                    onClick = {
-                        if (blocked) {
-                            onBlockedSongClick(song)
-                        } else {
-                            // The queue skips blocked rows, or playing through
-                            // it would stop at the first one with an error.
-                            val playable = tracks.filterNot(isBlocked)
-                            onSongClick(playable, playable.indexOfFirst { it === song })
-                        }
-                    },
+                    onClick = { onSongClick(tracks, index) },
                     onLongPress = { onSongLongPress(song) },
-                    onSwipeToQueue = { if (blocked) onBlockedSongClick(song) else onSongSwipe(song) },
+                    onSwipeToQueue = { onSongSwipe(song) },
                     isCurrent = isCurrentRow(song),
                     isPlaying = isPlaying && isCurrentRow(song),
                     searchPlayingStyle = true,
+                    activeTint = PlayingAccent,
                     showSourceQuality = addons,
                 )
                 if (index < tracks.lastIndex) {
@@ -514,12 +477,10 @@ private fun TopResultCard(
     onPlay: () -> Unit,
     onPlaylist: () -> Unit,
     onLongPress: () -> Unit,
-    modifier: Modifier = Modifier,
 ) {
     Column(
-        modifier = modifier
+        modifier = Modifier
             .fillMaxWidth()
-            .background(MaterialTheme.colorScheme.background)
             .padding(start = PAGE_GUTTER, end = PAGE_GUTTER, top = 18.dp, bottom = 8.dp)
             .longPressMenuClickable(onClick = onPlay, onLongClick = onLongPress)
             .contextClick(onLongPress),
@@ -534,8 +495,7 @@ private fun TopResultCard(
             AsyncImage(
                 model = song.thumbnailUrl?.artworkAt(ROW_ART_PX),
                 contentDescription = null,
-                contentScale = ContentScale.Crop,
-                modifier = Modifier.trackArtSize(72.dp, song.isVideo).clip(RoundedCornerShape(10.dp)),
+                modifier = Modifier.size(72.dp).clip(RoundedCornerShape(10.dp)),
             )
             Spacer(Modifier.width(14.dp))
             Column(Modifier.weight(1f)) {
@@ -751,22 +711,17 @@ private fun TypeaheadSongRow(
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .longPressMenuClickable(
-                onClick = onClick,
-                onLongClick = onLongPress,
-                liftPadding = PaddingValues(horizontal = PAGE_GUTTER),
-            )
+            .longPressMenuClickable(onClick = onClick, onLongClick = onLongPress)
             .contextClick(onLongPress)
             .padding(horizontal = PAGE_GUTTER, vertical = 6.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {
-        Box(Modifier.trackArtSize(52.dp, song.isVideo)) {
+        Box(Modifier.size(52.dp)) {
             AsyncImage(
                 model = song.artworkAt(ROW_ART_PX),
                 contentDescription = null,
-                contentScale = ContentScale.Crop,
                 modifier = Modifier
-                    .matchParentSize()
+                    .size(52.dp)
                     .clip(RoundedCornerShape(8.dp))
                     .thumbnailBorder(RoundedCornerShape(8.dp))
                     .background(MaterialTheme.colorScheme.surfaceVariant),
@@ -778,7 +733,7 @@ private fun TypeaheadSongRow(
             Text(
                 text = song.title,
                 style = MaterialTheme.typography.titleMedium,
-                color = MaterialTheme.colorScheme.onBackground,
+                color = if (isCurrent) PlayingAccent else MaterialTheme.colorScheme.onBackground,
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis,
             )
@@ -804,10 +759,8 @@ private fun LazyListScope.recentSearches(
     currentSong: Song?,
     isPlaying: Boolean,
     onClick: (SearchHistoryEntity) -> Unit,
-    onSongLongPress: (Song) -> Unit,
     onRemove: (String) -> Unit,
     onClear: () -> Unit,
-    onSongSwipe: (Song) -> Unit,
 ) {
     item(key = "recent:header") {
         Row(
@@ -834,18 +787,12 @@ private fun LazyListScope.recentSearches(
         }
     }
     items(history, key = { "recent:${it.id}" }) { entity ->
-        // A recent track gets the same menu and swipe as a result row, so it can
-        // be queued without interrupting what's playing. The ids an old build
-        // saved as raw queries ("q:…") have no track behind them.
-        val song = entity.toSong()
         RecentSearchEntityRow(
             entity = entity,
             isCurrent = entity.entityType == EntityType.TRACK && entity.id == currentSong?.videoId,
             isPlaying = isPlaying,
             onClick = { onClick(entity) },
-            onLongPress = song?.let { { onSongLongPress(it) } },
             onRemove = { onRemove(entity.id) },
-            onSwipeToQueue = song?.let { { onSongSwipe(it) } },
         )
     }
 }
@@ -924,83 +871,68 @@ private fun LazyListScope.recentAddonSearches(
 
 /**
  * Spotify-style entity row: square thumbnail, bold title, subtitle with type,
- * and a removal button. Tapping navigates to the entity or plays it directly;
- * holding a track opens its menu.
+ * and a removal button. Tapping navigates to the entity or plays it directly.
  */
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 private fun RecentSearchEntityRow(
     entity: SearchHistoryEntity,
     isCurrent: Boolean,
     isPlaying: Boolean,
     onClick: () -> Unit,
-    onLongPress: (() -> Unit)?,
     onRemove: () -> Unit,
-    onSwipeToQueue: (() -> Unit)? = null,
 ) {
-    SwipeToQueueBox(
-        onSwipeToQueue = onSwipeToQueue,
-        modifier = Modifier.fillMaxWidth(),
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .clickable(onClick = onClick)
+            .padding(start = PAGE_GUTTER, end = 8.dp, top = 6.dp, bottom = 6.dp),
+        verticalAlignment = Alignment.CenterVertically,
     ) {
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .background(MaterialTheme.colorScheme.background)
-                .longPressMenuClickable(
-                    onClick = onClick,
-                    onLongClick = onLongPress,
-                    liftPadding = PaddingValues(start = PAGE_GUTTER, end = 8.dp),
-                )
-                .contextClick(onLongPress)
-                .padding(start = PAGE_GUTTER, end = 8.dp, top = 6.dp, bottom = 6.dp),
-            verticalAlignment = Alignment.CenterVertically,
-        ) {
-            Box(Modifier.size(52.dp)) {
-                AsyncImage(
-                    model = entity.artworkUrl,
-                    contentDescription = null,
-                    modifier = Modifier
-                        .size(52.dp)
-                        .clip(RoundedCornerShape(8.dp))
-                        .thumbnailBorder(RoundedCornerShape(8.dp))
-                        .background(MaterialTheme.colorScheme.surfaceVariant),
-                )
-                if (isCurrent && isPlaying) {
-                    SearchPlayingBars(Modifier.align(Alignment.Center))
-                }
-            }
-            Spacer(Modifier.width(14.dp))
-            Column(Modifier.weight(1f)) {
-                Text(
-                    text = entity.title,
-                    style = MaterialTheme.typography.titleMedium,
-                    color = MaterialTheme.colorScheme.onBackground,
-                    maxLines = 1,
-                    overflow = TextOverflow.Ellipsis,
-                )
-                Spacer(Modifier.height(2.dp))
-                Text(
-                    text = entity.subtitle.ifBlank { entity.entityType.name.lowercase(Locale.ROOT).replaceFirstChar { it.uppercase(Locale.ROOT) } },
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-                    maxLines = 1,
-                    overflow = TextOverflow.Ellipsis,
-                )
-            }
-            Box(
+        Box(Modifier.size(52.dp)) {
+            AsyncImage(
+                model = entity.artworkUrl,
+                contentDescription = null,
                 modifier = Modifier
-                    .size(40.dp)
-                    .clip(CircleShape)
-                    .clickable(onClick = onRemove),
-                contentAlignment = Alignment.Center,
-            ) {
-                Icon(
-                    Icons.Rounded.Close,
-                    contentDescription = stringResource(Res.string.recent_search_remove, entity.title),
-                    tint = MaterialTheme.colorScheme.onSurfaceVariant,
-                    modifier = Modifier.size(18.dp),
-                )
+                    .size(52.dp)
+                    .clip(RoundedCornerShape(8.dp))
+                    .thumbnailBorder(RoundedCornerShape(8.dp))
+                    .background(MaterialTheme.colorScheme.surfaceVariant),
+            )
+            if (isCurrent && isPlaying) {
+                SearchPlayingBars(Modifier.align(Alignment.Center))
             }
+        }
+        Spacer(Modifier.width(14.dp))
+        Column(Modifier.weight(1f)) {
+            Text(
+                text = entity.title,
+                style = MaterialTheme.typography.titleMedium,
+                color = if (isCurrent) PlayingAccent else MaterialTheme.colorScheme.onBackground,
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis,
+            )
+            Spacer(Modifier.height(2.dp))
+            Text(
+                text = entity.subtitle.ifBlank { entity.entityType.name.lowercase(Locale.ROOT).replaceFirstChar { it.uppercase(Locale.ROOT) } },
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis,
+            )
+        }
+        Box(
+            modifier = Modifier
+                .size(40.dp)
+                .clip(CircleShape)
+                .clickable(onClick = onRemove),
+            contentAlignment = Alignment.Center,
+        ) {
+            Icon(
+                Icons.Rounded.Close,
+                contentDescription = stringResource(Res.string.recent_search_remove, entity.title),
+                tint = MaterialTheme.colorScheme.onSurfaceVariant,
+                modifier = Modifier.size(18.dp),
+            )
         }
     }
 }
@@ -1011,11 +943,7 @@ private fun BrowseRow(item: BrowseItem, onClick: () -> Unit, onLongPress: (() ->
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .longPressMenuClickable(
-                onClick = onClick,
-                onLongClick = onLongPress,
-                liftPadding = PaddingValues(horizontal = PAGE_GUTTER),
-            )
+            .longPressMenuClickable(onClick = onClick, onLongClick = onLongPress)
             .contextClick(onLongPress)
             .padding(horizontal = PAGE_GUTTER, vertical = 8.dp),
         verticalAlignment = Alignment.CenterVertically,
@@ -1055,5 +983,51 @@ private fun BrowseRow(item: BrowseItem, onClick: () -> Unit, onLongPress: (() ->
     }
 }
 
-/** How far an addon row the quality setting won't play is dimmed; Material's disabled level. */
-private const val BLOCKED_ROW_ALPHA = 0.38f
+/**
+ * Filter pills rather than a tab row: squarish rounded rectangles, the selected
+ * one inverted. They scroll horizontally so a long label set never squeezes the
+ * text, and the gutter padding sits inside the scroll so it scrolls with them.
+ */
+@Composable
+private fun SearchFilterTabs(filter: SearchFilter, onFilterChange: (SearchFilter) -> Unit) {
+    val haptics = rememberHaptics()
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .horizontalScroll(rememberScrollState())
+            .padding(horizontal = PAGE_GUTTER, vertical = 6.dp),
+        horizontalArrangement = Arrangement.spacedBy(8.dp),
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        SearchFilter.entries.forEach { entry ->
+            val selected = entry == filter
+            Box(
+                modifier = Modifier
+                    .clip(FILTER_PILL_SHAPE)
+                    .background(
+                        if (selected) MaterialTheme.colorScheme.onBackground
+                        else MaterialTheme.colorScheme.surfaceVariant,
+                    )
+                    // Only the pill that isn't already selected has anything to
+                    // report — re-tapping the current filter changes nothing, so
+                    // buzzing for it would be feedback for a no-op.
+                    .clickable {
+                        if (!selected) haptics.play(Haptic.Select)
+                        onFilterChange(entry)
+                    }
+                    .padding(horizontal = 12.dp, vertical = 6.dp),
+            ) {
+                Text(
+                    text = entry.label,
+                    style = MaterialTheme.typography.labelLarge,
+                    color = if (selected) MaterialTheme.colorScheme.background
+                    else MaterialTheme.colorScheme.onBackground,
+                    maxLines = 1,
+                )
+            }
+        }
+    }
+}
+
+/** Rounded, but well short of a capsule — the corner reads as a cut, not a curve. */
+private val FILTER_PILL_SHAPE = RoundedCornerShape(12.dp)

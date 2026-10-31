@@ -6,11 +6,11 @@ import type { Capability } from '@bitchord/shared/bridge';
 import { PageHeader } from '@/components/PageHeader';
 import { config } from '@/config';
 import { useExtension, type ExtensionStatus } from '@/extension/useExtension';
-import { downloadUrl, useExtensionUpdate, usePublishedExtension, type PublishedExtension } from '@/extension/useExtensionUpdate';
+import { useExtensionUpdate } from '@/extension/useExtensionUpdate';
 import { useYtAuth, type YtAuthStatus } from '@/extension/useYtAuth';
+import styles from './ExtensionPage.module.css';
 import { PrefetchLink } from '@/components/PrefetchLink';
 import { DiscordIntegration, SpotifyIntegration } from './IntegrationSettings';
-import { settingsUi } from './settingsStyles';
 
 type Browser = 'chrome' | 'firefox';
 
@@ -24,52 +24,44 @@ interface Download {
   updateSteps: string[];
 }
 
-/**
- * The two builds, as published (extension.json): the zip and the folder in it
- * carry the version, "bitchord-extension-chrome (0.4.3)". Before that file
- * has loaded, the configured URLs and the unversioned names stand in.
- */
-function downloadsFor(published: PublishedExtension | null): Download[] {
-  const folder = (browser: Browser) => `bitchord-extension-${browser}${published ? ` (${published.version})` : ''}`;
-  return [
-    {
-      browser: 'chrome',
-      title: 'Download for Chrome',
-      detail: 'Chrome, Edge, Brave and other Chromium browsers',
-      href: published ? downloadUrl(published.files.chrome) : config.extensionChromeUrl,
-      Icon: FaChrome,
-      steps: [
-        `Extract the zip somewhere you’ll keep it. It holds one folder, ${folder('chrome')}.`,
-        'Open chrome://extensions and turn on Developer mode.',
-        'Choose Load unpacked and select that folder.',
-        'Come back to this page: the status above turns to Installed.',
-      ],
-      updateSteps: [
-        `Extract the new zip. It holds ${folder('chrome')}.`,
-        'In chrome://extensions, choose Load unpacked and select that folder. It has the same ID, so it takes the old one’s place and keeps your settings.',
-        'Delete the old folder, then come back to this page: the version above updates on its own.',
-      ],
-    },
-    {
-      browser: 'firefox',
-      title: 'Download for Firefox',
-      detail: 'Firefox 128 or newer',
-      href: published ? downloadUrl(published.files.firefox) : config.extensionFirefoxUrl,
-      Icon: FaFirefoxBrowser,
-      steps: [
-        `Extract the zip. It holds one folder, ${folder('firefox')}.`,
-        'Open about:debugging#/runtime/this-firefox and choose Load Temporary Add-on.',
-        'Select manifest.json inside that folder.',
-        'Firefox removes temporary add-ons when it quits; a signed version is coming.',
-      ],
-      updateSteps: [
-        `Extract the new zip. It holds ${folder('firefox')}.`,
-        'In about:debugging, choose Load Temporary Add-on and select manifest.json in the new folder.',
-        'Come back to this page: the version above updates on its own.',
-      ],
-    },
-  ];
-}
+const DOWNLOADS: Download[] = [
+  {
+    browser: 'chrome',
+    title: 'Download for Chrome',
+    detail: 'Chrome, Edge, Brave and other Chromium browsers',
+    href: config.extensionChromeUrl,
+    Icon: FaChrome,
+    steps: [
+      'Extract the zip somewhere you’ll keep it. It holds one folder, bitchord-extension-chrome.',
+      'Open chrome://extensions and turn on Developer mode.',
+      'Choose Load unpacked and select that folder.',
+      'Come back to this page: the status above turns to Installed.',
+    ],
+    updateSteps: [
+      'Extract the new zip over the old one, replacing the bitchord-extension-chrome folder.',
+      'In chrome://extensions, press the reload arrow on BitChord’s card.',
+      'Come back to this page: the version above updates on its own.',
+    ],
+  },
+  {
+    browser: 'firefox',
+    title: 'Download for Firefox',
+    detail: 'Firefox 128 or newer',
+    href: config.extensionFirefoxUrl,
+    Icon: FaFirefoxBrowser,
+    steps: [
+      'Extract the zip. It holds one folder, bitchord-extension-firefox.',
+      'Open about:debugging#/runtime/this-firefox and choose Load Temporary Add-on.',
+      'Select manifest.json inside that folder.',
+      'Firefox removes temporary add-ons when it quits; a signed version is coming.',
+    ],
+    updateSteps: [
+      'Extract the new zip over the old one, replacing the bitchord-extension-firefox folder.',
+      'In about:debugging, press Reload on BitChord’s entry.',
+      'Come back to this page: the version above updates on its own.',
+    ],
+  },
+];
 
 /** The browser this page is open in, to put its download first. */
 const currentBrowser: Browser = /firefox/i.test(navigator.userAgent) ? 'firefox' : 'chrome';
@@ -109,7 +101,6 @@ function integrationStatus(status: ExtensionStatus, integration: Integration, au
 export default function ExtensionPage() {
   const status = useExtension();
   const update = useExtensionUpdate();
-  const DOWNLOADS = downloadsFor(usePublishedExtension());
   const auth = useYtAuth();
   const [chosen, setChosen] = useState<Browser | null>(null);
   const [updating, setUpdating] = useState(false);
@@ -120,36 +111,36 @@ export default function ExtensionPage() {
   const steps = DOWNLOADS.find((d) => d.browser === chosen)?.steps;
 
   return (
-    <div className={settingsUi.centered}>
+    <div className={styles.centered}>
       <PageHeader title="BitChord Extension" />
-      <div className={settingsUi.body}>
-        <section className={settingsUi.group} aria-live="polite">
-          <div className={settingsUi.row}>
+      <div className={styles.body}>
+        <section className={styles.group} aria-live="polite">
+          <div className={styles.row}>
             <span>Status</span>
-            <span className={settingsUi.value}>
+            <span className={styles.value}>
               {status.state === 'checking' && 'Checking…'}
               {status.state === 'missing' && 'Not installed'}
               {status.state === 'present' && (
                 <>
-                  <span className={settingsUi.dot} aria-hidden="true" />
+                  <span className={styles.dot} aria-hidden="true" />
                   Installed · v{status.extension.info.version}
                 </>
               )}
             </span>
           </div>
           {update.state !== 'unknown' && (
-            <div className={settingsUi.row}>
+            <div className={styles.row}>
               <span>Latest</span>
-              <span className={settingsUi.value}>
+              <span className={styles.value}>
                 v{update.latest.version}
                 {update.state === 'current' && ' · Up to date'}
               </span>
             </div>
           )}
           {status.state === 'present' && (
-            <div className={settingsUi.row}>
+            <div className={styles.row}>
               <span>Connection</span>
-              <span className={settingsUi.value}>
+              <span className={styles.value}>
                 {status.extension.bridge.transport === 'external' ? 'Direct' : 'Page relay'} ·{' '}
                 {status.extension.info.browser === 'firefox' ? 'Firefox' : 'Chromium'}
               </span>
@@ -159,23 +150,23 @@ export default function ExtensionPage() {
         {update.state === 'available' && (
           <>
             <a
-              className={`${settingsUi.group} ${settingsUi.download} mt-3`}
+              className={`${styles.group} ${styles.download} ${styles.update}`}
               href={forUpdate.href}
               download
               onClick={() => setUpdating(true)}
             >
-              <span className={settingsUi.updateDot} aria-hidden="true" />
-              <span className={settingsUi.downloadText}>
-                <span className={settingsUi.downloadTitle}>Update to v{update.latest.version}</span>
-                <span className={settingsUi.downloadDetail}>
+              <span className={styles.updateDot} aria-hidden="true" />
+              <span className={styles.downloadText}>
+                <span className={styles.downloadTitle}>Update to v{update.latest.version}</span>
+                <span className={styles.downloadDetail}>
                   You have v{update.installed}. Download the new {forUpdate.browser === 'firefox' ? 'Firefox' : 'Chrome'}{' '}
                   build, then reload the extension.
                 </span>
               </span>
-              <ChevronRight size={16} strokeWidth={2.4} className={settingsUi.chevron} />
+              <ChevronRight size={16} strokeWidth={2.4} className={styles.chevron} />
             </a>
             {updating && (
-              <ol className={settingsUi.steps}>
+              <ol className={styles.steps}>
                 {forUpdate.updateSteps.map((step) => (
                   <li key={step}>{step}</li>
                 ))}
@@ -183,70 +174,70 @@ export default function ExtensionPage() {
             )}
           </>
         )}
-        <p className={settingsUi.footer}>
+        <p className={styles.footer}>
           The extension does the networking and sign-in work a web page isn’t allowed to do. Addons and most lyric
           providers work without it.
         </p>
 
-        <h2 className={settingsUi.sectionHeader}>Get the extension</h2>
-        <section className={settingsUi.group}>
+        <h2 className={styles.sectionHeader}>Get the extension</h2>
+        <section className={styles.group}>
           {downloads.map(({ browser, title, detail, href, Icon }) => (
             <a
               key={browser}
-              className={settingsUi.download}
+              className={styles.download}
               href={href}
               download
               onClick={() => setChosen(browser)}
             >
-              <Icon size={28} className="text-primary" />
-              <span className={settingsUi.downloadText}>
-                <span className={settingsUi.downloadTitle}>{title}</span>
-                <span className={settingsUi.downloadDetail}>
+              <Icon size={28} className={styles.browserIcon} />
+              <span className={styles.downloadText}>
+                <span className={styles.downloadTitle}>{title}</span>
+                <span className={styles.downloadDetail}>
                   {detail}
                   {browser === currentBrowser && ' · This browser'}
                 </span>
               </span>
-              <ChevronRight size={16} strokeWidth={2.4} className={settingsUi.chevron} />
+              <ChevronRight size={16} strokeWidth={2.4} className={styles.chevron} />
             </a>
           ))}
         </section>
         {steps ? (
-          <ol className={settingsUi.steps}>
+          <ol className={styles.steps}>
             {steps.map((step) => (
               <li key={step}>{step}</li>
             ))}
           </ol>
         ) : (
-          <p className={settingsUi.footer}>Pick your browser to download the extension and see how to install it.</p>
+          <p className={styles.footer}>Pick your browser to download the extension and see how to install it.</p>
         )}
 
-        <h2 className={settingsUi.sectionHeader}>Integrations</h2>
-        <section className={settingsUi.group}>
+        <h2 className={styles.sectionHeader}>Integrations</h2>
+        <section className={styles.group}>
           {INTEGRATIONS.map((integration) => (
-            <div key={integration.name} className={settingsUi.integration}>
-              <span className={settingsUi.integrationIcon} style={{ backgroundColor: integration.color }}>
+            <div key={integration.name} className={styles.integration}>
+              <span className={styles.integrationIcon} style={{ backgroundColor: integration.color }}>
                 <integration.Icon size={15} />
               </span>
-              <span className={settingsUi.integrationName}>{integration.name}</span>
+              <span className={styles.integrationName}>{integration.name}</span>
               {status.state === 'present' && integration.capability === 'spotify' ? (
                 <SpotifyIntegration />
               ) : status.state === 'present' && integration.capability === 'discord' ? (
                 <DiscordIntegration />
               ) : (
-                <span className={settingsUi.value}>{integrationStatus(status, integration, auth)}</span>
+                <span className={styles.value}>{integrationStatus(status, integration, auth)}</span>
               )}
             </div>
           ))}
         </section>
         {auth.state === 'ready' && auth.auth.problem && (
-          <p className={settingsUi.footer}>YouTube Music: {auth.auth.problem}.</p>
+          <p className={styles.footer}>YouTube Music: {auth.auth.problem}.</p>
         )}
-        <p className={settingsUi.footer}>
+        <p className={styles.footer}>
           Sign-ins stay inside the extension: this page only ever sees results, never your cookies or tokens.
         </p>
-        <p className={settingsUi.footer}>
+        <p className={styles.footer}>
           Spotify Canvas, Discord presence and Listen Together are in{' '}
-          <PrefetchLink to="/settings" className={settingsUi.inlineLink}>
+          <PrefetchLink to="/settings" className={styles.inlineLink}>
             Settings
           </PrefetchLink>
           .

@@ -1,5 +1,6 @@
 import { useState, type CSSProperties } from 'react';
 import { sizedArtwork } from '@/lib/artwork';
+import styles from './Artwork.module.css';
 
 interface ArtworkProps {
   src: string | null;
@@ -12,8 +13,6 @@ interface ArtworkProps {
   /** Eager for above-the-fold heroes; lazy everywhere else. */
   eager?: boolean;
 }
-
-const frame = 'relative isolate w-full overflow-hidden bg-joe artwork-stroke';
 
 /**
  * Fixed-aspect artwork: a neutral placeholder until the image decodes, then a
@@ -29,13 +28,13 @@ export function Artwork({ src, displayWidth, aspect = 1, radius, className, eage
   const url = attempt >= 2 || sized === src ? src : sized;
   return (
     <div
-      className={className ? `${frame} ${className}` : frame}
+      className={className ? `${styles.frame} ${className}` : styles.frame}
       style={{ aspectRatio: String(aspect), borderRadius: radius }}
     >
       {url && (
         <img
           key={`${url}#${attempt}`}
-          className="absolute inset-0 size-full object-cover opacity-0 transition-opacity duration-250 ease-in data-loaded:opacity-100"
+          className={styles.image}
           data-loaded={loaded || undefined}
           src={url}
           alt=""

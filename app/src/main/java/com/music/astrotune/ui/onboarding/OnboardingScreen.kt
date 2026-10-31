@@ -74,7 +74,7 @@ import com.music.astrotune.sharedui.resources.Res
 import com.music.astrotune.sharedui.resources.ic_google_g
 import com.music.astrotune.sharedui.resources.ic_logo
 import org.jetbrains.compose.resources.painterResource
-import com.music.astrotune.ui.icons.AstroTuneIcons
+import com.music.astrotune.ui.icons.BitChordIcons
 import com.music.astrotune.ui.player.MeshGradientBackground
 import com.music.astrotune.ui.player.MESH_CYCLE_MILLIS
 import com.music.astrotune.ui.player.MeshPalette
@@ -423,7 +423,7 @@ private fun BackButton(onClick: () -> Unit) {
         contentAlignment = Alignment.Center,
     ) {
         Icon(
-            imageVector = AstroTuneIcons.ChevronRight,
+            imageVector = BitChordIcons.ChevronRight,
             contentDescription = stringResource(R.string.onboarding_back),
             tint = Color.White,
             modifier = Modifier

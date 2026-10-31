@@ -2,7 +2,8 @@ import { useMutation } from '@tanstack/react-query';
 import { ListPlus } from 'lucide-react';
 import { useState } from 'react';
 import { useNavigate, useParams } from 'react-router';
-import { DetailHeader, detailButton } from '@/components/music/DetailHeader';
+import { DetailHeader } from '@/components/music/DetailHeader';
+import header from '@/components/music/DetailHeader.module.css';
 import { playList, shuffleList } from '@/components/music/play';
 import { EmptyState, LoadError, NeedsExtension } from '@/components/music/States';
 import { TrackList } from '@/components/music/TrackList';
@@ -15,7 +16,7 @@ import { useSpotifySignedIn } from '@/extension/useSpotifyAuth';
 import { useArtworkColor } from '@/lib/artworkColor';
 import { usePageTint } from '@/lib/usePageTint';
 import { PlaylistSkeleton } from '@/skeletons/PageSkeletons';
-import { detailFooter } from './pageStyles';
+import styles from './DetailPage.module.css';
 
 /**
  * A Spotify playlist as an ordinary playlist page (MainViewModel.openSpotifyPage):
@@ -68,7 +69,7 @@ export default function SpotifyPlaylistPage() {
         extra={<ImportButton title={info.data.name} videoIds={playable.map((t) => t.videoId)} ready={rows.matching === 0} />}
       />
       <TrackList tracks={rows.rows} variant="playlist" source={context.source} />
-      <footer className={detailFooter}>
+      <footer className={styles.footer}>
         <p>From Spotify. Songs are matched to YouTube Music by title, artist and length.</p>
       </footer>
     </>
@@ -96,7 +97,7 @@ function ImportButton({ title, videoIds, ready }: { title: string; videoIds: str
           : 'Import to YouTube Music';
   return (
     <button
-      className={confirming ? detailButton.pill : detailButton.circle}
+      className={confirming ? header.pill : header.circle}
       aria-label={label}
       title={label}
       disabled={!ready || !videoIds.length || create.isPending}

@@ -5,7 +5,7 @@ import android.os.SystemClock
 import android.content.SharedPreferences
 import android.net.ConnectivityManager
 import android.net.Network
-import com.music.astrotune.AstroTuneApplication
+import com.music.astrotune.BitChordApplication
 import com.music.astrotune.BuildConfig
 import com.music.astrotune.data.DebugLog as Log
 import com.music.astrotune.data.settings.AppSettings
@@ -16,6 +16,7 @@ import io.ktor.client.plugins.HttpTimeout
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.client.plugins.timeout
 import io.ktor.client.plugins.websocket.DefaultClientWebSocketSession
+import io.ktor.websocket.close
 import io.ktor.client.plugins.websocket.WebSockets
 import io.ktor.client.plugins.websocket.webSocket
 import io.ktor.client.request.get
@@ -252,7 +253,6 @@ object ListenTogether {
 
     private val _messages = MutableStateFlow<List<ChatMessage>>(emptyList())
     val messages: StateFlow<List<ChatMessage>> = _messages.asStateFlow()
-
     private val _state = MutableStateFlow(State())
     val state: StateFlow<State> = _state.asStateFlow()
 
@@ -269,7 +269,7 @@ object ListenTogether {
      * will ever show back, because it is the only one the user typed.
      */
     fun parseAndNormalizeServerUrl(raw: String): ServerUrlValidationResult {
-        val trimmed = raw.trim()
+        val trimmed = raw.trim().replace("/api/parties", "").replace("/api/presence", "").trimEnd('/')
         if (trimmed.isEmpty()) return ServerUrlValidationResult.Valid("")
         if (trimmed.any { it.isWhitespace() }) return ServerUrlValidationResult.Invalid(ServerUrlError.Whitespace)
 
@@ -1199,8 +1199,16 @@ object ListenTogether {
 
     // ------------------------------------------------------------- socket --
 
+    fun reconnect() {
+        if (_state.value.connection == Connection.LIVE) return
+        connect()
+    }
+
     private fun connect() {
         socketJob?.cancel()
+        scope.launch {
+            try { session?.close() } catch (e: Exception) {}
+        }
         socketJob = scope.launch { runSocketLoop() }
     }
 
@@ -1235,10 +1243,11 @@ object ListenTogether {
                     }
                 }
             } catch (cancelled: CancellationException) {
-                throw cancelled
+                Log.w(TAG, "party socket cancelled by system while scope is active, restarting...")
             } catch (failure: Exception) {
                 Log.w(TAG, "party socket dropped: ${redact(failure.message)}")
             } finally {
+                try { session?.close() } catch (e: Exception) { /* ignore */ }
                 session = null
             }
             if (!currentScopeActive()) return
@@ -1419,6 +1428,12 @@ object ListenTogether {
                 val by = frame["by"]?.jsonPrimitive?.content?.takeIf { it.isNotBlank() } ?: return
                 val atMs = frame["atMs"]?.jsonPrimitive?.content?.toLongOrNull() ?: received
                 val detail = frame["detail"]?.jsonPrimitive?.content.orEmpty()
+                
+                if (detail.isNotEmpty()) {
+                    val text = if (detail.startsWith(by)) detail else "$by $detail"
+                    _messages.update { it + ChatMessage("SYSTEM", text, System.currentTimeMillis()) }
+                }
+                
                 recordActivity(PartyActivity(action, by, atMs, detail))
             }
 
@@ -1476,7 +1491,7 @@ object ListenTogether {
      * real account identifiers would be holding something it has no use for.
      */
     private fun identity(nickname: String = nickname()): Identity? {
-        val store = AstroTuneApplication.authStore
+        val store = BitChordApplication.authStore
         if (!store.isSignedIn) return null
         val account = store.activeSession ?: return null
         val profile = account.profiles.firstOrNull { it.profileId == account.activeProfileId }
@@ -1736,8 +1751,10 @@ object ListenTogether {
         val msg = mapOf("type" to "chat", "text" to text)
         scope.launch {
             try {
+                // Use the correct socket variable (usually 'session' or 'ws')
                 session?.send(Frame.Text(kotlinx.serialization.json.Json.encodeToString(msg)))
             } catch (e: Exception) { e.printStackTrace() }
         }
     }
+
 }

@@ -17,6 +17,7 @@ import com.music.astrotune.data.model.Song
 import com.music.astrotune.data.model.UiState
 import com.music.astrotune.data.model.playingRowMatcher
 import com.music.astrotune.ui.components.MessageState
+import com.music.astrotune.ui.components.PlayingAccent
 import com.music.astrotune.ui.components.ROW_DIVIDER_INSET
 import com.music.astrotune.ui.components.SongRow
 import com.music.astrotune.ui.components.songListSkeleton
@@ -76,6 +77,7 @@ fun HistoryScreen(
                         isCurrent = isCurrentRow(song),
                         isPlaying = isCurrentRow(song) && isPlaying,
                         searchPlayingStyle = true,
+                        activeTint = PlayingAccent,
                     )
                     if (index < songs.lastIndex) {
                         HorizontalDivider(

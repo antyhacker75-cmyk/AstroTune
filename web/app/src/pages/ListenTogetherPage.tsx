@@ -21,14 +21,8 @@ import {
 } from '@/party/listenTogether';
 import { usePlayer } from '@/state/player';
 import { Toggle } from './IntegrationSettings';
-import { settingsUi } from './settingsStyles';
-
-const lede = 'mx-4 mb-4 type-body-tall text-secondary';
-const error = 'mx-4 mt-3 type-callout text-red';
-const primary = 'flex-none rounded-pill bg-key-bg px-4 py-1.5 type-body-emphasized text-white disabled:opacity-45';
-// The code, large, as the phone shows it.
-const invite = 'flex flex-col items-center gap-2.5 rounded-[10px] bg-quinary px-4 py-7 text-center';
-const inviteCode = 'type-[700_40px/48px] tracking-[0.18em]';
+import styles from './ExtensionPage.module.css';
+import own from './ListenTogetherPage.module.css';
 
 /**
  * Listen Together (ListenTogetherScreen on the phone): start a party or join
@@ -46,9 +40,9 @@ export default function ListenTogetherPage() {
   const signedIn = useSignedIn();
 
   return (
-    <div className={settingsUi.centered}>
+    <div className={styles.centered}>
       <PageHeader title="Listen Together" />
-      <div className={settingsUi.body}>
+      <div className={styles.body}>
         {state.code ? (
           <InParty />
         ) : inviteCode ? (
@@ -56,7 +50,7 @@ export default function ListenTogetherPage() {
         ) : (
           <StartOrJoin signedIn={signedIn} />
         )}
-        {state.error && <p className={error}>{state.error}</p>}
+        {state.error && <p className={own.error}>{state.error}</p>}
       </div>
     </div>
   );
@@ -64,7 +58,7 @@ export default function ListenTogetherPage() {
 
 function SignInFirst() {
   return (
-    <p className={`${settingsUi.footer} mb-4`}>
+    <p className={`${styles.footer} ${own.notice}`}>
       Listen Together uses your YouTube Music account for your name and picture in the party. Sign in on music.youtube.com,
       then come back.
     </p>
@@ -84,22 +78,22 @@ function StartOrJoin({ signedIn }: { signedIn: boolean }) {
 
   return (
     <>
-      <p className={lede}>
+      <p className={own.lede}>
         Listen to the same music at the same moment with up to five devices. Anyone in the party can play, pause and skip.
       </p>
       {!signedIn && <SignInFirst />}
-      <section className={settingsUi.group}>
-        <div className={settingsUi.row}>
-          <span className={settingsUi.rowText}>
+      <section className={styles.group}>
+        <div className={styles.row}>
+          <span className={styles.rowText}>
             <span>Start a Party</span>
-            <span className={settingsUi.rowDetail}>Whatever you’re playing comes with you.</span>
+            <span className={styles.rowDetail}>Whatever you’re playing comes with you.</span>
           </span>
-          <button className={primary} disabled={!signedIn || create.isPending} onClick={() => create.mutate()}>
+          <button className={own.primary} disabled={!signedIn || create.isPending} onClick={() => create.mutate()}>
             {create.isPending ? 'Starting…' : 'Start'}
           </button>
         </div>
         <form
-          className={settingsUi.controlRow}
+          className={styles.row}
           onSubmit={(e) => {
             e.preventDefault();
             const cleaned = cleanCode(code);
@@ -107,45 +101,45 @@ function StartOrJoin({ signedIn }: { signedIn: boolean }) {
           }}
         >
           <span>Join with a Code</span>
-          <span className="flex gap-2">
+          <span className={own.join}>
             <input
-              className="w-[110px] flex-none rounded-[8px] border-0 bg-quaternary px-2.5 py-[5px] text-center type-body tracking-[0.12em] text-primary uppercase"
+              className={`${styles.input} ${own.code}`}
               value={code}
               maxLength={7}
               placeholder="ABC123"
               aria-label="Party code"
               onChange={(e) => setCode(e.currentTarget.value.toUpperCase())}
             />
-            <button className={primary} type="submit" disabled={!cleanCode(code)}>
+            <button className={own.primary} type="submit" disabled={!cleanCode(code)}>
               Join
             </button>
           </span>
         </form>
       </section>
 
-      <h2 className={settingsUi.sectionHeader}>You</h2>
-      <section className={settingsUi.group}>
-        <label className={settingsUi.controlRow}>
+      <h2 className={styles.sectionHeader}>You</h2>
+      <section className={styles.group}>
+        <label className={styles.row}>
           <span>Name in parties</span>
           <input
-            className={settingsUi.input}
+            className={styles.input}
             placeholder="Your YouTube name"
             value={settings.nickname}
             maxLength={80}
             onChange={(e) => update({ nickname: e.currentTarget.value })}
           />
         </label>
-        <label className={settingsUi.controlRow}>
+        <label className={styles.row}>
           <span>Party server</span>
           <input
-            className={settingsUi.input}
-            placeholder={DEFAULT_SERVER ? new URL(DEFAULT_SERVER).host : 'party.example.com'}
+            className={styles.input}
+            placeholder={new URL(DEFAULT_SERVER).host}
             value={settings.customServer}
             onChange={(e) => update({ customServer: e.currentTarget.value })}
           />
         </label>
       </section>
-      <p className={settingsUi.footer}>Leave the server empty to use BitChord’s. Anyone joining your party uses the server it’s on.</p>
+      <p className={styles.footer}>Leave the server empty to use BitChord’s. Anyone joining your party uses the server it’s on.</p>
     </>
   );
 }
@@ -156,26 +150,26 @@ function InviteCard({ code, server, signedIn }: { code: string; server: string |
   const join = useMutation({ mutationFn: () => joinParty(code, server) });
   const data = preview.data;
   return (
-    <div className={invite}>
-      <p className={inviteCode}>{code}</p>
-      {preview.isPending && <p className={settingsUi.footer}>Looking up the party…</p>}
-      {preview.isError && <p className={error}>{messageOf(preview.error)}</p>}
+    <div className={own.invite}>
+      <p className={own.inviteCode}>{code}</p>
+      {preview.isPending && <p className={styles.footer}>Looking up the party…</p>}
+      {preview.isError && <p className={own.error}>{messageOf(preview.error)}</p>}
       {data && (
         <>
-          <p className={lede}>
+          <p className={own.lede}>
             {data.hostName ? `${data.hostName}’s party` : 'A Listen Together party'}
             {data.memberCount ? ` · ${data.memberCount} of ${data.maxMembers} listening` : ''}
           </p>
-          <div className="flex gap-1.5">
+          <div className={own.faces}>
             {data.members.map((m, i) => (
-              <Avatar key={i} name={m.displayName} url={m.avatarUrl} large />
+              <Avatar key={i} name={m.displayName} url={m.avatarUrl} />
             ))}
           </div>
         </>
       )}
       {!signedIn && <SignInFirst />}
       <button
-        className="mt-1.5 flex-none rounded-pill bg-key-bg px-7 py-2.5 type-title-3-emphasized text-white disabled:opacity-45"
+        className={own.tapToJoin}
         disabled={!signedIn || join.isPending || data?.isFull || preview.isError}
         onClick={() => join.mutate()}
       >
@@ -185,12 +179,11 @@ function InviteCard({ code, server, signedIn }: { code: string; server: string |
   );
 }
 
-function Avatar({ name, url, large = false }: { name: string; url: string | null; large?: boolean }) {
-  const className = `grid place-items-center rounded-full bg-quaternary object-cover type-callout-emphasized ${large ? 'size-9' : 'size-6'}`;
+function Avatar({ name, url }: { name: string; url: string | null }) {
   return url ? (
-    <img className={className} src={url} alt="" referrerPolicy="no-referrer" />
+    <img className={own.avatar} src={url} alt="" referrerPolicy="no-referrer" />
   ) : (
-    <span className={className}>{name.slice(0, 1).toUpperCase()}</span>
+    <span className={own.avatar}>{name.slice(0, 1).toUpperCase()}</span>
   );
 }
 
@@ -219,11 +212,11 @@ function InParty() {
 
   return (
     <>
-      <div className={invite}>
-        <p className={inviteCode}>{state.code}</p>
-        <p className={settingsUi.footer}>{status}</p>
+      <div className={own.invite}>
+        <p className={own.inviteCode}>{state.code}</p>
+        <p className={styles.footer}>{status}</p>
         <button
-          className="inline-flex items-center gap-1.5 rounded-pill bg-quaternary px-3.5 py-1.5 type-callout-emphasized"
+          className={own.copy}
           onClick={() => void navigator.clipboard.writeText(link).then(() => setCopied(true))}
           title={link}
         >
@@ -232,22 +225,22 @@ function InParty() {
         </button>
       </div>
 
-      <h2 className={settingsUi.sectionHeader}>
+      <h2 className={styles.sectionHeader}>
         Listening · {state.members.length} of {state.maxMembers}
       </h2>
-      <section className={settingsUi.group}>
+      <section className={styles.group}>
         {state.members.map((m) => (
-          <div key={m.memberId} className={settingsUi.integrationPlain}>
+          <div key={m.memberId} className={styles.integration}>
             <Avatar name={m.displayName} url={m.avatarUrl} />
-            <span className={settingsUi.integrationName}>
+            <span className={styles.integrationName}>
               {m.displayName}
-              {m.memberId === state.you?.memberId && <span className="text-secondary"> (you)</span>}
+              {m.memberId === state.you?.memberId && <span className={own.you}> (you)</span>}
             </span>
-            <span className={settingsUi.value}>
+            <span className={styles.value}>
               {m.isHost && <Crown size={14} aria-label="Host" />}
-              <span className="size-2 rounded-full bg-quaternary data-on:bg-green" data-on={m.connected || undefined} title={m.connected ? 'Connected' : 'Reconnecting'} />
+              <span className={own.dot} data-on={m.connected || undefined} title={m.connected ? 'Connected' : 'Reconnecting'} />
               {isHost && m.memberId !== state.you?.memberId && (
-                <button className={settingsUi.inlineButton} onClick={() => party.kick(m.memberId)} title="Remove from the party">
+                <button className={styles.inlineButton} onClick={() => party.kick(m.memberId)} title="Remove from the party">
                   <UserMinus size={13} />
                 </button>
               )}
@@ -256,8 +249,8 @@ function InParty() {
         ))}
       </section>
 
-      <h2 className={settingsUi.sectionHeader}>Party</h2>
-      <section className={settingsUi.group}>
+      <h2 className={styles.sectionHeader}>Party</h2>
+      <section className={styles.group}>
         <Toggle
           label="AutoPlay"
           detail="Keep the party going with similar music when the queue runs out."
@@ -273,28 +266,28 @@ function InParty() {
           />
         )}
       </section>
-      {locked && <p className={settingsUi.footer}>The host controls the music in this party. You can still pause your own device.</p>}
+      {locked && <p className={styles.footer}>The host controls the music in this party. You can still pause your own device.</p>}
 
       {state.activity.length > 0 && (
         <>
-          <h2 className={settingsUi.sectionHeader}>Activity</h2>
-          <section className={settingsUi.group}>
+          <h2 className={styles.sectionHeader}>Activity</h2>
+          <section className={styles.group}>
             {state.activity.slice(0, 8).map((a, i) => (
-              <div key={i} className={settingsUi.row}>
-                <span className={settingsUi.rowText}>
+              <div key={i} className={styles.row}>
+                <span className={styles.rowText}>
                   <span>
                     {a.by} · {a.action}
                   </span>
-                  {a.detail && <span className={settingsUi.rowDetail}>{a.detail}</span>}
+                  {a.detail && <span className={styles.rowDetail}>{a.detail}</span>}
                 </span>
-                <span className={settingsUi.rowDetail}>{new Date(a.atMs).toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' })}</span>
+                <span className={styles.rowDetail}>{new Date(a.atMs).toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' })}</span>
               </div>
             ))}
           </section>
         </>
       )}
 
-      <button className="mx-4 mt-6 inline-flex items-center gap-1.5 type-body-emphasized text-red" onClick={() => void leaveParty().then(() => navigate('/settings/listen-together'))}>
+      <button className={own.leave} onClick={() => void leaveParty().then(() => navigate('/settings/listen-together'))}>
         <LogOut size={15} />
         Leave Party
       </button>
