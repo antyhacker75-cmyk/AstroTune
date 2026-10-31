@@ -32,8 +32,8 @@ import com.music.astrotune.ui.components.FrostedTopBar
 import com.music.astrotune.ui.components.MiniPlayer
 import com.music.astrotune.ui.components.TopFadeBlur
 import com.music.astrotune.ui.components.TopBarBlur
-import com.music.astrotune.ui.icons.BitChordIcons
-import com.music.astrotune.ui.theme.BitChordTheme
+import com.music.astrotune.ui.icons.AstroTuneIcons
+import com.music.astrotune.ui.theme.AstroTuneTheme
 import dev.chrisbanes.haze.HazeState
 import dev.chrisbanes.haze.hazeSource
 
@@ -109,10 +109,10 @@ private val PreviewSong = Song(
 )
 
 private val PreviewTabs = listOf(
-    BottomTab("Play", BitChordIcons.Play),
-    BottomTab("Explore", BitChordIcons.TabExplore),
-    BottomTab("Library", BitChordIcons.TabLibrary),
-    BottomTab("Search", BitChordIcons.TabSearch),
+    BottomTab("Play", AstroTuneIcons.Play),
+    BottomTab("Explore", AstroTuneIcons.TabExplore),
+    BottomTab("Library", AstroTuneIcons.TabLibrary),
+    BottomTab("Search", AstroTuneIcons.TabSearch),
 )
 
 /**
@@ -135,7 +135,7 @@ private fun ChromeStack(scrolled: Boolean, withMiniPlayer: Boolean) {
         )
         FrostedTopBar(
             title = "Listen Now",
-            scrolled = scrolled,
+            scrolled = { scrolled },
             modifier = Modifier.align(Alignment.TopCenter),
         )
 
@@ -179,20 +179,20 @@ private fun ChromeStack(scrolled: Boolean, withMiniPlayer: Boolean) {
 @Preview(name = "Chrome · dark", device = "id:pixel_8", showBackground = true)
 @Composable
 private fun ChromeDarkPreview() {
-    BitChordTheme(darkTheme = true) { ChromeStack(scrolled = true, withMiniPlayer = false) }
+    AstroTuneTheme(darkTheme = true) { ChromeStack(scrolled = true, withMiniPlayer = false) }
 }
 
 @Preview(name = "Chrome · light", device = "id:pixel_8", showBackground = true)
 @Composable
 private fun ChromeLightPreview() {
-    BitChordTheme(darkTheme = false) { ChromeStack(scrolled = true, withMiniPlayer = false) }
+    AstroTuneTheme(darkTheme = false) { ChromeStack(scrolled = true, withMiniPlayer = false) }
 }
 
 /** The taller scrim, which the mini player's arrival grows it into. */
 @Preview(name = "Chrome · mini player", device = "id:pixel_8", showBackground = true)
 @Composable
 private fun ChromeMiniPlayerPreview() {
-    BitChordTheme(darkTheme = true) { ChromeStack(scrolled = true, withMiniPlayer = true) }
+    AstroTuneTheme(darkTheme = true) { ChromeStack(scrolled = true, withMiniPlayer = true) }
 }
 
 /**
@@ -213,7 +213,7 @@ private fun ChromeMiniPlayerPreview() {
 )
 @Composable
 private fun MiniPlayerPreview() {
-    BitChordTheme {
+    AstroTuneTheme {
         Column(
             modifier = Modifier
                 .fillMaxSize()
@@ -265,7 +265,7 @@ private fun MiniPlayerPreview() {
 )
 @Composable
 private fun ScrimRampPreview() {
-    BitChordTheme {
+    AstroTuneTheme {
         Box(Modifier.fillMaxSize()) {
             // A mid grey under it: the ramp reads as a ramp against this,
             // whereas over the theme's own background it is invisible by
@@ -290,20 +290,20 @@ private fun ScrimRampPreview() {
 @Preview(name = "Top bar · backdrops", device = "id:pixel_8", showBackground = true)
 @Composable
 private fun TopBarBackdropPreview() {
-    BitChordTheme(darkTheme = true) {
+    AstroTuneTheme(darkTheme = true) {
         Column(
             Modifier
                 .fillMaxSize()
                 .background(MaterialTheme.colorScheme.background),
         ) {
             Box(Modifier.height(160.dp)) {
-                FrostedTopBar(title = "At rest", scrolled = false)
+                FrostedTopBar(title = "At rest", scrolled = { false })
             }
             Box(Modifier.height(160.dp)) {
-                FrostedTopBar(title = "Scrolled", scrolled = true)
+                FrostedTopBar(title = "Scrolled", scrolled = { true })
             }
             Box(Modifier.height(160.dp)) {
-                FrostedTopBar(title = "Pushed page", scrolled = true, onBack = {})
+                FrostedTopBar(title = "Pushed page", scrolled = { true }, onBack = {})
             }
         }
     }

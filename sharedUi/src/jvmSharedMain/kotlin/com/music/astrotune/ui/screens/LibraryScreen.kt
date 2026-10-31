@@ -51,7 +51,7 @@ import com.music.astrotune.data.model.ShelfItem
 import com.music.astrotune.data.model.UiState
 import com.music.astrotune.data.settings.LibrarySort
 import com.music.astrotune.ui.AppUi
-import com.music.astrotune.ui.icons.BitChordIcons
+import com.music.astrotune.ui.icons.AstroTuneIcons
 import com.music.astrotune.ui.components.LIBRARY_GRID_SPACING
 import com.music.astrotune.ui.components.MessageState
 import com.music.astrotune.ui.components.PAGE_GUTTER
@@ -277,7 +277,7 @@ private fun LibraryLinkList(links: List<LibraryLink>, onClick: (ShelfItem) -> Un
                     modifier = Modifier.weight(1f),
                 )
                 Icon(
-                    imageVector = BitChordIcons.ChevronRight,
+                    imageVector = AstroTuneIcons.ChevronRight,
                     contentDescription = null,
                     tint = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = .6f),
                     modifier = Modifier.size(20.dp),
@@ -321,14 +321,14 @@ private fun PlaylistShelf(
         leadingCard = {
             Row(horizontalArrangement = Arrangement.spacedBy(LIBRARY_GRID_SPACING)) {
                 NewShelfCard(
-                    icon = BitChordIcons.Plus,
+                    icon = AstroTuneIcons.Plus,
                     label = stringResource(Res.string.new_playlist),
                     subtitle = stringResource(Res.string.saved_to_youtube_music),
                     onClick = onNewPlaylist,
                 )
                 if (onImportSpotifyPlaylist != null) {
                     NewShelfCard(
-                        icon = BitChordIcons.Download,
+                        icon = AstroTuneIcons.Download,
                         label = stringResource(Res.string.import_spotify),
                         subtitle = stringResource(Res.string.import_spotify_subtitle),
                         onClick = onImportSpotifyPlaylist,
@@ -402,7 +402,7 @@ fun LibraryGridPage(
     onNewPlaylist: (() -> Unit)? = null,
 ) {
     // Re-read live rather than trusting [shelf] to already be sorted: this page
-    // is opened from a snapshot (see `libraryShowAll` in MainActivity), and a
+    // is opened from a snapshot (see `AppRoute.LibraryShowAll`), and a
     // pin toggled from this page's own long-press menu must move the card
     // immediately rather than waiting for the row underneath to be revisited.
     val pinnedPlaylists by AppUi.host.pinnedPlaylists.collectAsStateWithLifecycle()
@@ -424,7 +424,7 @@ fun LibraryGridPage(
             if (onNewPlaylist != null) {
                 item(key = "leading") {
                     NewShelfCard(
-                        icon = BitChordIcons.Plus,
+                        icon = AstroTuneIcons.Plus,
                         label = stringResource(Res.string.new_playlist),
                         subtitle = stringResource(Res.string.saved_to_youtube_music),
                         onClick = onNewPlaylist,

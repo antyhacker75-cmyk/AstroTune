@@ -61,8 +61,9 @@ import coil3.compose.AsyncImage
 import coil3.compose.AsyncImagePainter
 import coil3.request.ImageRequest
 import com.music.astrotune.ui.components.ExplicitBadge
+import com.music.astrotune.ui.components.menuAnchor
 import com.music.astrotune.ui.haptics.Haptic
-import com.music.astrotune.ui.icons.BitChordIcons
+import com.music.astrotune.ui.icons.AstroTuneIcons
 import com.music.astrotune.ui.theme.stableStatusBarInsets
 import com.music.astrotune.data.canvas.CanvasArtwork
 import com.music.astrotune.data.model.LikeStatus
@@ -320,7 +321,7 @@ internal fun LandscapeArtwork(
         ) {
             if (!artLoaded && !canvasRendered) {
                 Icon(
-                    imageVector = BitChordIcons.MusicNote,
+                    imageVector = AstroTuneIcons.MusicNote,
                     contentDescription = null,
                     tint = Color.White.copy(alpha = 0.35f),
                     modifier = Modifier.fillMaxSize(0.36f),
@@ -432,13 +433,15 @@ internal fun LandscapeCredits(
         ) {
             Column {
                 var titleOverflowing by remember { mutableStateOf(false) }
+                val artistColor = LocalPlayerTint.current.copy(alpha = 0.55f)
                 MarqueeText(
                     text = song.title,
                     style = MaterialTheme.typography.titleLarge,
                     color = Color.White,
                     onOverflowChange = { titleOverflowing = it },
+                    // Before the title, in the artist line's colour.
                     leading = if (song.isExplicit == true) {
-                        { ExplicitBadge(Color.White) }
+                        { ExplicitBadge(artistColor) }
                     } else {
                         null
                     },
@@ -451,7 +454,7 @@ internal fun LandscapeCredits(
                         artistCredits(song.artist, song.artists, song.artistId)
                     },
                     style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.W500),
-                    color = LocalPlayerTint.current.copy(alpha = 0.55f),
+                    color = artistColor,
                     // A title that's also scrolling gets to go first — starting
                     // together reads as clutter, so the artist waits a beat.
                     startDelayMillis = if (titleOverflowing) MARQUEE_ARTIST_STAGGER_MS else 0L,
@@ -461,12 +464,12 @@ internal fun LandscapeCredits(
         }
         Spacer(Modifier.width(10.dp))
         // Same gate as the portrait player's: no account to like against for a
-        // guest, and no YouTube identity to rate a local file or a finished
-        // download against either.
-        if (signedIn && song.localUri == null) {
+        // guest — but a local file or a finished download is liked on the
+        // device, which needs none.
+        if (signedIn || song.localUri != null) {
             val liked = likeStatus == LikeStatus.LIKE
             CircleGlyph(
-                icon = if (liked) BitChordIcons.HeartFilled else BitChordIcons.Heart,
+                icon = if (liked) AstroTuneIcons.StarFilled else AstroTuneIcons.Star,
                 contentDescription = stringResource(
                     if (liked) Res.string.remove_from_liked else Res.string.like,
                 ),
@@ -480,6 +483,7 @@ internal fun LandscapeCredits(
             icon = if (showRevertCue) Icons.AutoMirrored.Rounded.Undo else Icons.Rounded.MoreHoriz,
             contentDescription = stringResource(Res.string.more),
             onClick = onOpenMenu,
+            modifier = Modifier.menuAnchor(),
         )
     }
 }

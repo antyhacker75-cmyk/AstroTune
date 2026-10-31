@@ -18,13 +18,13 @@ import (
 
 	"github.com/gorilla/websocket"
 
-	"github.com/antyhacker75-cmyk/BitChord/backend/clock"
-	"github.com/antyhacker75-cmyk/BitChord/backend/codes"
-	"github.com/antyhacker75-cmyk/BitChord/backend/config"
-	"github.com/antyhacker75-cmyk/BitChord/backend/hub"
-	"github.com/antyhacker75-cmyk/BitChord/backend/party"
-	"github.com/antyhacker75-cmyk/BitChord/backend/presence"
-	"github.com/antyhacker75-cmyk/BitChord/backend/protocol"
+	"github.com/KabirSinghBhatia/BitChord/backend/clock"
+	"github.com/KabirSinghBhatia/BitChord/backend/codes"
+	"github.com/KabirSinghBhatia/BitChord/backend/config"
+	"github.com/KabirSinghBhatia/BitChord/backend/hub"
+	"github.com/KabirSinghBhatia/BitChord/backend/party"
+	"github.com/KabirSinghBhatia/BitChord/backend/presence"
+	"github.com/KabirSinghBhatia/BitChord/backend/protocol"
 )
 
 var (
@@ -73,7 +73,6 @@ func main() {
 
 	// WebSocket endpoint
 	mux.HandleFunc("GET /ws/parties/{code}", handleWebSocket)
-	registerWebUI(mux)
 
 	handler := corsMiddleware(mux)
 
@@ -199,7 +198,6 @@ func decodeJSONBody(w http.ResponseWriter, r *http.Request, dst interface{}) boo
 
 func jsonResponse(w http.ResponseWriter, status int, data interface{}) {
 	w.Header().Set("Content-Type", "application/json")
-
 	w.WriteHeader(status)
 	_ = json.NewEncoder(w).Encode(data)
 }
@@ -247,7 +245,16 @@ func parseSocketToken(r *http.Request) string {
 // REST Handlers
 
 func handleRoot(w http.ResponseWriter, r *http.Request) {
-	http.ServeFileFS(w, r, webAssets, "web/templates/index.html")
+	if r.URL.Path != "/" {
+		http.NotFound(w, r)
+		return
+	}
+	jsonResponse(w, http.StatusOK, map[string]interface{}{
+		"service":    "bitchord-listen-together",
+		"members":    store.MemberCount(),
+		"parties":    store.Len(),
+		"serverMs":   clock.NowMs(),
+	})
 }
 
 func handleHealthz(w http.ResponseWriter, r *http.Request) {
@@ -264,14 +271,8 @@ func handleTime(w http.ResponseWriter, r *http.Request) {
 }
 
 // handlePresence takes the open apps' heartbeat:
-// {"id": "<install uuid>", "platform": "android"|"pc", "open": true|false}.
+// {"id": "<install uuid>", "platform": "android"|"pc"|"browser", "open": true|false}.
 func handlePresence(w http.ResponseWriter, r *http.Request) {
-	// Only the apps ping, and they send no Origin. Refusing browsers stops any web
-	// page from making its visitors post made-up installs from their addresses.
-	if r.Header.Get("Origin") != "" {
-		jsonError(w, http.StatusForbidden, "origin_not_allowed", "Presence is only accepted from the apps.")
-		return
-	}
 	if !presenceLimiter.Allow(clientIP(r)) {
 		jsonError(w, http.StatusTooManyRequests, "rate_limited", "Too many presence pings from this address.")
 		return
@@ -291,11 +292,19 @@ func handlePresence(w http.ResponseWriter, r *http.Request) {
 	}
 	platform, ok := presence.ParsePlatform(body.Platform)
 	if !ok {
-		jsonError(w, http.StatusUnprocessableEntity, "invalid_platform", "platform must be android or pc.")
+		jsonError(w, http.StatusUnprocessableEntity, "invalid_platform", "platform must be android, pc or browser.")
 		return
 	}
 	if body.Open == nil {
 		jsonError(w, http.StatusUnprocessableEntity, "invalid_open", "open must be true or false.")
+		return
+	}
+	// The native apps send no Origin; only the web player does, and only from a
+	// named origin. Refusing every other browser stops any web page from making
+	// its visitors post made-up installs from their addresses.
+	origin := r.Header.Get("Origin")
+	if (platform == presence.Browser) != (origin != "") || (origin != "" && !config.IsAllowedOrigin(origin)) {
+		jsonError(w, http.StatusForbidden, "origin_not_allowed", "Presence is only accepted from the apps and the web player.")
 		return
 	}
 	if *body.Open {
@@ -427,18 +436,7 @@ func handleJoinParty(w http.ResponseWriter, r *http.Request) {
 	youWire := m.ToWire()
 	token := m.Token
 	pCode := p.Code
-	membersF := membersFrame(p)
 	p.Unlock()
-
-	hubInst.Broadcast(pCode, membersF, "")
-	
-	joinFrame := map[string]interface{}{
-		"type":     protocol.FrameActivity,
-		"sender":   m.DisplayName,
-		"detail":   "joined the party",
-		"serverMs": clock.NowMs(),
-	}
-	hubInst.Broadcast(pCode, joinFrame, "")
 
 	jsonResponse(w, http.StatusOK, map[string]interface{}{
 		"code":  pCode,
@@ -501,7 +499,7 @@ func handlePreviewParty(w http.ResponseWriter, r *http.Request) {
 		"memberCount": len(p.Members),
 		"maxMembers":  p.MaxMembers,
 		"isFull":      len(p.Members) >= p.MaxMembers,
-		"users":     members,
+		"members":     members,
 	}
 	p.Unlock()
 
@@ -586,7 +584,6 @@ func handleLeaveParty(w http.ResponseWriter, r *http.Request) {
 	hubInst.Broadcast(p.Code, membersFrame, memberId)
 
 	jsonResponse(w, http.StatusOK, map[string]bool{"ok": true})
-
 }
 
 // Web Invite Landing Handler
@@ -600,9 +597,6 @@ type invitePageData struct {
 	CurrentSongTitle  string
 	CurrentSongArtist string
 	MemberCount       int
-	MessageCount      int
-	HostOnlyControl   bool
-	MemberNames       []string
 	IsActive          bool
 }
 
@@ -794,9 +788,6 @@ func requestOrigin(r *http.Request) string {
 	if config.PublicOrigin != "" {
 		return config.PublicOrigin
 	}
-	if proto := r.Header.Get("X-Forwarded-Proto"); proto != "" {
-		return proto + "://" + r.Host
-	}
 	proto := "http"
 	if r.TLS != nil {
 		proto = "https"
@@ -820,7 +811,7 @@ func handleInviteLanding(w http.ResponseWriter, r *http.Request) {
 
 	if len(code) != codes.CodeLength {
 		w.WriteHeader(http.StatusBadRequest)
-		_ = inviteTmpl.Execute(w, invitePageData{
+		_ = inviteTemplate.Execute(w, invitePageData{
 			Code:     html.EscapeString(r.PathValue("code")),
 			IsActive: false,
 		})
@@ -830,7 +821,7 @@ func handleInviteLanding(w http.ResponseWriter, r *http.Request) {
 	p := store.Find(code)
 	if p == nil {
 		w.WriteHeader(http.StatusNotFound)
-		_ = inviteTmpl.Execute(w, invitePageData{
+		_ = inviteTemplate.Execute(w, invitePageData{
 			Code:     code,
 			IsActive: false,
 		})
@@ -848,16 +839,10 @@ func handleInviteLanding(w http.ResponseWriter, r *http.Request) {
 		currentSongArtist = p.Playback.Track.Artist
 	}
 	memberCount := len(p.Members)
-		msgCount := p.MessageCount
-		hostOnly := p.HostOnlyControl
-		var memberNames []string
-		for _, m := range p.Members {
-			memberNames = append(memberNames, m.DisplayName)
-		}
 	p.Unlock()
 
 	w.WriteHeader(http.StatusOK)
-	_ = inviteTmpl.Execute(w, invitePageData{
+	_ = inviteTemplate.Execute(w, invitePageData{
 		Code:              code,
 		DeepLink:          deepLink,
 		IntentURI:         template.URL(intentURI),
@@ -866,9 +851,6 @@ func handleInviteLanding(w http.ResponseWriter, r *http.Request) {
 		CurrentSongTitle:  currentSongTitle,
 		CurrentSongArtist: currentSongArtist,
 		MemberCount:       memberCount,
-		MessageCount:      msgCount,
-		HostOnlyControl:   hostOnly,
-		MemberNames:       memberNames,
 		IsActive:          true,
 	})
 }
@@ -939,8 +921,7 @@ func handleWebSocket(w http.ResponseWriter, r *http.Request) {
 		hubInst.Broadcast(p.Code, mFrame, "")
 	}()
 
-        for {
-                _ = conn.SetReadDeadline(time.Now().Add(time.Duration(config.ConnectionIdleMs) * time.Millisecond))
+	for {
 		var raw map[string]interface{}
 		if err := conn.ReadJSON(&raw); err != nil {
 			break
@@ -968,20 +949,6 @@ func handleSocketFrame(p *party.Party, member *party.Member, sc *hub.SafeConn, f
 	member.LastSeenMs = clock.NowMs()
 
 	switch kind {
-		case "chat":
-			text, _ := frame["text"].(string)
-			if text != "" {
-				p.MessageCount++
-				chatFrame := map[string]interface{}{
-					"type":      protocol.FrameChat,
-					"senderId":  member.MemberId,
-					"sender":    member.DisplayName,
-					"text":      text,
-					"timestamp": clock.NowMs(),
-				}
-				hubInst.Broadcast(p.Code, chatFrame, "")
-			}
-
 	case protocol.FramePing:
 		_ = sc.WriteJSON(map[string]interface{}{
 			"type":     protocol.FramePong,
@@ -1291,7 +1258,7 @@ func membersFrame(p *party.Party) map[string]interface{} {
 	}
 	return map[string]interface{}{
 		"type":            protocol.FrameMembers,
-		"members":       membersList,
+		"members":         membersList,
 		"maxMembers":      p.MaxMembers,
 		"hostOnlyControl": p.HostOnlyControl,
 		"serverMs":        clock.NowMs(),

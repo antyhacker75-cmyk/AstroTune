@@ -50,16 +50,13 @@ val lastfmSecret: String = (
 val listenTogetherServer: String = (
     localProps.getProperty("LISTEN_TOGETHER_SERVER")
         ?: System.getenv("LISTEN_TOGETHER_SERVER")
-        ?: "https://bitchord-b96t.onrender.com"
+        ?: "https://bitchord-listen-together.onrender.com"
     ).trim().trimEnd('/')
 
 // See the root build.gradle.kts: one version for the phone and its watch app.
 val betaSuffix = rootProject.extra["bitchordBetaSuffix"] as String
 
 android {
-    defaultConfig {
-        setProperty("archivesBaseName", "AstroTune")
-    }
     namespace = "com.music.astrotune"
     // InnerTubeX's AAR requires compiling against 37; targetSdk (runtime behaviour) stays 36.
     compileSdk = 37
@@ -119,7 +116,7 @@ android {
         create("dev") {
             dimension = "env"
             applicationId = "com.dev.astrotune"
-            resValue("string", "app_name", "BitChord Dev")
+            resValue("string", "app_name", "AstroTune Dev")
         }
         create("prod") {
             dimension = "env"
@@ -168,6 +165,7 @@ android {
              * `benchmark` build type below before it ships.
              */
             isMinifyEnabled = true
+            isShrinkResources = true
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
@@ -285,6 +283,8 @@ dependencies {
     implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.8.7")
     // ProcessLifecycleOwner: whether the app is on screen, for the open-app count.
     implementation("androidx.lifecycle:lifecycle-process:2.8.7")
+    // The scheduled check behind "Keep playlists updated"; see PlaylistSync.
+    implementation("androidx.work:work-runtime-ktx:2.10.1")
     implementation("androidx.core:core-ktx:1.15.0")
     implementation("androidx.appcompat:appcompat:1.7.0")
     debugImplementation("androidx.compose.ui:ui-tooling")
@@ -322,6 +322,13 @@ dependencies {
     // Title logos are PNG, but artist signatures are usually SVG — without
     // this Coil can't decode them (see ArtistSignatureRepository).
     implementation("io.coil-kt.coil3:coil-svg:3.0.4")
+    // SF Symbols as Compose vectors, for the iOS-style settings and menus (as Convx uses).
+    // Without its own dependencies: it asks for Compose 1.12, which needs a newer Android
+    // Gradle plugin than this build, and the plain ImageVectors used here need nothing
+    // the app's own Compose doesn't already have.
+    implementation("com.github.cosmictaserdev-creator.Jetpack_SF_Symbols:sfsymbols-android:1.1.1") {
+        isTransitive = false
+    }
     implementation("androidx.palette:palette-ktx:1.0.0")
 
     // ---- Frosted glass / progressive blur (Telegram-style bars) ----
@@ -410,7 +417,7 @@ dependencies {
     // Opens the watch app after an update, so its install prompt is on screen.
     implementation("androidx.wear:wear-remote-interactions:1.1.0")
 
-    // ---- "BitChord for Wear OS": the first install onto a watch ----
+    // ---- "AstroTune for Wear OS": the first install onto a watch ----
     // Without the Play Store only ADB can install on a watch, so this phone is
     // the ADB client, over the watch's Wireless debugging — see WatchInstaller.
     // GPL-3.0/Apache-2.0 dual-licensed. Its own BouncyCastle (jdk15to18) is the
@@ -468,7 +475,7 @@ val verifyDevInstall = tasks.register("verifyDevInstall") {
 tasks.matching { it.name == "installDevDebug" }.configureEach { finalizedBy(verifyDevInstall) }
 
 /*
- * The watch app rides inside the phone app, so "BitChord for Wear OS" in
+ * The watch app rides inside the phone app, so "AstroTune for Wear OS" in
  * Settings can put it on a watch — or update it — with no computer involved.
  *
  * Each phone variant carries the watch build of the same flavor *and* build
@@ -494,7 +501,7 @@ abstract class BundleWearApk : DefaultTask() {
         out.mkdirs()
         val apk = apks.asFileTree.matching { include("*.apk") }.files.singleOrNull()
             ?: throw GradleException("Expected exactly one watch APK in ${apks.files}")
-        val target = out.resolve("BitChordWear.apk")
+        val target = out.resolve("AstroTuneWear.apk")
         apk.copyTo(target, overwrite = true)
         val digest = MessageDigest.getInstance("SHA-256")
         target.inputStream().use { input ->
@@ -505,7 +512,7 @@ abstract class BundleWearApk : DefaultTask() {
                 digest.update(buffer, 0, read)
             }
         }
-        out.resolve("BitChordWear.sha256").writeText(digest.digest().joinToString("") { "%02x".format(it) })
+        out.resolve("AstroTuneWear.sha256").writeText(digest.digest().joinToString("") { "%02x".format(it) })
     }
 }
 

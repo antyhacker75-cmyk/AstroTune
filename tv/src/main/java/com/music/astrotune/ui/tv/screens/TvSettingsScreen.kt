@@ -41,6 +41,7 @@ import com.music.astrotune.ui.tv.dialogs.TvEqualizerDialog
 import com.music.astrotune.ui.tv.dialogs.TvLyricsSourcesDialog
 import com.music.astrotune.ui.tv.dialogs.TvRefreshRateDialog
 import com.music.astrotune.ui.tv.dialogs.TvScrobbleDialog
+import com.music.astrotune.data.settings.TvPlayerStyle
 import com.music.astrotune.ui.tv.dialogs.TvThemeDialog
 import com.music.astrotune.ui.tv.dialogs.TvUpdateDialog
 import com.music.astrotune.ui.tv.display.TvRefreshRateController
@@ -84,6 +85,7 @@ fun TvSettingsScreen(
     val lyricsCanvas by TvSettings.tvLyricsCanvasEnabled.collectAsState()
     val nerdStats by AppSettings.showNerdStats.collectAsState()
     val themeId by TvSettings.tvTheme.collectAsState()
+    val playerStyle by TvSettings.tvPlayerStyle.collectAsState()
     val uiScale by TvSettings.tvUiScale.collectAsState()
     val refreshRate by TvRefreshRateController.preference.collectAsState()
     val reduceMotion by AppSettings.reduceAnimation.collectAsState()
@@ -269,6 +271,17 @@ fun TvSettingsScreen(
                     value = AppThemeOption.fromId(themeId).title,
                     onFocused = { blurb = "The background behind BitChord's pages." },
                     onClick = { sheet = SettingsSheet.Theme },
+                )
+            }
+            item {
+                TvListRow(
+                    title = "Player Background",
+                    value = playerStyle.label,
+                    onFocused = { blurb = "What Now Playing shows behind the song: the artwork's colours, or AMOLED's pure black." },
+                    onClick = {
+                        val styles = TvPlayerStyle.entries
+                        TvSettings.setTvPlayerStyle(styles[(playerStyle.ordinal + 1) % styles.size])
+                    },
                 )
             }
             item {

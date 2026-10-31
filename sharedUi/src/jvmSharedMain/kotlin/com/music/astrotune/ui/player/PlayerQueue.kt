@@ -1,5 +1,7 @@
 package com.music.astrotune.ui.player
 
+import com.music.astrotune.ui.components.trackArtSize
+import androidx.compose.ui.layout.ContentScale
 import com.music.astrotune.sharedui.resources.*
 import com.music.astrotune.ui.components.ExplicitSongTitle
 
@@ -74,7 +76,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.Velocity
 import coil3.compose.AsyncImage
 import com.music.astrotune.ui.components.thumbnailBorder
-import com.music.astrotune.ui.icons.BitChordIcons
+import com.music.astrotune.ui.icons.AstroTuneIcons
 import com.music.astrotune.data.model.QueueTier
 import com.music.astrotune.data.model.Song
 import com.music.astrotune.playback.autoplaySectionStart
@@ -465,7 +467,7 @@ private fun AutoplayHeading(hasTracks: Boolean, modifier: Modifier = Modifier) {
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Icon(
-            BitChordIcons.Infinity,
+            AstroTuneIcons.Infinity,
             contentDescription = null,
             tint = Color.White.copy(alpha = 0.75f),
             modifier = Modifier.size(18.dp),
@@ -772,8 +774,9 @@ private fun InlineQueueRow(
         AsyncImage(
             model = rememberRemoteArtworkUrl(song),
             contentDescription = null,
+            contentScale = ContentScale.Crop,
             modifier = Modifier
-                .size(44.dp)
+                .trackArtSize(44.dp, song.isVideo)
                 .clip(RoundedCornerShape(6.dp))
                 .thumbnailBorder(RoundedCornerShape(6.dp))
                 .background(Color.White.copy(alpha = 0.08f)),

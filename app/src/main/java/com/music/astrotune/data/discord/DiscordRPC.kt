@@ -95,7 +95,7 @@ class DiscordRPC(
                 button2Text.ifEmpty { DEFAULT_BUTTON_2 },
                 song,
             )
-            buttonsList.add(resolvedText to (if (resolvedText.startsWith("http")) resolvedText else PROJECT_URL))
+            buttonsList.add(resolvedText to PROJECT_URL)
         }
 
         val type = when (activityType) {
@@ -105,7 +105,7 @@ class DiscordRPC(
             else -> Type.LISTENING
         }
 
-        val name = resolveVariables(activityName.ifEmpty { appName() }, song)
+        val name = activityName.ifEmpty { appName() }
 
         setActivity(
             name = name,
@@ -169,8 +169,6 @@ class DiscordRPC(
                 .replace("{song_name}", song.title)
                 .replace("{artist_name}", song.artist)
                 .replace("{album_name}", song.albumName ?: "")
-                .replace("{song_url}", watchUrl(song))
-                .replace("{invite_url}", "https://bitchord-b96t.onrender.com")
         }
     }
 }

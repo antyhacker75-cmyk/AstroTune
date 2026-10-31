@@ -37,6 +37,7 @@ import androidx.media3.session.MediaController
 import com.music.astrotune.data.LikeState
 import com.music.astrotune.data.model.LikeStatus
 import com.music.astrotune.data.settings.AppSettings
+import com.music.astrotune.data.settings.TvSettings
 import com.music.astrotune.playback.PlayerState
 import com.music.astrotune.playback.toggleAutoplay
 import com.music.astrotune.playback.toggleShuffle
@@ -102,6 +103,7 @@ fun TvNowPlayingScreen(
     val isLiked = likeOverrides[song.videoId] == LikeStatus.LIKE
     val shuffle by com.music.astrotune.playback.QueueShuffle.enabled.collectAsState()
     val autoplay by AppSettings.autoplay.collectAsState()
+    val playerStyle by TvSettings.tvPlayerStyle.collectAsState()
 
     LaunchedEffect(song.videoId, durationMs) {
         viewModel.loadLyrics(
@@ -219,7 +221,7 @@ fun TvNowPlayingScreen(
                 }
             },
     ) {
-        TvPlayerBackground(artworkUrl = song.thumbnailUrl)
+        TvPlayerBackground(artworkUrl = song.thumbnailUrl, style = playerStyle)
 
         // The stage: takes the remote while the transport is down. Select or a
         // vertical press brings the transport up; left and right change track.

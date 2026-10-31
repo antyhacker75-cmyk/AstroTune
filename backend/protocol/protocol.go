@@ -15,7 +15,6 @@ const (
 	FrameError   = "error"
 	FrameBye     = "bye"
 	FrameActivity = "activity"
-	FrameChat     = "chat"
 )
 
 // Client -> Server frame types

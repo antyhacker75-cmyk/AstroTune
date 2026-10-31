@@ -13,10 +13,10 @@ import com.music.astrotune.playback.PlayerDeepLink
 import com.music.astrotune.playback.rememberMediaController
 import com.music.astrotune.playback.rememberPlayerState
 import com.music.astrotune.ui.MainViewModel
-import com.music.astrotune.ui.theme.BitChordTheme
+import com.music.astrotune.ui.theme.AstroTuneTheme
 import com.music.astrotune.ui.tv.TvApp
 import com.music.astrotune.ui.tv.display.TvRefreshRateController
-import com.music.astrotune.ui.tv.theme.BitChordTvTheme
+import com.music.astrotune.ui.tv.theme.AstroTuneTvTheme
 
 /**
  * Dedicated TV Activity for Android TV, Google TV, and Fire TV devices.
@@ -37,10 +37,10 @@ class TvActivity : ComponentActivity() {
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
 
         setContent {
-            BitChordTvTheme {
+            AstroTuneTvTheme {
                 // The phone's Material theme too, so the components shared with
                 // it (lyrics, mood sleeves) are set in SF Pro on its type scale.
-                BitChordTheme(darkTheme = true) {
+                AstroTuneTheme(darkTheme = true) {
                     val mediaController = rememberMediaController()
                     val playerState = rememberPlayerState(mediaController)
 

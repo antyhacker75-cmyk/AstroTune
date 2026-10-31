@@ -8,9 +8,9 @@ import (
 	"sort"
 	"sync"
 
-	"github.com/antyhacker75-cmyk/BitChord/backend/clock"
-	"github.com/antyhacker75-cmyk/BitChord/backend/codes"
-	"github.com/antyhacker75-cmyk/BitChord/backend/config"
+	"github.com/KabirSinghBhatia/BitChord/backend/clock"
+	"github.com/KabirSinghBhatia/BitChord/backend/codes"
+	"github.com/KabirSinghBhatia/BitChord/backend/config"
 )
 
 // PartyError represents an error with an HTTP status code and wire error code.
@@ -521,7 +521,6 @@ func (m *Member) ToWire() map[string]interface{} {
 
 // Party holds members and playback state for a single room code.
 type Party struct {
-	MessageCount int `json:"messageCount"`
 	mu         sync.Mutex
 	Code       string
 	Members    map[string]*Member

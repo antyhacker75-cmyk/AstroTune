@@ -19,7 +19,7 @@ object JamInviteLink {
     const val ORIGIN = "https://bitchord-b96t.onrender.com"
 
     private const val EXTRA_CONSUMED = "bitchord.jamInviteConsumed"
-    private const val HOST = "bitchord-b96t.onrender.com"
+    private const val HOST = "bitchord.kushagrasingh.in"
     private const val CUSTOM_SCHEME = "bitchord"
     private const val CUSTOM_HOST = "party"
 

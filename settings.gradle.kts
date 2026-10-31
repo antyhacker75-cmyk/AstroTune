@@ -15,11 +15,9 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "BitChord"
+rootProject.name = "AstroTune"
 include(":shared")
 include(":sharedUi")
-include(":desktopUi")
-include(":desktopApp")
 
 // The Android module only when there is an SDK to build it against. A machine
 // set up for the desktop alone has none, and including it there fails at

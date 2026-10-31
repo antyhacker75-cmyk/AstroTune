@@ -5,7 +5,7 @@ import android.os.SystemClock
 import android.content.SharedPreferences
 import android.net.ConnectivityManager
 import android.net.Network
-import com.music.astrotune.BitChordApplication
+import com.music.astrotune.AstroTuneApplication
 import com.music.astrotune.BuildConfig
 import com.music.astrotune.data.DebugLog as Log
 import com.music.astrotune.data.settings.AppSettings
@@ -16,7 +16,6 @@ import io.ktor.client.plugins.HttpTimeout
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.client.plugins.timeout
 import io.ktor.client.plugins.websocket.DefaultClientWebSocketSession
-import io.ktor.websocket.close
 import io.ktor.client.plugins.websocket.WebSockets
 import io.ktor.client.plugins.websocket.webSocket
 import io.ktor.client.request.get
@@ -251,8 +250,6 @@ object ListenTogether {
     private val clock = ServerClock(SystemClock::elapsedRealtime)
     private val switchMutex = Mutex()
 
-    private val _messages = MutableStateFlow<List<ChatMessage>>(emptyList())
-    val messages: StateFlow<List<ChatMessage>> = _messages.asStateFlow()
     private val _state = MutableStateFlow(State())
     val state: StateFlow<State> = _state.asStateFlow()
 
@@ -269,7 +266,7 @@ object ListenTogether {
      * will ever show back, because it is the only one the user typed.
      */
     fun parseAndNormalizeServerUrl(raw: String): ServerUrlValidationResult {
-        val trimmed = raw.trim().replace("/api/parties", "").replace("/api/presence", "").trimEnd('/')
+        val trimmed = raw.trim()
         if (trimmed.isEmpty()) return ServerUrlValidationResult.Valid("")
         if (trimmed.any { it.isWhitespace() }) return ServerUrlValidationResult.Invalid(ServerUrlError.Whitespace)
 
@@ -1199,16 +1196,8 @@ object ListenTogether {
 
     // ------------------------------------------------------------- socket --
 
-    fun reconnect() {
-        if (_state.value.connection == Connection.LIVE) return
-        connect()
-    }
-
     private fun connect() {
         socketJob?.cancel()
-        scope.launch {
-            try { session?.close() } catch (e: Exception) {}
-        }
         socketJob = scope.launch { runSocketLoop() }
     }
 
@@ -1243,11 +1232,10 @@ object ListenTogether {
                     }
                 }
             } catch (cancelled: CancellationException) {
-                Log.w(TAG, "party socket cancelled by system while scope is active, restarting...")
+                throw cancelled
             } catch (failure: Exception) {
                 Log.w(TAG, "party socket dropped: ${redact(failure.message)}")
             } finally {
-                try { session?.close() } catch (e: Exception) { /* ignore */ }
                 session = null
             }
             if (!currentScopeActive()) return
@@ -1322,13 +1310,6 @@ object ListenTogether {
         val received = clock.nowMs()
         val frame = runCatching { json.parseToJsonElement(text).jsonObject }.getOrNull() ?: return
         when (frame["type"]?.jsonPrimitive?.content) {
-            "chat" -> {
-                val sender = frame["sender"]?.jsonPrimitive?.content ?: "Unknown"
-                val text = frame["text"]?.jsonPrimitive?.content ?: ""
-                val timestamp = frame["timestamp"]?.jsonPrimitive?.content?.toLongOrNull() ?: System.currentTimeMillis()
-                _messages.update { it + ChatMessage(sender, text, timestamp) }
-            }
-            
             "welcome" -> {
                 val party = frame["party"]?.let {
                     runCatching { json.decodeFromJsonElement(PartySnapshot.serializer(), it) }.getOrNull()
@@ -1428,12 +1409,6 @@ object ListenTogether {
                 val by = frame["by"]?.jsonPrimitive?.content?.takeIf { it.isNotBlank() } ?: return
                 val atMs = frame["atMs"]?.jsonPrimitive?.content?.toLongOrNull() ?: received
                 val detail = frame["detail"]?.jsonPrimitive?.content.orEmpty()
-                
-                if (detail.isNotEmpty()) {
-                    val text = if (detail.startsWith(by)) detail else "$by $detail"
-                    _messages.update { it + ChatMessage("SYSTEM", text, System.currentTimeMillis()) }
-                }
-                
                 recordActivity(PartyActivity(action, by, atMs, detail))
             }
 
@@ -1491,7 +1466,7 @@ object ListenTogether {
      * real account identifiers would be holding something it has no use for.
      */
     private fun identity(nickname: String = nickname()): Identity? {
-        val store = BitChordApplication.authStore
+        val store = AstroTuneApplication.authStore
         if (!store.isSignedIn) return null
         val account = store.activeSession ?: return null
         val profile = account.profiles.firstOrNull { it.profileId == account.activeProfileId }
@@ -1745,16 +1720,4 @@ object ListenTogether {
     private const val HEALTH_MIN_GAP_MS = 5_000L
     private const val REPORT_INTERVAL_MS = 10_000L
     private const val HEALTH_TIMEOUT_MS = 45_000L
-
-    fun sendChatMessage(text: String) {
-        if (text.isBlank()) return
-        val msg = mapOf("type" to "chat", "text" to text)
-        scope.launch {
-            try {
-                // Use the correct socket variable (usually 'session' or 'ws')
-                session?.send(Frame.Text(kotlinx.serialization.json.Json.encodeToString(msg)))
-            } catch (e: Exception) { e.printStackTrace() }
-        }
-    }
-
 }
