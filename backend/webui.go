@@ -6,7 +6,7 @@ import (
 	"html/template"
 	"io/fs"
 	"net/http"
-	"github.com/antyhacker75-cmyk/BitChord/backend/clock"
+	"github.com/antyhacker75-cmyk/AstroTune/backend/clock"
 )
 
 //go:embed web/templates/* web/static/*

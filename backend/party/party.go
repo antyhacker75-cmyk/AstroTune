@@ -8,9 +8,9 @@ import (
 	"sort"
 	"sync"
 
-	"github.com/antyhacker75-cmyk/BitChord/backend/clock"
-	"github.com/antyhacker75-cmyk/BitChord/backend/codes"
-	"github.com/antyhacker75-cmyk/BitChord/backend/config"
+	"github.com/antyhacker75-cmyk/AstroTune/backend/clock"
+	"github.com/antyhacker75-cmyk/AstroTune/backend/codes"
+	"github.com/antyhacker75-cmyk/AstroTune/backend/config"
 )
 
 // PartyError represents an error with an HTTP status code and wire error code.

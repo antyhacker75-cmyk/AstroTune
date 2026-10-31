@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"testing"
 
-	"github.com/antyhacker75-cmyk/BitChord/backend/codes"
-	"github.com/antyhacker75-cmyk/BitChord/backend/config"
+	"github.com/antyhacker75-cmyk/AstroTune/backend/codes"
+	"github.com/antyhacker75-cmyk/AstroTune/backend/config"
 )
 
 func TestCodeNormalisation(t *testing.T) {
