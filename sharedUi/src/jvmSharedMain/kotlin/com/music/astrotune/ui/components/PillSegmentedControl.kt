@@ -1,5 +1,7 @@
 package com.music.astrotune.ui.components
 
+import androidx.compose.ui.graphics.Shape
+
 import androidx.compose.animation.core.AnimationSpec
 import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.animateFloatAsState
