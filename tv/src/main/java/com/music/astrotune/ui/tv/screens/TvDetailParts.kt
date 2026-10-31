@@ -22,7 +22,7 @@ import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import com.music.astrotune.ui.icons.BitChordIcons
+import com.music.astrotune.ui.icons.AstroTuneIcons
 import com.music.astrotune.ui.tv.components.tvClick
 import com.music.astrotune.ui.tv.components.tvInitialFocus
 import com.music.astrotune.ui.tv.components.tvLift
@@ -55,14 +55,14 @@ internal fun TvActionRow(
         verticalAlignment = Alignment.CenterVertically,
     ) {
         TvCircleAction(
-            icon = BitChordIcons.Shuffle,
+            icon = AstroTuneIcons.Shuffle,
             contentDescription = "Shuffle",
             size = 43.dp,
             enabled = canPlay,
             onClick = onShuffle,
         )
         TvCircleAction(
-            icon = BitChordIcons.Play,
+            icon = AstroTuneIcons.Play,
             contentDescription = "Play",
             size = 58.dp,
             iconScale = 0.5f,
