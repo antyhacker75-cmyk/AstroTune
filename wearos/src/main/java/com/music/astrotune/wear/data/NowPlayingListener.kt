@@ -21,7 +21,7 @@ import com.music.astrotune.wear.WearActivity
 import com.music.astrotune.wear.WearProtocol as P
 
 /**
- * Puts AstroTune's own icon on the watch face while the phone plays.
+ * Puts BitChord's own icon on the watch face while the phone plays.
  *
  * The icon Wear OS shows by itself for phone playback belongs to the system's
  * media controller and opens that, whatever app is playing. An Ongoing Activity
@@ -42,7 +42,7 @@ class NowPlayingListener : WearableListenerService() {
         }
     }
 
-    /** A newer build of this app, sent by the phone's "AstroTune for Wear OS" settings. */
+    /** A newer build of this app, sent by the phone's "BitChord for Wear OS" settings. */
     override fun onChannelOpened(channel: ChannelClient.Channel) {
         if (channel.path == P.PATH_APK) SelfUpdate.receive(this, channel)
     }

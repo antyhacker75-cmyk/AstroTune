@@ -4,7 +4,7 @@ The web player and its companion browser extension. The plan, and the decisions 
 
 | Package | What it is |
 |---|---|
-| `app/` | The site: Vite, React 19, TypeScript, React Router, TanStack Query, Zustand, Tailwind CSS v4 |
+| `app/` | The site: Vite, React 19, TypeScript, React Router, TanStack Query, Zustand, CSS Modules |
 | `extension/` | Manifest V3 extension for Chromium and Firefox, built with WXT |
 | `shared/` | The page ↔ extension bridge contract and client, used by both |
 | `docs/` | `apple-music-dom.md` (the design measurements), `kira-notes.md` (how the reference YouTube web client plays), `youtube-playback.md`, `youtube-signin.md`, `queue-and-player.md`, `lyrics.md`, `spotify-and-discord.md` |
@@ -59,11 +59,10 @@ Then open `http://localhost:5173/extension`. It shows "Installed", with the vers
 
 | Variable | Where | Default |
 |---|---|---|
-| `BITCHORD_SITE_ORIGINS` | extension build | `https://bitchord.in,https://bitchord-8bw.pages.dev,http://localhost:5173` (store builds leave out localhost). Comma-separated origins the extension serves; replaces the default |
+| `BITCHORD_SITE_ORIGINS` | extension build | `https://bitchord.in,http://localhost:5173` (store builds: `https://bitchord.in` only). Comma-separated origins the extension serves; replaces the default |
 | `BITCHORD_STORE_BUILD=1` | extension build | Leaves out the dev `key` for a Chrome Web Store upload |
 | `VITE_EXTENSION_ID_CHROMIUM` | app (`app/.env.local`) | The pinned dev id. Set it for a store-built extension |
 | `VITE_ANDROID_APP_URL` | app | The GitHub releases page |
-| `VITE_PARTY_SERVER_URL` | app (`app/.env.local`, Pages env) | None. The Listen Together server; `vite build` fails without it |
 
 ## Deploy (Cloudflare Pages)
 
@@ -72,7 +71,7 @@ Then open `http://localhost:5173/extension`. It shows "Installed", with the vers
 | Root directory | `web` |
 | Build command | `pnpm build:site` |
 | Output directory | `app/dist` |
-| Environment | `NODE_VERSION=22`, `VITE_PARTY_SERVER_URL` |
+| Environment | `NODE_VERSION=22` |
 
 `build:site` packages the extension first, so each deploy publishes the zips and `downloads/extension.json` with the version from `web/extension/package.json`. The Extension page polls that file and offers the update when it's newer than the installed one. Bump that version to make an update show.
 

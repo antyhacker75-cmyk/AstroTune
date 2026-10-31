@@ -16,11 +16,6 @@
          this, so granting it doesn't override a user who turned buzzing off. -->
     <uses-permission android:name="android.permission.VIBRATE" />
 
-    <!-- Bit-perfect output: setting Android 14's preferred mixer attributes
-         for a USB DAC. A normal permission, granted at install. -->
-    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
-    <uses-feature android:name="android.hardware.usb.host" android:required="false" />
-
     <!--
       Asked for only when the output picker is first opened, and only on API 31+
       where it exists. Without it a paired headset is listed by the audio
@@ -29,14 +24,6 @@
       Everything else in the app works without it.
     -->
     <uses-permission android:name="android.permission.BLUETOOTH_CONNECT" />
-    <!--
-      BLUETOOTH_CONNECT's predecessor, granted at install: what reads a paired
-      device's class below API 31, so the player can draw a speaker for a
-      speaker. See AudioRouting.formOf.
-    -->
-    <uses-permission
-        android:name="android.permission.BLUETOOTH"
-        android:maxSdkVersion="30" />
 
     <!--
       In-app updates: handing a downloaded APK to the system installer. The
@@ -61,7 +48,7 @@
         android:maxSdkVersion="28" />
 
     <application
-        android:name=".AstroTuneApplication"
+        android:name=".BitChordApplication"
         android:allowBackup="true"
         android:appCategory="audio"
         android:usesCleartextTraffic="false"
@@ -72,17 +59,8 @@
         android:localeConfig="@xml/locales_config"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.AstroTune"
+        android:theme="@style/Theme.BitChord"
         tools:targetApi="34">
-
-        <!--
-          Lets a release build be sampled with simpleperf or Perfetto from adb,
-          so jank is measured on the build users get rather than on a debug
-          build that is slow for its own reasons. No runtime cost.
-        -->
-        <profileable
-            android:shell="true"
-            tools:targetApi="29" />
 
         <!--
           One UI 7+ only routes an app's ongoing notification to Live
@@ -131,7 +109,7 @@
             android:exported="true"
             android:launchMode="singleTask"
             android:configChanges="orientation|screenSize|screenLayout|smallestScreenSize|keyboardHidden"
-            android:theme="@style/Theme.AstroTune">
+            android:theme="@style/Theme.BitChord">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <!--
@@ -139,7 +117,7 @@
                   the assistant, Android Auto's media list and the OEM pickers
                   that put up "Complete action using" all ask for
                   MAIN/APP_MUSIC by name and list whoever answers — a launcher
-                  entry alone is not enough, which is why AstroTune was missing
+                  entry alone is not enough, which is why BitChord was missing
                   from that dialog while every other player on the device was in
                   it.
                 -->
@@ -173,10 +151,10 @@
               tapped anywhere on the device.
 
               Not autoVerify. Verification is a claim to *own* these domains,
-              which AstroTune doesn't — and on Android 12+ an app that has
+              which BitChord doesn't — and on Android 12+ an app that has
               verified them (the YouTube Music app itself) takes the link
               without a dialog either way. Declaring the filter is what puts
-              AstroTune in the "Open with" list once the user turns YT Music's
+              BitChord in the "Open with" list once the user turns YT Music's
               "Open supported links" off; the SEND filter below is the path
               that always works, because sharing asks rather than routing.
 
@@ -217,7 +195,7 @@
             </intent-filter>
 
             <!-- Public Listen Together invites. autoVerify makes a tap open
-                 AstroTune directly once the domain publishes its assetlinks
+                 BitChord directly once the domain publishes its assetlinks
                  association for the production signing certificate. -->
             <intent-filter android:autoVerify="true">
                 <action android:name="android.intent.action.VIEW" />
@@ -225,7 +203,7 @@
                 <category android:name="android.intent.category.BROWSABLE" />
                 <data
                     android:scheme="https"
-                    android:host="bitchord.kushagrasingh.in"
+                    android:host="bitchord-b96t.onrender.com"
                     android:pathPattern="/invite/......" />
             </intent-filter>
 
@@ -240,7 +218,7 @@
             </intent-filter>
 
             <!--
-              Share → AstroTune, from YT Music's own share sheet or from
+              Share → BitChord, from YT Music's own share sheet or from
               anywhere a link can be sent. The text is whatever the sending app
               wrote around the URL, so the URL is picked out of it rather than
               parsed whole.
@@ -249,24 +227,6 @@
                 <action android:name="android.intent.action.SEND" />
                 <category android:name="android.intent.category.DEFAULT" />
                 <data android:mimeType="text/plain" />
-            </intent-filter>
-
-            <!--
-              "Open with" for an audio file: a file manager, a downloads list, a
-              tapped attachment. Typed rather than matched on extension, which
-              is what every sender actually fills in — and the two Ogg/FLAC
-              spellings are there because some file managers still type those
-              files as applications. Answered by MusicLink.LocalFile.
-            -->
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
-                <category android:name="android.intent.category.DEFAULT" />
-                <data android:scheme="content" />
-                <data android:scheme="file" />
-                <data android:mimeType="audio/*" />
-                <data android:mimeType="application/ogg" />
-                <data android:mimeType="application/x-ogg" />
-                <data android:mimeType="application/x-flac" />
             </intent-filter>
         </activity>
 
@@ -281,20 +241,6 @@
             android:exported="true"
             android:icon="@mipmap/ic_launcher"
             android:roundIcon="@mipmap/ic_launcher"
-            android:label="@string/app_name"
-            android:targetActivity=".MainActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity-alias>
-
-        <activity-alias
-            android:name=".LauncherMonochrome"
-            android:enabled="false"
-            android:exported="true"
-            android:icon="@mipmap/ic_monochrome"
-            android:roundIcon="@mipmap/ic_monochrome"
             android:label="@string/app_name"
             android:targetActivity=".MainActivity">
             <intent-filter>
@@ -471,132 +417,6 @@
             </intent-filter>
         </activity-alias>
 
-        <activity-alias
-            android:name=".LauncherNeonSilver"
-            android:enabled="false"
-            android:exported="true"
-            android:icon="@mipmap/ic_neon_silver"
-            android:roundIcon="@mipmap/ic_neon_silver"
-            android:label="@string/app_name"
-            android:targetActivity=".MainActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity-alias>
-
-        <activity-alias
-            android:name=".LauncherNeonCyan"
-            android:enabled="false"
-            android:exported="true"
-            android:icon="@mipmap/ic_neon_cyan"
-            android:roundIcon="@mipmap/ic_neon_cyan"
-            android:label="@string/app_name"
-            android:targetActivity=".MainActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity-alias>
-
-        <activity-alias
-            android:name=".LauncherNeonViolet"
-            android:enabled="false"
-            android:exported="true"
-            android:icon="@mipmap/ic_neon_violet"
-            android:roundIcon="@mipmap/ic_neon_violet"
-            android:label="@string/app_name"
-            android:targetActivity=".MainActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity-alias>
-
-        <activity-alias
-            android:name=".LauncherSamsungNeonSilver"
-            android:enabled="false"
-            android:exported="true"
-            android:icon="@mipmap/ic_samsung_neon_silver"
-            android:roundIcon="@mipmap/ic_samsung_neon_silver"
-            android:label="@string/app_name"
-            android:targetActivity=".MainActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity-alias>
-
-        <activity-alias
-            android:name=".LauncherSamsungNeonCyan"
-            android:enabled="false"
-            android:exported="true"
-            android:icon="@mipmap/ic_samsung_neon_cyan"
-            android:roundIcon="@mipmap/ic_samsung_neon_cyan"
-            android:label="@string/app_name"
-            android:targetActivity=".MainActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity-alias>
-
-        <activity-alias
-            android:name=".LauncherSamsungNeonViolet"
-            android:enabled="false"
-            android:exported="true"
-            android:icon="@mipmap/ic_samsung_neon_violet"
-            android:roundIcon="@mipmap/ic_samsung_neon_violet"
-            android:label="@string/app_name"
-            android:targetActivity=".MainActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity-alias>
-
-        <activity-alias
-            android:name=".LauncherPixelNeonSilver"
-            android:enabled="false"
-            android:exported="true"
-            android:icon="@mipmap/ic_pixel_neon_silver"
-            android:roundIcon="@mipmap/ic_pixel_neon_silver"
-            android:label="@string/app_name"
-            android:targetActivity=".MainActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity-alias>
-
-        <activity-alias
-            android:name=".LauncherPixelNeonCyan"
-            android:enabled="false"
-            android:exported="true"
-            android:icon="@mipmap/ic_pixel_neon_cyan"
-            android:roundIcon="@mipmap/ic_pixel_neon_cyan"
-            android:label="@string/app_name"
-            android:targetActivity=".MainActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity-alias>
-
-        <activity-alias
-            android:name=".LauncherPixelNeonViolet"
-            android:enabled="false"
-            android:exported="true"
-            android:icon="@mipmap/ic_pixel_neon_violet"
-            android:roundIcon="@mipmap/ic_pixel_neon_violet"
-            android:label="@string/app_name"
-            android:targetActivity=".MainActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity-alias>
-
         <service
             android:name=".playback.PlaybackService"
             android:exported="true"
@@ -609,7 +429,7 @@
         </service>
 
         <!--
-          Commands from the AstroTune watch app (wearos/). Exported because Play
+          Commands from the BitChord watch app (wearos/). Exported because Play
           services binds it; only messages from the same package and signing key
           on a paired watch are ever delivered, and only under this path.
         -->
@@ -649,26 +469,6 @@
             android:name=".download.DownloadService"
             android:exported="false"
             android:foregroundServiceType="dataSync" />
-
-        <!-- The tap on a "new songs in this playlist" notification. See PlaylistSync. -->
-        <receiver
-            android:name=".download.PlaylistSyncApproval"
-            android:exported="false" />
-
-        <!--
-          WorkManager comes up on first use instead of at every launch, since the
-          one thing using it is a setting that is off by default.
-        -->
-        <provider
-            android:name="androidx.startup.InitializationProvider"
-            android:authorities="${applicationId}.androidx-startup"
-            android:exported="false"
-            tools:node="merge">
-            <meta-data
-                android:name="androidx.work.WorkManagerInitializer"
-                android:value="androidx.startup"
-                tools:node="remove" />
-        </provider>
 
         <!--
           Home-screen widgets. Two providers so the picker lists a 2×2 and a 4×2,

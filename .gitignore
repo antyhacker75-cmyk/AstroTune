@@ -3,6 +3,7 @@
 .vscode/
 /build/
 /app/build/
+/desktopApp/bin/
 build/
 gradle-app.setting
 !gradle-wrapper.jar
@@ -48,5 +49,6 @@ AGENTS.md
 *.apk
 *.aab
 
-# Claude Code session files (launch configs, worktrees)
-.claude/
+bitchord-release.jks
+keystore.base64.txt
+*.patch

@@ -1,12 +1,13 @@
 import { PageHeader } from '@/components/PageHeader';
 import { SquareLockup } from '@/components/music/Lockups';
-import { EmptyState, LoadError, NeedsExtension, stateStyles } from '@/components/music/States';
+import { EmptyState, LoadError, NeedsExtension } from '@/components/music/States';
+import states from '@/components/music/States.module.css';
 import type { MusicItem } from '@/data/music/types';
 import { useSpotifyPlaylists } from '@/data/spotify/queries';
 import { useExtension } from '@/extension/useExtension';
 import { openSpotifySignIn, useRefreshSpotifyAuth, useSetSpotifyConnected, useSpotifyAuth } from '@/extension/useSpotifyAuth';
 import { PlainSkeleton } from '@/skeletons/PageSkeletons';
-import { seeAllGrid } from './pageStyles';
+import styles from './BrowsePage.module.css';
 
 /**
  * The signed-in Spotify account's playlists (SpotifyLibraryScreen): this page
@@ -40,11 +41,11 @@ export default function SpotifyPage() {
     return (
       <>
         <PageHeader title="Spotify" />
-        <div className={stateStyles.state}>
-          <p className={stateStyles.title}>{title}</p>
-          <p className={stateStyles.detail}>{detail}</p>
+        <div className={states.state}>
+          <p className={states.title}>{title}</p>
+          <p className={states.detail}>{detail}</p>
           <button
-            className={stateStyles.button}
+            className={states.button}
             disabled={connect.isPending || retry.isPending}
             onClick={() =>
               !state.browserSignedIn ? openSpotifySignIn() : !state.connected ? connect.mutate(true) : retry.mutate()
@@ -75,7 +76,7 @@ export default function SpotifyPage() {
     <>
       <PageHeader title="Spotify" />
       {!items.length && <EmptyState title="No playlists yet" />}
-      <ul className={seeAllGrid}>
+      <ul className={styles.grid}>
         {items.map((item) => (
           <li key={item.id}>
             <SquareLockup item={item} />

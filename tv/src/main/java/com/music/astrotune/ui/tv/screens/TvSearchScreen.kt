@@ -118,7 +118,7 @@ fun TvSearchScreen(
                     BrowseType.ALBUM -> EntityType.ALBUM
                     BrowseType.ARTIST -> EntityType.ARTIST
                     BrowseType.PLAYLIST -> EntityType.PLAYLIST
-                    BrowseType.OTHER -> EntityType.OTHER
+                    else -> EntityType.TRACK
                 },
             ),
         )
@@ -270,7 +270,7 @@ private fun LazyListScope.idleContent(
     if (history.isEmpty()) {
         item(key = "idleEmpty") {
             TvEmptyState(
-                title = "Search AstroTune",
+                title = "Search BitChord",
                 message = "Find songs, albums, artists and playlists.",
                 modifier = Modifier.height(240.dp),
             )

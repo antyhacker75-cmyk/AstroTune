@@ -12,7 +12,7 @@ export const useSpotifySettings = create<{ canvas: boolean; setCanvas: (on: bool
 );
 
 const reducedMotion = typeof matchMedia === 'function' ? matchMedia('(prefers-reduced-motion: reduce)') : null;
-export function useReducedMotion(): boolean {
+function useReducedMotion(): boolean {
   return useSyncExternalStore(
     (onChange) => {
       reducedMotion?.addEventListener('change', onChange);
@@ -23,7 +23,7 @@ export function useReducedMotion(): boolean {
 }
 
 /** Save-Data, or a cellular link where the browser says so (Network Information API, Chromium only). */
-export function metered(): boolean {
+function metered(): boolean {
   const connection = (navigator as Navigator & { connection?: { saveData?: boolean; type?: string } }).connection;
   return !!connection?.saveData || connection?.type === 'cellular';
 }

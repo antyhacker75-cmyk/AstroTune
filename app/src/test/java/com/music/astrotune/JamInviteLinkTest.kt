@@ -37,7 +37,7 @@ class JamInviteLinkTest {
 
     @Test
     fun `rejects other hosts schemes paths and malformed codes`() {
-        assertNull(JamInviteLink.parse("http://bitchord.kushagrasingh.in/invite/ABC123"))
+        assertNull(JamInviteLink.parse("http://bitchord-b96t.onrender.com/invite/ABC123"))
         assertNull(JamInviteLink.parse("https://example.com/invite/ABC123"))
         assertNull(JamInviteLink.parse("https://bitchord-b96t.onrender.com/"))
         assertNull(JamInviteLink.parse("https://bitchord-b96t.onrender.com/download"))

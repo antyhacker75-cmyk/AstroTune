@@ -44,7 +44,7 @@ object WearType {
 }
 
 @Composable
-fun AstroTuneWearTheme(content: @Composable () -> Unit) {
+fun BitChordWearTheme(content: @Composable () -> Unit) {
     MaterialTheme(
         colorScheme = ColorScheme(
             primary = Color.White,

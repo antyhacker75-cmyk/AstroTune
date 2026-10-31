@@ -1,7 +1,6 @@
 import type { YTMusic, YTNodes } from 'youtubei.js/web';
 import type { Candidate } from '@/playback/queue/builder';
 import { getInnertube, getMusicClient, getSignedInnertube } from '@/playback/youtube/innertube';
-import { isExactArtistMatch, normalizedArtistName } from '@/lib/artistCredits';
 import { LIBRARY_SECTIONS, LIKED_MUSIC_PLAYLIST, type LibrarySection } from './library';
 import {
   mapAlbum,
@@ -306,89 +305,41 @@ function isMusicVideo(item: YTNodes.PlaylistPanelVideo): boolean {
   return type !== undefined ? type !== 'MUSIC_VIDEO_TYPE_ATV' : !item.album;
 }
 
-/** A station, and which cut it was seeded on: a music video's station is built from music videos. */
-export interface Radio {
-  candidates: Candidate[];
-  /** [videoId] is itself a music video, not the catalogue song. */
-  seedIsVideo: boolean;
-}
-
 /**
  * The radio YouTube Music would play after [videoId]: its "RDAMVM" mix, as
  * Innertube.next asks for it on the phone. Signed in it's the user's own
- * station.
- *
- * Most rows carry both cuts of a track, and which one is taken follows what
- * is playing: a music video's station stays on music videos, a song's on the
- * catalogue cuts. The seed's own row says which of the two it is.
+ * station. Music videos are flagged so the station builder can prefer the
+ * catalogue cut (QueueBuilder).
  */
-export async function fetchRadio(videoId: string): Promise<Radio> {
+export async function fetchRadio(videoId: string): Promise<Candidate[]> {
   const yt = await getMusicClient();
   const panel = await yt.music.getUpNext(videoId, true);
-  const rows = panel.contents as unknown as Raw[];
-  const seedCut = rows.flatMap(panelCuts).find((cut) => cut.video_id === videoId);
-  const seedIsVideo = seedCut ? isMusicVideo(seedCut) : false;
-  return {
-    candidates: rows.map((raw) => panelCandidate(raw, seedIsVideo)).filter((c): c is Candidate => c !== null),
-    seedIsVideo,
-  };
-}
-
-/**
- * A watch-queue row's cuts. A wrapper pairs the two cuts of one track (song
- * and music video), with either as its primary.
- */
-function panelCuts(raw: Raw): YTNodes.PlaylistPanelVideo[] {
-  const cuts = (raw.type === 'PlaylistPanelVideoWrapper'
-    ? [raw.primary, ...((raw.counterpart as unknown[] | undefined) ?? [])]
-    : [raw]) as (YTNodes.PlaylistPanelVideo | null | undefined)[];
-  return cuts.filter((c): c is YTNodes.PlaylistPanelVideo => c?.type === 'PlaylistPanelVideo');
-}
-
-/** One watch-queue row as a track: the catalogue song (the cut with an album), or its music video for [wantVideo]. */
-function panelCandidate(raw: Raw, wantVideo = false): Candidate | null {
-  const panelVideos = panelCuts(raw);
-  const item = panelVideos.find((c) => isMusicVideo(c) === wantVideo) ?? panelVideos[0];
-  if (!item?.video_id) return null;
-  const thumbs = [...(item.thumbnail ?? [])].sort((a, b) => b.width - a.width);
-  return {
-    track: {
-      videoId: item.video_id,
-      title: item.title?.toString() ?? '',
-      artists: (item.artists ?? []).map((a) => ({ name: a.name, id: a.channel_id ?? null })),
-      album: item.album ? { name: item.album.name, id: item.album.id ?? null } : null,
-      durationSec: item.duration?.seconds || null,
-      explicit: (item.badges ?? []).some((b) => /explicit/i.test(JSON.stringify(b))),
-      thumbnail: thumbs[0]?.url ?? null,
-      index: null,
-      plays: null,
-    },
-    isVideo: isMusicVideo(item),
-  };
-}
-
-// ---- Player links ---------------------------------------------------------------
-
-/**
- * The album and artist pages a track links out to (YtMusicRepository.trackLinks).
- * Queue rows from home cards often lack them; the track's own watch-queue
- * entry always names both.
- */
-export async function fetchTrackLinks(videoId: string): Promise<Track | null> {
-  const yt = await getMusicClient();
-  const panel = await yt.music.getUpNext(videoId, false);
-  // The row holding this video, by either of its cuts; its catalogue cut names the album.
-  const row = (panel.contents as unknown as Raw[]).find((raw) => panelCuts(raw).some((cut) => cut.video_id === videoId));
-  return (row && panelCandidate(row)?.track) ?? null;
-}
-
-/**
- * The page of the artist called exactly [name] (YtMusicRepository.findArtistPageId):
- * a name is not an identity, so only a result that answers to it exactly is
- * opened, never the nearest one.
- */
-export async function findArtistPageId(name: string): Promise<string | null> {
-  if (!normalizedArtistName(name)) return null;
-  const results = await fetchSearch(name);
-  return [...results.top, ...results.artists].find((item) => item.kind === 'artist' && isExactArtistMatch(item.title, name))?.id ?? null;
+  const out: Candidate[] = [];
+  for (const raw of panel.contents as unknown as Raw[]) {
+    // A wrapper pairs the two cuts of one track (song and music video), with
+    // either as its primary; take the catalogue song (the one with an album).
+    const cuts = (raw.type === 'PlaylistPanelVideoWrapper'
+      ? [raw.primary, ...((raw.counterpart as unknown[] | undefined) ?? [])]
+      : [raw]) as (YTNodes.PlaylistPanelVideo | null | undefined)[];
+    const panelVideos = cuts.filter((c): c is YTNodes.PlaylistPanelVideo => c?.type === 'PlaylistPanelVideo');
+    const item = panelVideos.find((c) => !isMusicVideo(c)) ?? panelVideos[0];
+    if (!item) continue;
+    if (!item.video_id) continue;
+    const thumbs = [...(item.thumbnail ?? [])].sort((a, b) => b.width - a.width);
+    out.push({
+      track: {
+        videoId: item.video_id,
+        title: item.title?.toString() ?? '',
+        artists: (item.artists ?? []).map((a) => ({ name: a.name, id: a.channel_id ?? null })),
+        album: item.album ? { name: item.album.name, id: item.album.id ?? null } : null,
+        durationSec: item.duration?.seconds || null,
+        explicit: (item.badges ?? []).some((b) => /explicit/i.test(JSON.stringify(b))),
+        thumbnail: thumbs[0]?.url ?? null,
+        index: null,
+        plays: null,
+      },
+      isVideo: isMusicVideo(item),
+    });
+  }
+  return out;
 }

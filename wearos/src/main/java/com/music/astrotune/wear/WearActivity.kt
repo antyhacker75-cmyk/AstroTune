@@ -24,7 +24,7 @@ import androidx.wear.ambient.AmbientLifecycleObserver
 import com.music.astrotune.wear.ui.Ambient
 import com.music.astrotune.wear.ui.LocalAmbient
 import com.music.astrotune.wear.data.PhoneLink
-import com.music.astrotune.wear.ui.AstroTuneWearTheme
+import com.music.astrotune.wear.ui.BitChordWearTheme
 import com.music.astrotune.wear.ui.WearApp
 
 class WearViewModel(app: Application) : AndroidViewModel(app) {
@@ -95,7 +95,7 @@ class WearActivity : ComponentActivity() {
             }
         }
         setContent {
-            AstroTuneWearTheme {
+            BitChordWearTheme {
                 CompositionLocalProvider(LocalAmbient provides ambient.value) {
                     WearApp(model.link)
                 }
