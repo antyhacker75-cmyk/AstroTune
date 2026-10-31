@@ -1,6 +1,12 @@
 name: Check
 
 on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
 jobs:
   android:
     name: Android
@@ -57,5 +63,7 @@ jobs:
           cache-dependency-path: backend/go.sum
 
       - run: go build ./...
+
       - run: go vet ./...
+
       - run: go test ./...
