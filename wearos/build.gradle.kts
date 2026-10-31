@@ -7,7 +7,7 @@ plugins {
 }
 
 /*
- * BitChord for Wear OS: a remote for the phone app, not a second player.
+ * AstroTune for Wear OS: a remote for the phone app, not a second player.
  *
  * It holds no library, streams nothing and runs no Palette or blur of its own —
  * the phone sends it what is playing, the cover as a 240px JPEG, and the mesh
@@ -16,7 +16,7 @@ plugins {
  *
  * It has to share the phone app's application id *and* signing key, because the
  * Wearable Data Layer only delivers between apps that match on both. So:
- *   dev  -> com.dev.bitchord   pairs only with the phone's dev build
+ *   dev  -> com.dev.astrotune   pairs only with the phone's dev build
  *   prod -> com.music.astrotune pairs only with the phone's prod build
  * and each build type is signed exactly the way the phone's is (debug key for
  * debug, the release keystore for release), so a watch build pairs with the
@@ -53,12 +53,12 @@ android {
     productFlavors {
         create("dev") {
             dimension = "env"
-            applicationId = "com.dev.bitchord"
-            resValue("string", "app_name", "BitChord Dev")
+            applicationId = "com.dev.astrotune"
+            resValue("string", "app_name", "AstroTune Dev")
         }
         create("prod") {
             dimension = "env"
-            resValue("string", "app_name", "BitChord")
+            resValue("string", "app_name", "AstroTune")
         }
     }
 
@@ -136,10 +136,10 @@ kotlin {
     }
 }
 
-// Named after the phone APKs (BitChord-v1.8.apk) but with their own prefix, so
-// the phone's updater — which only takes assets starting "BitChord-" — can never
+// Named after the phone APKs (AstroTune-v1.8.apk) but with their own prefix, so
+// the phone's updater — which only takes assets starting "AstroTune-" — can never
 // pick a watch APK by mistake.
-base.archivesName.set("BitChordWear")
+base.archivesName.set("AstroTuneWear")
 
 dependencies {
     implementation("androidx.wear.compose:compose-material3:1.6.2")
