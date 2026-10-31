@@ -159,6 +159,3 @@ AstroTune is an independent, community-driven third-party audio player and clien
 This project is licensed under the **GNU General Public License v3.0 (GPLv3)**. See the [LICENSE](LICENSE) file for details.
 
 </div>
-
-
-that should be sociobuzz
