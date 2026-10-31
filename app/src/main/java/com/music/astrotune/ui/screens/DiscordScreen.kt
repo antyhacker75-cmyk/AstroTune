@@ -327,7 +327,7 @@ fun DiscordScreen(
                     SettingsRow(
                         icon = SfIcons.Label,
                         title = stringResource(R.string.name),
-                        subtitle = activityName.ifEmpty { appName() },
+                        subtitle = if (song != null) DiscordRPC.resolveVariables(activityName.ifEmpty { appName() }, song) else activityName.ifEmpty { appName() },
                         onClick = { onOpenDialog(DiscordDialog.ACTIVITY_NAME) },
                     )
                 }
@@ -373,7 +373,7 @@ fun DiscordScreen(
                 song = song,
                 positionMs = positionMs,
                 durationMs = durationMs,
-                heading = activityName.ifEmpty { appName() },
+                heading = if (song != null) DiscordRPC.resolveVariables(activityName.ifEmpty { appName() }, song) else activityName.ifEmpty { appName() },
                 verb = kindOf(activityType).localizedVerb(),
                 useDetails = useDetails,
                 audioQuality = discordAudioQualityLine(nerdStats).takeIf { showAudioQuality },
@@ -637,12 +637,14 @@ private fun RichPresencePreview(
         }
         if (button2Visible) {
             Spacer(Modifier.height(8.dp))
+            val partyCode = com.music.astrotune.data.listentogether.ListenTogether.state.value.code
+            val isPartyActive = partyCode != null
             PresenceButton(
-                label = resolved(button2Text, DiscordRPC.DEFAULT_BUTTON_2),
+                label = if (isPartyActive) "Join Party" else resolved(button2Text, DiscordRPC.DEFAULT_BUTTON_2),
                 enabled = true,
                 onClick = {
                     context.startActivity(
-                        Intent(Intent.ACTION_VIEW, DiscordRPC.PROJECT_URL.toUri()),
+                        Intent(Intent.ACTION_VIEW, (if (isPartyActive) "https://bitchord-b96t.onrender.com/invite/$partyCode" else DiscordRPC.PROJECT_URL).toUri()),
                     )
                 },
             )

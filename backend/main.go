@@ -949,6 +949,18 @@ func handleSocketFrame(p *party.Party, member *party.Member, sc *hub.SafeConn, f
 	member.LastSeenMs = clock.NowMs()
 
 	switch kind {
+case "chat":
+			text, _ := frame["text"].(string)
+			if text != "" {
+				chatFrame := map[string]interface{}{
+					"type":      protocol.FrameChat,
+					"sender":    member.DisplayName,
+					"text":      text,
+					"timestamp": clock.NowMs(),
+				}
+				hubInst.Broadcast(p.Code, chatFrame, "")
+			}
+		
 	case protocol.FramePing:
 		_ = sc.WriteJSON(map[string]interface{}{
 			"type":     protocol.FramePong,

@@ -250,6 +250,9 @@ object ListenTogether {
     private val clock = ServerClock(SystemClock::elapsedRealtime)
     private val switchMutex = Mutex()
 
+    private val _messages = MutableStateFlow<List<ChatMessage>>(emptyList())
+    val messages: StateFlow<List<ChatMessage>> = _messages.asStateFlow()
+
     private val _state = MutableStateFlow(State())
     val state: StateFlow<State> = _state.asStateFlow()
 
@@ -1310,6 +1313,13 @@ object ListenTogether {
         val received = clock.nowMs()
         val frame = runCatching { json.parseToJsonElement(text).jsonObject }.getOrNull() ?: return
         when (frame["type"]?.jsonPrimitive?.content) {
+            "chat" -> {
+                val sender = frame["sender"]?.jsonPrimitive?.content ?: "Unknown"
+                val text = frame["text"]?.jsonPrimitive?.content ?: ""
+                val timestamp = frame["timestamp"]?.jsonPrimitive?.content?.toLongOrNull() ?: System.currentTimeMillis()
+                _messages.update { it + ChatMessage(sender, text, timestamp) }
+            }
+            
             "welcome" -> {
                 val party = frame["party"]?.let {
                     runCatching { json.decodeFromJsonElement(PartySnapshot.serializer(), it) }.getOrNull()
@@ -1720,4 +1730,14 @@ object ListenTogether {
     private const val HEALTH_MIN_GAP_MS = 5_000L
     private const val REPORT_INTERVAL_MS = 10_000L
     private const val HEALTH_TIMEOUT_MS = 45_000L
+
+    fun sendChatMessage(text: String) {
+        if (text.isBlank()) return
+        val msg = mapOf("type" to "chat", "text" to text)
+        scope.launch {
+            try {
+                session?.send(Frame.Text(kotlinx.serialization.json.Json.encodeToString(msg)))
+            } catch (e: Exception) { e.printStackTrace() }
+        }
+    }
 }
