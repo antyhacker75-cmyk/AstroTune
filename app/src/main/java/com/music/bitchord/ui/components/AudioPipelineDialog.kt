@@ -1,4 +1,4 @@
-package com.music.bitchord.ui.components
+package com.music.astrotune.ui.components
 
 import android.media.AudioFormat
 import android.provider.Settings
@@ -61,13 +61,13 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.music.bitchord.R
-import com.music.bitchord.data.NerdStats
-import com.music.bitchord.data.settings.AppSettings
-import com.music.bitchord.playback.AudioOutputStatus
-import com.music.bitchord.playback.audio.bitperfect.BitPerfectOutput
-import com.music.bitchord.playback.dsd.DsdFilter
-import com.music.bitchord.playback.dsd.DsdFormat
+import com.music.astrotune.R
+import com.music.astrotune.data.NerdStats
+import com.music.astrotune.data.settings.AppSettings
+import com.music.astrotune.playback.AudioOutputStatus
+import com.music.astrotune.playback.audio.bitperfect.BitPerfectOutput
+import com.music.astrotune.playback.dsd.DsdFilter
+import com.music.astrotune.playback.dsd.DsdFormat
 import dev.chrisbanes.haze.HazeState
 import kotlinx.coroutines.isActive
 import java.util.Locale
@@ -131,7 +131,7 @@ private fun bitExactVerdict(
 
 /**
  * Full audio playback pipeline inspection surface, opened from the "Audio Pipeline"
- * row at the bottom of [com.music.bitchord.ui.player.AudioOutputSheet].
+ * row at the bottom of [com.music.astrotune.ui.player.AudioOutputSheet].
  *
  * Displays live, authoritative details for each stage in the audio pipeline:
  * Track Info -> Decoder -> Resampler -> DSP -> Output Device.
@@ -520,7 +520,7 @@ fun AudioPipelineDialog(
                     PipelineNote("Reported by Android for the connected USB device. This describes device capabilities and may differ from the active playback format.")
                 }
 
-                if (outputStatus.routeKind == com.music.bitchord.playback.AudioRouting.Kind.BLUETOOTH) {
+                if (outputStatus.routeKind == com.music.astrotune.playback.AudioRouting.Kind.BLUETOOTH) {
                     val bt = outputStatus.bluetoothTelemetry
                     outputStatus.bluetoothProfile?.let { PipelineRow("Bluetooth", it) }
                     if (bt != null && bt.isConnected) {
@@ -534,7 +534,7 @@ fun AudioPipelineDialog(
                     }
                 }
 
-                if (outputStatus.fallbackReason != com.music.bitchord.playback.audio.FallbackReason.NONE) {
+                if (outputStatus.fallbackReason != com.music.astrotune.playback.audio.FallbackReason.NONE) {
                     val fallbackText = outputStatus.fallbackDetail ?: outputStatus.fallbackReason.label
                     PipelineRow("Fallback", fallbackText)
                 }

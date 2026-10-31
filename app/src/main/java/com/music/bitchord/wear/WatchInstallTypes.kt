@@ -1,4 +1,4 @@
-package com.music.bitchord.wear
+package com.music.astrotune.wear
 
 /**
  * What Settings → "BitChord for Wear OS" draws, kept apart from

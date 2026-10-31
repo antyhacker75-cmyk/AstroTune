@@ -1,12 +1,12 @@
-package com.music.bitchord.download
+package com.music.astrotune.download
 
-import com.music.bitchord.data.DebugLog as Log
-import com.music.bitchord.data.lyrics.LyricsRepository
-import com.music.bitchord.data.lyrics.toEnhancedLrc
-import com.music.bitchord.data.lyrics.toLrc
-import com.music.bitchord.data.model.Song
-import com.music.bitchord.data.model.durationMillis
-import com.music.bitchord.data.settings.AppSettings
+import com.music.astrotune.data.DebugLog as Log
+import com.music.astrotune.data.lyrics.LyricsRepository
+import com.music.astrotune.data.lyrics.toEnhancedLrc
+import com.music.astrotune.data.lyrics.toLrc
+import com.music.astrotune.data.model.Song
+import com.music.astrotune.data.model.durationMillis
+import com.music.astrotune.data.settings.AppSettings
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.withTimeoutOrNull
 
@@ -50,7 +50,7 @@ internal object LyricsTag {
      * other player looks. [enhanced] is the same lines with their word timings
      * kept, in a field only this app reads — null when the source was
      * line-synced and there was nothing extra to say. See
-     * [toEnhancedLrc][com.music.bitchord.data.lyrics.toEnhancedLrc] for why
+     * [toEnhancedLrc][com.music.astrotune.data.lyrics.toEnhancedLrc] for why
      * they are two fields rather than one.
      */
     internal class Embeddable(val plain: String, val enhanced: String?)

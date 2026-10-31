@@ -1,4 +1,4 @@
-package com.music.bitchord.playback
+package com.music.astrotune.playback
 
 import androidx.media3.common.MimeTypes
 import java.util.concurrent.ConcurrentHashMap

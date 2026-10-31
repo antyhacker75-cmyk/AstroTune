@@ -1,13 +1,13 @@
-package com.music.bitchord.playback
+package com.music.astrotune.playback
 
-import com.music.bitchord.data.NerdStats
-import com.music.bitchord.data.TrackLog
-import com.music.bitchord.data.listentogether.ListenTogether
-import com.music.bitchord.data.settings.AppSettings
-import com.music.bitchord.data.sources.SourceResolver
-import com.music.bitchord.data.sources.SourceStream
-import com.music.bitchord.data.sources.StreamFormat
-import com.music.bitchord.data.sources.TrackMatcher
+import com.music.astrotune.data.NerdStats
+import com.music.astrotune.data.TrackLog
+import com.music.astrotune.data.listentogether.ListenTogether
+import com.music.astrotune.data.settings.AppSettings
+import com.music.astrotune.data.sources.SourceResolver
+import com.music.astrotune.data.sources.SourceStream
+import com.music.astrotune.data.sources.StreamFormat
+import com.music.astrotune.data.sources.TrackMatcher
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.CoroutineStart
 import kotlinx.coroutines.Deferred

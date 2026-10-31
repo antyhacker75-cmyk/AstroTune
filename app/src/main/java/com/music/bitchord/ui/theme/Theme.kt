@@ -1,4 +1,4 @@
-package com.music.bitchord.ui.theme
+package com.music.astrotune.ui.theme
 
 import android.app.Activity
 import androidx.compose.foundation.isSystemInDarkTheme
@@ -16,8 +16,8 @@ import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
-import com.music.bitchord.R
-import com.music.bitchord.data.settings.AppFont
+import com.music.astrotune.R
+import com.music.astrotune.data.settings.AppFont
 
 // Apple Music's signature red. No longer the primary accent, but kept for the
 // spots (Replay's rank badge) that want that specific red regardless of theme.

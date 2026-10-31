@@ -1,7 +1,7 @@
-package com.music.bitchord.data.canvas
+package com.music.astrotune.data.canvas
 
-import com.music.bitchord.data.DebugLog as Log
-import com.music.bitchord.data.Http
+import com.music.astrotune.data.DebugLog as Log
+import com.music.astrotune.data.Http
 import com.google.protobuf.CodedInputStream
 import com.google.protobuf.CodedOutputStream
 import kotlinx.serialization.json.Json

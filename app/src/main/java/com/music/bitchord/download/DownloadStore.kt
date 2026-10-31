@@ -1,4 +1,4 @@
-package com.music.bitchord.download
+package com.music.astrotune.download
 
 import android.content.ContentValues
 import android.content.Context
@@ -7,10 +7,10 @@ import android.net.Uri
 import android.os.Build
 import android.os.Environment
 import android.provider.MediaStore
-import com.music.bitchord.data.DebugLog as Log
-import com.music.bitchord.data.settings.AppSettings
+import com.music.astrotune.data.DebugLog as Log
+import com.music.astrotune.data.settings.AppSettings
 import androidx.annotation.RequiresApi
-import com.music.bitchord.data.model.Song
+import com.music.astrotune.data.model.Song
 import java.io.File
 import java.io.OutputStream
 import java.util.Locale

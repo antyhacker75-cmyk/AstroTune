@@ -1,4 +1,4 @@
-package com.music.bitchord.ui.screens
+package com.music.astrotune.ui.screens
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -8,17 +8,17 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.music.bitchord.R
-import com.music.bitchord.data.canvas.ArtistSignatureRepository
-import com.music.bitchord.data.settings.AppSettings
-import com.music.bitchord.ui.components.AddonEditorAlert
+import com.music.astrotune.R
+import com.music.astrotune.data.canvas.ArtistSignatureRepository
+import com.music.astrotune.data.settings.AppSettings
+import com.music.astrotune.ui.components.AddonEditorAlert
 import dev.chrisbanes.haze.HazeState
 import kotlinx.coroutines.launch
 
 /**
  * The artist-signature API's address, on the card an addon is added with.
  *
- * **Mounted from [MainActivity][com.music.bitchord.MainActivity], not from the
+ * **Mounted from [MainActivity][com.music.astrotune.MainActivity], not from the
  * settings sheet, and it has to stay that way** — see [PartyServerEditor] for why
  * a haze card cannot live inside a screen.
  *

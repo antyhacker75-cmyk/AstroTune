@@ -1,22 +1,22 @@
-package com.music.bitchord.download
+package com.music.astrotune.download
 
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.media.MediaMetadataRetriever
 import android.net.Uri
-import com.music.bitchord.data.DebugLog as Log
+import com.music.astrotune.data.DebugLog as Log
 import androidx.core.content.ContextCompat
-import com.music.bitchord.data.innertube.StreamResolver
-import com.music.bitchord.data.model.Song
-import com.music.bitchord.data.settings.AppSettings
-import com.music.bitchord.data.settings.DownloadQuality
-import com.music.bitchord.data.sources.SourceRegistry
-import com.music.bitchord.data.sources.SourceResolver
-import com.music.bitchord.data.sources.SourceStream
-import com.music.bitchord.data.sources.StreamFormat
-import com.music.bitchord.data.sources.TrackMatcher
-import com.music.bitchord.playback.AudioCache
+import com.music.astrotune.data.innertube.StreamResolver
+import com.music.astrotune.data.model.Song
+import com.music.astrotune.data.settings.AppSettings
+import com.music.astrotune.data.settings.DownloadQuality
+import com.music.astrotune.data.sources.SourceRegistry
+import com.music.astrotune.data.sources.SourceResolver
+import com.music.astrotune.data.sources.SourceStream
+import com.music.astrotune.data.sources.StreamFormat
+import com.music.astrotune.data.sources.TrackMatcher
+import com.music.astrotune.playback.AudioCache
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.Dispatchers

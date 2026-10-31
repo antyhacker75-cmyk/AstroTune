@@ -1,4 +1,4 @@
-package com.music.bitchord.ui.components.backdrop.backdrops
+package com.music.astrotune.ui.components.backdrop.backdrops
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
@@ -22,8 +22,8 @@ import androidx.compose.ui.layout.positionInWindow
 import androidx.compose.ui.platform.LocalGraphicsContext
 import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.IntSize
-import com.music.bitchord.ui.components.backdrop.Backdrop
-import com.music.bitchord.ui.components.backdrop.internal.InverseLayerScope
+import com.music.astrotune.ui.components.backdrop.Backdrop
+import com.music.astrotune.ui.components.backdrop.internal.InverseLayerScope
 import kotlinx.coroutines.launch
 import kotlin.math.roundToInt
 

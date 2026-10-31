@@ -1,6 +1,6 @@
-package com.music.bitchord.data.canvas
+package com.music.astrotune.data.canvas
 
-import com.music.bitchord.data.DebugLog as Log
+import com.music.astrotune.data.DebugLog as Log
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.contentOrNull

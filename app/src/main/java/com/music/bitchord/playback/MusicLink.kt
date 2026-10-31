@@ -1,4 +1,4 @@
-package com.music.bitchord.playback
+package com.music.astrotune.playback
 
 import android.app.SearchManager
 import android.content.Intent
@@ -32,7 +32,7 @@ sealed interface LinkRequest {
     /**
      * An audio file another app asked to have played — "Open with" from a file
      * manager, a tapped attachment — by the `content://` or `file://` uri it
-     * handed over. See [com.music.bitchord.data.LocalMediaRepository.songFromUri].
+     * handed over. See [com.music.astrotune.data.LocalMediaRepository.songFromUri].
      */
     data class LocalFile(val uri: Uri) : LinkRequest
 }
@@ -42,7 +42,7 @@ sealed interface LinkRequest {
  *
  * The same relay [PlayerDeepLink] is, and for the same reason: what has to
  * happen — start a queue, push a page, run a search — is all inside
- * `BitChordApp`'s composition, which [MainActivity][com.music.bitchord.MainActivity]
+ * `BitChordApp`'s composition, which [MainActivity][com.music.astrotune.MainActivity]
  * has no handle on. The activity reads the intent, this holds the answer, and
  * the composition serves it once its controller and view model exist.
  *

@@ -1,4 +1,4 @@
-package com.music.bitchord.ui.components
+package com.music.astrotune.ui.components
 
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.AnimatedVisibility
@@ -32,7 +32,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.CornerBasedShape
 import androidx.compose.material.icons.Icons
-import com.music.bitchord.ui.icons.SfIcons
+import com.music.astrotune.ui.icons.SfIcons
 import androidx.compose.material.icons.rounded.Person
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
@@ -71,10 +71,10 @@ import androidx.compose.ui.unit.max
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil3.compose.AsyncImage
 import kotlinx.coroutines.launch
-import com.music.bitchord.R
-import com.music.bitchord.data.model.Account
-import com.music.bitchord.data.settings.AppSettings
-import com.music.bitchord.ui.theme.stableStatusBarInsets
+import com.music.astrotune.R
+import com.music.astrotune.data.model.Account
+import com.music.astrotune.data.settings.AppSettings
+import com.music.astrotune.ui.theme.stableStatusBarInsets
 import dev.chrisbanes.haze.HazeState
 import dev.chrisbanes.haze.materials.ExperimentalHazeMaterialsApi
 import dev.chrisbanes.haze.materials.HazeMaterials

@@ -1,6 +1,6 @@
-package com.music.bitchord.download
+package com.music.astrotune.download
 
-import com.music.bitchord.data.lyrics.WORD_LYRICS_FIELD
+import com.music.astrotune.data.lyrics.WORD_LYRICS_FIELD
 
 /**
  * Appends Matroska `Tags` and `Attachments` elements — title, artist, album,

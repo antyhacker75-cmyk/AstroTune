@@ -1,7 +1,7 @@
-package com.music.bitchord.auth
+package com.music.astrotune.auth
 
 import android.webkit.CookieManager
-import com.music.bitchord.data.DebugLog as Log
+import com.music.astrotune.data.DebugLog as Log
 
 /** What the in-app browser is being opened for. */
 enum class WebSessionMode {

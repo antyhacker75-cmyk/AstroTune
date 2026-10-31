@@ -1,7 +1,7 @@
-package com.music.bitchord.playback
+package com.music.astrotune.playback
 
 import android.os.SystemClock
-import com.music.bitchord.data.sources.SourceStream
+import com.music.astrotune.data.sources.SourceStream
 import java.util.concurrent.ConcurrentHashMap
 
 /**
@@ -149,7 +149,7 @@ object StreamChoice {
      * same margin it won it the first time, and resolves straight back to the
      * URL that just failed. Three attempts of that is a track that never plays
      * at all, while a working YouTube URL sits in
-     * [StreamResolver][com.music.bitchord.data.innertube.StreamResolver]'s cache
+     * [StreamResolver][com.music.astrotune.data.innertube.StreamResolver]'s cache
      * unused.
      *
      * ### Why this expires

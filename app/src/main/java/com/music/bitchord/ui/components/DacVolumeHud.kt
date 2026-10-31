@@ -7,7 +7,7 @@
  *
  *      http://www.apache.org/licenses/LICENSE-2.0
  */
-package com.music.bitchord.ui.components
+package com.music.astrotune.ui.components
 
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.Spring
@@ -57,13 +57,13 @@ import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.window.DialogWindowProvider
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.music.bitchord.data.settings.AppSettings
-import com.music.bitchord.playback.audio.bitperfect.DacVolume
+import com.music.astrotune.data.settings.AppSettings
+import com.music.astrotune.playback.audio.bitperfect.DacVolume
 import dev.chrisbanes.haze.HazeState
 import dev.chrisbanes.haze.materials.ExperimentalHazeMaterialsApi
 import dev.chrisbanes.haze.materials.HazeMaterials
-import com.music.bitchord.playback.cast.CastController
-import com.music.bitchord.wear.WearBridge
+import com.music.astrotune.playback.cast.CastController
+import com.music.astrotune.wear.WearBridge
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow

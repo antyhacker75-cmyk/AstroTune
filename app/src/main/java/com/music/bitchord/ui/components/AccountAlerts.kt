@@ -1,6 +1,6 @@
-package com.music.bitchord.ui.components
+package com.music.astrotune.ui.components
 
-import com.music.bitchord.R
+import com.music.astrotune.R
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -50,7 +50,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.music.bitchord.data.settings.AppSettings
+import com.music.astrotune.data.settings.AppSettings
 import kotlinx.coroutines.launch
 import dev.chrisbanes.haze.HazeState
 import dev.chrisbanes.haze.materials.ExperimentalHazeMaterialsApi

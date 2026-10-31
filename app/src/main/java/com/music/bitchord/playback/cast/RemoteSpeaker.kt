@@ -1,4 +1,4 @@
-package com.music.bitchord.playback.cast
+package com.music.astrotune.playback.cast
 
 import androidx.media3.common.C
 import androidx.media3.common.MediaItem

@@ -9,7 +9,7 @@
  * refracts the tab bar's exported glass and its recorded tab row rather than a
  * screen capture.
  */
-package com.music.bitchord.ui.components.floatingtabbar
+package com.music.astrotune.ui.components.floatingtabbar
 
 import android.os.Build
 import androidx.compose.foundation.background
@@ -35,13 +35,13 @@ import androidx.compose.ui.unit.Constraints
 import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.dp
-import com.music.bitchord.ui.components.LocalAppBackdrop
-import com.music.bitchord.ui.components.backdrop.Backdrop
-import com.music.bitchord.ui.components.backdrop.backdrops.LayerBackdrop
-import com.music.bitchord.ui.components.backdrop.drawBackdrop
-import com.music.bitchord.ui.components.backdrop.effects.lens
-import com.music.bitchord.ui.components.backdrop.highlight.Highlight
-import com.music.bitchord.ui.components.backdrop.shadow.Shadow
+import com.music.astrotune.ui.components.LocalAppBackdrop
+import com.music.astrotune.ui.components.backdrop.Backdrop
+import com.music.astrotune.ui.components.backdrop.backdrops.LayerBackdrop
+import com.music.astrotune.ui.components.backdrop.drawBackdrop
+import com.music.astrotune.ui.components.backdrop.effects.lens
+import com.music.astrotune.ui.components.backdrop.highlight.Highlight
+import com.music.astrotune.ui.components.backdrop.shadow.Shadow
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import kotlin.math.abs

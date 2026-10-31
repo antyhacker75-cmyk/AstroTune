@@ -7,7 +7,7 @@
  *
  *      http://www.apache.org/licenses/LICENSE-2.0
  */
-package com.music.bitchord.playback.audio.bitperfect
+package com.music.astrotune.playback.audio.bitperfect
 
 import java.nio.ByteBuffer
 import java.nio.ByteOrder

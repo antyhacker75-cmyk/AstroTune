@@ -1,8 +1,8 @@
-package com.music.bitchord.data.canvas
+package com.music.astrotune.data.canvas
 
-import com.music.bitchord.data.DebugLog as Log
-import com.music.bitchord.data.model.Song
-import com.music.bitchord.data.settings.AppSettings
+import com.music.astrotune.data.DebugLog as Log
+import com.music.astrotune.data.model.Song
+import com.music.astrotune.data.settings.AppSettings
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock

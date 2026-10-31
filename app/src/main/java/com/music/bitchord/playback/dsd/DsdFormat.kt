@@ -1,4 +1,4 @@
-package com.music.bitchord.playback.dsd
+package com.music.astrotune.playback.dsd
 
 import java.nio.ByteBuffer
 import java.nio.ByteOrder

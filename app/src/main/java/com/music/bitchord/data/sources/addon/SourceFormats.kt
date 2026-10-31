@@ -1,7 +1,7 @@
-package com.music.bitchord.data.sources.addon
+package com.music.astrotune.data.sources.addon
 
-import com.music.bitchord.data.Http
-import com.music.bitchord.data.TrackLog
+import com.music.astrotune.data.Http
+import com.music.astrotune.data.TrackLog
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import kotlinx.serialization.json.Json
@@ -38,7 +38,7 @@ sealed interface DetectedFormat {
 
     /**
      * A module index: JS plugins listed under `category:*` keys, run in the
-     * QuickJS sandbox. See [ModuleIndex][com.music.bitchord.data.sources.module.ModuleIndex].
+     * QuickJS sandbox. See [ModuleIndex][com.music.astrotune.data.sources.module.ModuleIndex].
      */
     data class ModuleIndex(val moduleCount: Int, val url: String) : DetectedFormat
 
@@ -142,7 +142,7 @@ object SourceFormats {
         //    because its marker is unmistakable and belongs to no other format.
         if (obj.keys.any { it.startsWith("category:") }) {
             val modules = runCatching {
-                com.music.bitchord.data.sources.module.ModuleIndex.parseModules(json, body)
+                com.music.astrotune.data.sources.module.ModuleIndex.parseModules(json, body)
             }.getOrDefault(emptyList())
             return if (modules.isEmpty()) {
                 DetectedFormat.Unsupported("That module index listed no modules")
@@ -210,7 +210,7 @@ object SourceFormats {
     private suspend fun fetch(url: String): Result<String> = runCatching {
         val request = Request.Builder().url(url)
             .header("Accept", "application/json")
-            .header("User-Agent", "BitChord/v${com.music.bitchord.BuildConfig.VERSION_NAME}")
+            .header("User-Agent", "BitChord/v${com.music.astrotune.BuildConfig.VERSION_NAME}")
             .build()
         Http.client.newCall(request).execute().use { response ->
             if (!response.isSuccessful) {

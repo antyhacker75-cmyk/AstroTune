@@ -1,4 +1,4 @@
-package com.music.bitchord.wear
+package com.music.astrotune.wear
 
 import android.content.Context
 import android.net.Uri
@@ -40,7 +40,7 @@ import java.security.cert.CertificateFactory
 import java.security.spec.PKCS8EncodedKeySpec
 import java.util.Date
 import java.util.concurrent.TimeUnit
-import com.music.bitchord.wear.WearProtocol as P
+import com.music.astrotune.wear.WearProtocol as P
 
 /**
  * Settings → "BitChord for Wear OS": which watches have BitChord, whether it is
@@ -313,7 +313,7 @@ object WatchInstaller {
                 // wake it to answer the phone until then. It is also the
                 // clearest way to tell the wearer it worked.
                 runCatching {
-                    manager.openStream("exec:am start -n ${app.packageName}/com.music.bitchord.wear.WearActivity").use { stream ->
+                    manager.openStream("exec:am start -n ${app.packageName}/com.music.astrotune.wear.WearActivity").use { stream ->
                         withTimeoutOrNull(10_000) { runInterruptible { stream.openInputStream().read(ByteArray(256)) } }
                     }
                 }

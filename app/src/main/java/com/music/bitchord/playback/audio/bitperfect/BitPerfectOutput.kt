@@ -7,17 +7,17 @@
  *
  *      http://www.apache.org/licenses/LICENSE-2.0
  */
-package com.music.bitchord.playback.audio.bitperfect
+package com.music.astrotune.playback.audio.bitperfect
 
 import android.content.Context
 import android.media.AudioManager
 import android.os.Build
 import android.util.Log
-import com.music.bitchord.data.settings.AppSettings
-import com.music.bitchord.data.settings.BitPerfectMode
-import com.music.bitchord.playback.audio.bitperfect.usb.UsbDirectDevices
-import com.music.bitchord.playback.audio.bitperfect.usb.UsbDirectTransport
-import com.music.bitchord.playback.audio.bitperfect.usb.UsbVolume
+import com.music.astrotune.data.settings.AppSettings
+import com.music.astrotune.data.settings.BitPerfectMode
+import com.music.astrotune.playback.audio.bitperfect.usb.UsbDirectDevices
+import com.music.astrotune.playback.audio.bitperfect.usb.UsbDirectTransport
+import com.music.astrotune.playback.audio.bitperfect.usb.UsbVolume
 import java.util.concurrent.Executors
 import java.util.concurrent.atomic.AtomicReference
 import kotlinx.coroutines.flow.MutableStateFlow

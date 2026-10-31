@@ -1,8 +1,8 @@
-package com.music.bitchord.playback
+package com.music.astrotune.playback
 
 import android.content.Context
 import android.content.SharedPreferences
-import com.music.bitchord.data.model.Song
+import com.music.astrotune.data.model.Song
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
 
@@ -151,10 +151,10 @@ object LastPlayed {
     ) {
         fun toSong(): Song {
             val resolvedTier = when (tier) {
-                "USER_QUEUE" -> com.music.bitchord.data.model.QueueTier.USER_QUEUE
-                "CONTEXT" -> com.music.bitchord.data.model.QueueTier.CONTEXT
-                "AUTOPLAY" -> com.music.bitchord.data.model.QueueTier.AUTOPLAY
-                else -> if (auto) com.music.bitchord.data.model.QueueTier.AUTOPLAY else com.music.bitchord.data.model.QueueTier.CONTEXT
+                "USER_QUEUE" -> com.music.astrotune.data.model.QueueTier.USER_QUEUE
+                "CONTEXT" -> com.music.astrotune.data.model.QueueTier.CONTEXT
+                "AUTOPLAY" -> com.music.astrotune.data.model.QueueTier.AUTOPLAY
+                else -> if (auto) com.music.astrotune.data.model.QueueTier.AUTOPLAY else com.music.astrotune.data.model.QueueTier.CONTEXT
             }
             return Song(
                 videoId = id,
@@ -170,7 +170,7 @@ object LastPlayed {
                 radioName = radio,
                 playbackSource = source,
                 playbackSourceType = sourceType?.let {
-                    runCatching { com.music.bitchord.data.model.PlaybackSourceType.valueOf(it) }.getOrNull()
+                    runCatching { com.music.astrotune.data.model.PlaybackSourceType.valueOf(it) }.getOrNull()
                 },
                 playbackSourceId = sourceId,
                 localUri = local,

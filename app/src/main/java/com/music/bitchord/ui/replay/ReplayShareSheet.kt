@@ -1,6 +1,6 @@
-package com.music.bitchord.ui.replay
+package com.music.astrotune.ui.replay
 
-import com.music.bitchord.R
+import com.music.astrotune.R
 
 import android.content.ContentValues
 import android.content.Context
@@ -55,7 +55,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.core.content.FileProvider
-import com.music.bitchord.data.stats.ReplaySummary
+import com.music.astrotune.data.stats.ReplaySummary
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext

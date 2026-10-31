@@ -1,4 +1,4 @@
-package com.music.bitchord.ui.replay
+package com.music.astrotune.ui.replay
 
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.tween
@@ -54,18 +54,18 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil3.compose.AsyncImage
-import com.music.bitchord.R
-import com.music.bitchord.data.model.ROW_ART_PX
-import com.music.bitchord.data.model.Song
-import com.music.bitchord.data.model.artworkAt
-import com.music.bitchord.data.stats.ArtistFacts
-import com.music.bitchord.data.stats.ReplayPeriod
-import com.music.bitchord.data.stats.ReplaySummary
-import com.music.bitchord.ui.components.PAGE_GUTTER
-import com.music.bitchord.ui.icons.BitChordIcons
-import com.music.bitchord.ui.player.MeshGradientBackground
-import com.music.bitchord.ui.player.rememberArtworkColors
-import com.music.bitchord.ui.theme.AccentRed
+import com.music.astrotune.R
+import com.music.astrotune.data.model.ROW_ART_PX
+import com.music.astrotune.data.model.Song
+import com.music.astrotune.data.model.artworkAt
+import com.music.astrotune.data.stats.ArtistFacts
+import com.music.astrotune.data.stats.ReplayPeriod
+import com.music.astrotune.data.stats.ReplaySummary
+import com.music.astrotune.ui.components.PAGE_GUTTER
+import com.music.astrotune.ui.icons.BitChordIcons
+import com.music.astrotune.ui.player.MeshGradientBackground
+import com.music.astrotune.ui.player.rememberArtworkColors
+import com.music.astrotune.ui.theme.AccentRed
 
 /** Whether the Replay page is being shown in dark mode (vs light). */
 @Composable
@@ -291,7 +291,7 @@ private fun Heading(state: ReplayState, onPeriodChange: (ReplayPeriod) -> Unit, 
  * The four stretches a Replay can cover.
  *
  * Weeks and months rather than a date range, because that is the granularity the
- * listening is actually kept at — see [com.music.bitchord.data.stats.ListeningStats].
+ * listening is actually kept at — see [com.music.astrotune.data.stats.ListeningStats].
  * A "last 30 days" chip would have to be answered from monthly totals, which
  * would make it a lie for the first thirty days of every month.
  */

@@ -1,4 +1,4 @@
-package com.music.bitchord.ui.components
+package com.music.astrotune.ui.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box

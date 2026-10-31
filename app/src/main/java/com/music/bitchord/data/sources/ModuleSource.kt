@@ -1,12 +1,12 @@
-package com.music.bitchord.data.sources
+package com.music.astrotune.data.sources
 
 import android.util.Log
-import com.music.bitchord.data.TrackLog
-import com.music.bitchord.data.model.Song
-import com.music.bitchord.data.settings.AppSettings
-import com.music.bitchord.data.sources.module.ModuleManager
-import com.music.bitchord.data.sources.module.ModuleSearchResult
-import com.music.bitchord.data.sources.module.SpineModule
+import com.music.astrotune.data.TrackLog
+import com.music.astrotune.data.model.Song
+import com.music.astrotune.data.settings.AppSettings
+import com.music.astrotune.data.sources.module.ModuleManager
+import com.music.astrotune.data.sources.module.ModuleSearchResult
+import com.music.astrotune.data.sources.module.SpineModule
 import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.coroutineScope
@@ -90,7 +90,7 @@ class ModuleSource(
      *    whoever hasn't spoken by then sits this track out.
      *
      * What comes back is a candidate list, not a ranking:
-     * [TrackMatcher][com.music.bitchord.data.sources.TrackMatcher] decides
+     * [TrackMatcher][com.music.astrotune.data.sources.TrackMatcher] decides
      * which rows are the recording and [SourceResolver] decides which of those
      * to open. This only has to be complete enough to contain the right one.
      *
@@ -518,7 +518,7 @@ class ModuleSource(
          * files its immersive rows under `audioQuality: LOW`, which read as a
          * bitrate would rank the mix a listener switched Atmos on for below
          * every stereo row in the list. Tagging it as what it is lets the one
-         * place that decides — [SourceResolver.preferred][com.music.bitchord.data.sources.SourceResolver]
+         * place that decides — [SourceResolver.preferred][com.music.astrotune.data.sources.SourceResolver]
          * — ask the listener's preference instead of a number.
          */
         const val DOLBY = "DOLBY"

@@ -1,6 +1,6 @@
-package com.music.bitchord.ui.screens
+package com.music.astrotune.ui.screens
 
-import com.music.bitchord.ui.icons.SfIcons
+import com.music.astrotune.ui.icons.SfIcons
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -42,13 +42,13 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.music.bitchord.R
-import com.music.bitchord.ui.components.PillTextField
-import com.music.bitchord.wear.WatchAppStatus
-import com.music.bitchord.wear.WatchEntry
-import com.music.bitchord.wear.WatchInstaller
-import com.music.bitchord.wear.WatchPairingState
-import com.music.bitchord.wear.WatchUpdateState
+import com.music.astrotune.R
+import com.music.astrotune.ui.components.PillTextField
+import com.music.astrotune.wear.WatchAppStatus
+import com.music.astrotune.wear.WatchEntry
+import com.music.astrotune.wear.WatchInstaller
+import com.music.astrotune.wear.WatchPairingState
+import com.music.astrotune.wear.WatchUpdateState
 
 /**
  * Settings' way in: one row, with what is true of the watches right now on the

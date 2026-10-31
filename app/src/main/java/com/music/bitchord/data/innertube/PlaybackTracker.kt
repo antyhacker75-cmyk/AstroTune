@@ -1,7 +1,7 @@
-package com.music.bitchord.data.innertube
+package com.music.astrotune.data.innertube
 
-import com.music.bitchord.data.TrackLog
-import com.music.bitchord.data.settings.AppSettings
+import com.music.astrotune.data.TrackLog
+import com.music.astrotune.data.settings.AppSettings
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers

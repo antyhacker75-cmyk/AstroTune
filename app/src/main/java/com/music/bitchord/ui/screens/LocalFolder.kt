@@ -1,4 +1,4 @@
-package com.music.bitchord.ui.screens
+package com.music.astrotune.ui.screens
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
@@ -64,34 +64,34 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil3.compose.AsyncImage
-import com.music.bitchord.R
-import com.music.bitchord.data.LocalGroup
-import com.music.bitchord.data.LocalGroups
-import com.music.bitchord.data.OfflinePlaylists
-import com.music.bitchord.data.model.BrowseType
-import com.music.bitchord.data.model.CARD_ART_PX
-import com.music.bitchord.data.model.ROW_ART_PX
-import com.music.bitchord.data.model.Song
-import com.music.bitchord.data.model.artworkAt
-import com.music.bitchord.data.model.playingRowMatcher
-import com.music.bitchord.data.settings.LibraryViewType
-import com.music.bitchord.data.settings.LocalMusicSort
-import com.music.bitchord.download.DownloadState
-import com.music.bitchord.download.DownloadedCollection
-import com.music.bitchord.download.Downloads
-import com.music.bitchord.ui.components.CoverPlaceholder
-import com.music.bitchord.ui.components.ExplicitSongTitle
-import com.music.bitchord.ui.components.LIBRARY_GRID_SPACING
-import com.music.bitchord.ui.components.MessageState
-import com.music.bitchord.ui.components.PAGE_GUTTER
-import com.music.bitchord.ui.components.ROW_DIVIDER_INSET
-import com.music.bitchord.ui.components.SearchPlayingBars
-import com.music.bitchord.ui.components.SongRow
-import com.music.bitchord.ui.components.longPressMenuClickable
-import com.music.bitchord.ui.components.rememberRemoteArtworkUrl
-import com.music.bitchord.ui.components.thumbnailBorder
-import com.music.bitchord.ui.icons.BitChordIcons
-import com.music.bitchord.ui.theme.ArtworkPalette
+import com.music.astrotune.R
+import com.music.astrotune.data.LocalGroup
+import com.music.astrotune.data.LocalGroups
+import com.music.astrotune.data.OfflinePlaylists
+import com.music.astrotune.data.model.BrowseType
+import com.music.astrotune.data.model.CARD_ART_PX
+import com.music.astrotune.data.model.ROW_ART_PX
+import com.music.astrotune.data.model.Song
+import com.music.astrotune.data.model.artworkAt
+import com.music.astrotune.data.model.playingRowMatcher
+import com.music.astrotune.data.settings.LibraryViewType
+import com.music.astrotune.data.settings.LocalMusicSort
+import com.music.astrotune.download.DownloadState
+import com.music.astrotune.download.DownloadedCollection
+import com.music.astrotune.download.Downloads
+import com.music.astrotune.ui.components.CoverPlaceholder
+import com.music.astrotune.ui.components.ExplicitSongTitle
+import com.music.astrotune.ui.components.LIBRARY_GRID_SPACING
+import com.music.astrotune.ui.components.MessageState
+import com.music.astrotune.ui.components.PAGE_GUTTER
+import com.music.astrotune.ui.components.ROW_DIVIDER_INSET
+import com.music.astrotune.ui.components.SearchPlayingBars
+import com.music.astrotune.ui.components.SongRow
+import com.music.astrotune.ui.components.longPressMenuClickable
+import com.music.astrotune.ui.components.rememberRemoteArtworkUrl
+import com.music.astrotune.ui.components.thumbnailBorder
+import com.music.astrotune.ui.icons.BitChordIcons
+import com.music.astrotune.ui.theme.ArtworkPalette
 
 /**
  * What a device folder — Downloads, Local Music, the song cache, a file
@@ -142,7 +142,7 @@ class LocalFolder(
     val tabs: List<LocalFolderTab> = LocalFolderTab.BASIC,
     /**
      * Local Music only: the offline player's own playlists, Liked first, as
-     * the Playlists tab lists them — see [com.music.bitchord.data.OfflinePlaylists].
+     * the Playlists tab lists them — see [com.music.astrotune.data.OfflinePlaylists].
      */
     val playlists: List<LocalGroup> = emptyList(),
     /** Puts "New playlist" at the head of the Playlists tab. */

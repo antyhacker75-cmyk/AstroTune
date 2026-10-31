@@ -7,9 +7,9 @@
  *
  *      http://www.apache.org/licenses/LICENSE-2.0
  */
-package com.music.bitchord.playback.audio.bitperfect
+package com.music.astrotune.playback.audio.bitperfect
 
-import com.music.bitchord.playback.audio.bitperfect.usb.UsbVolume
+import com.music.astrotune.playback.audio.bitperfect.usb.UsbVolume
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow

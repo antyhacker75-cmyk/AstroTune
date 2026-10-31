@@ -1,4 +1,4 @@
-package com.music.bitchord.playback
+package com.music.astrotune.playback
 
 import android.app.PendingIntent
 import android.content.Context
@@ -14,7 +14,7 @@ import android.widget.Toast
 import android.os.Bundle
 import android.os.Handler
 import android.os.SystemClock
-import com.music.bitchord.data.TelemetryProvenance
+import com.music.astrotune.data.TelemetryProvenance
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import android.util.Log
@@ -74,84 +74,84 @@ import com.google.common.collect.ImmutableList
 import com.google.common.util.concurrent.Futures
 import com.google.common.util.concurrent.ListenableFuture
 import kotlinx.coroutines.guava.future
-import com.music.bitchord.playback.audio.DspChain
-import com.music.bitchord.playback.cast.CastController
-import com.music.bitchord.playback.cast.CastPlayback
-import com.music.bitchord.playback.cast.CastSink
-import com.music.bitchord.playback.cast.RemoteSpeaker
-import com.music.bitchord.playback.cast.Speakers
-import com.music.bitchord.playback.cast.CastStream
-import com.music.bitchord.playback.audio.PrecisionAudioSink
-import com.music.bitchord.playback.dsd.DsdExtractorsFactory
-import com.music.bitchord.playback.audio.DirectAudioProbe
-import com.music.bitchord.playback.audio.OutputNegotiator
-import com.music.bitchord.playback.audio.PcmEncoding
-import com.music.bitchord.playback.audio.SourceDescriptor
-import com.music.bitchord.playback.audio.bitperfect.BitPerfectAudioSink
-import com.music.bitchord.playback.audio.bitperfect.BitPerfectOutput
-import com.music.bitchord.playback.audio.bitperfect.BitPerfectRoutingSink
-import com.music.bitchord.playback.audio.bitperfect.DacVolume
-import com.music.bitchord.playback.audio.bitperfect.usb.UsbDirectDevices
-import com.music.bitchord.playback.audio.bluetooth.BluetoothAudioTracker
-import com.music.bitchord.playback.audio.bluetooth.BluetoothTelemetry
-import com.music.bitchord.MainActivity
-import com.music.bitchord.data.listentogether.ListenTogether
-import com.music.bitchord.data.listentogether.partyQueueIndexOf
-import com.music.bitchord.data.listentogether.partyUpcomingAfter
-import com.music.bitchord.R
-import com.music.bitchord.data.LocalMediaRepository
-import com.music.bitchord.data.OfflinePlaylists
-import com.music.bitchord.data.innertube.InnertubeParser
-import com.music.bitchord.data.YtMusicRepository
-import com.music.bitchord.data.lyrics.EmbeddedLyrics
-import com.music.bitchord.data.lyrics.LyricLine
-import com.music.bitchord.data.lyrics.LyricsRepository
-import com.music.bitchord.data.model.NOTIFICATION_ART_PX
-import com.music.bitchord.data.model.PlaybackSourceType
-import com.music.bitchord.data.model.SearchFilter
-import com.music.bitchord.data.model.SearchResult
-import com.music.bitchord.data.model.BrowseItem
-import com.music.bitchord.data.model.ShelfItem
-import com.music.bitchord.data.model.artworkAt
-import com.music.bitchord.data.model.QueueTier
-import com.music.bitchord.data.sources.SourceRegistry
-import com.music.bitchord.download.Downloads
+import com.music.astrotune.playback.audio.DspChain
+import com.music.astrotune.playback.cast.CastController
+import com.music.astrotune.playback.cast.CastPlayback
+import com.music.astrotune.playback.cast.CastSink
+import com.music.astrotune.playback.cast.RemoteSpeaker
+import com.music.astrotune.playback.cast.Speakers
+import com.music.astrotune.playback.cast.CastStream
+import com.music.astrotune.playback.audio.PrecisionAudioSink
+import com.music.astrotune.playback.dsd.DsdExtractorsFactory
+import com.music.astrotune.playback.audio.DirectAudioProbe
+import com.music.astrotune.playback.audio.OutputNegotiator
+import com.music.astrotune.playback.audio.PcmEncoding
+import com.music.astrotune.playback.audio.SourceDescriptor
+import com.music.astrotune.playback.audio.bitperfect.BitPerfectAudioSink
+import com.music.astrotune.playback.audio.bitperfect.BitPerfectOutput
+import com.music.astrotune.playback.audio.bitperfect.BitPerfectRoutingSink
+import com.music.astrotune.playback.audio.bitperfect.DacVolume
+import com.music.astrotune.playback.audio.bitperfect.usb.UsbDirectDevices
+import com.music.astrotune.playback.audio.bluetooth.BluetoothAudioTracker
+import com.music.astrotune.playback.audio.bluetooth.BluetoothTelemetry
+import com.music.astrotune.MainActivity
+import com.music.astrotune.data.listentogether.ListenTogether
+import com.music.astrotune.data.listentogether.partyQueueIndexOf
+import com.music.astrotune.data.listentogether.partyUpcomingAfter
+import com.music.astrotune.R
+import com.music.astrotune.data.LocalMediaRepository
+import com.music.astrotune.data.OfflinePlaylists
+import com.music.astrotune.data.innertube.InnertubeParser
+import com.music.astrotune.data.YtMusicRepository
+import com.music.astrotune.data.lyrics.EmbeddedLyrics
+import com.music.astrotune.data.lyrics.LyricLine
+import com.music.astrotune.data.lyrics.LyricsRepository
+import com.music.astrotune.data.model.NOTIFICATION_ART_PX
+import com.music.astrotune.data.model.PlaybackSourceType
+import com.music.astrotune.data.model.SearchFilter
+import com.music.astrotune.data.model.SearchResult
+import com.music.astrotune.data.model.BrowseItem
+import com.music.astrotune.data.model.ShelfItem
+import com.music.astrotune.data.model.artworkAt
+import com.music.astrotune.data.model.QueueTier
+import com.music.astrotune.data.sources.SourceRegistry
+import com.music.astrotune.download.Downloads
 import java.util.concurrent.ConcurrentHashMap
 import java.util.concurrent.CopyOnWriteArraySet
 import java.util.concurrent.atomic.AtomicLong
-import com.music.bitchord.data.Http
-import com.music.bitchord.auth.SignedIn
-import com.music.bitchord.data.LikeState
-import com.music.bitchord.data.NerdStats
-import com.music.bitchord.data.TrackLog
-import com.music.bitchord.data.discord.DiscordRPC
-import com.music.bitchord.data.discord.discordAudioQualityLine
-import com.music.bitchord.data.innertube.PlaybackTracker
-import com.music.bitchord.data.stats.ListeningRecorder
-import com.music.bitchord.data.innertube.PlayerClient
-import com.music.bitchord.data.innertube.StreamResolver
-import com.music.bitchord.data.model.LikeStatus
-import com.music.bitchord.data.model.Song
-import com.music.bitchord.data.model.isUnresolvedSpotify
-import com.music.bitchord.data.scrobbling.LastFM
-import com.music.bitchord.data.scrobbling.ListenBrainzManager
-import com.music.bitchord.data.scrobbling.ScrobbleManager
-import com.music.bitchord.data.settings.AppSettings
-import com.music.bitchord.data.settings.AudioQuality
-import com.music.bitchord.data.settings.BitPerfectMode
-import com.music.bitchord.data.settings.permits
-import com.music.bitchord.data.settings.EqualizerMode
-import com.music.bitchord.data.settings.OutputPcmMode
-import com.music.bitchord.data.sources.SourceKind
-import com.music.bitchord.data.sources.SourceResolver
-import com.music.bitchord.data.sources.SourceStream
-import com.music.bitchord.data.sources.StreamFormat
-import com.music.bitchord.data.sources.TrackMatcher
-import com.music.bitchord.playback.smart.AutomixAnalysisSource
-import com.music.bitchord.playback.smart.VersionAudioAligner
-import com.music.bitchord.widget.MediaWidget
-import com.music.bitchord.widget.MediaWidgetSnapshot
-import com.music.bitchord.wear.WearBridge
+import com.music.astrotune.data.Http
+import com.music.astrotune.auth.SignedIn
+import com.music.astrotune.data.LikeState
+import com.music.astrotune.data.NerdStats
+import com.music.astrotune.data.TrackLog
+import com.music.astrotune.data.discord.DiscordRPC
+import com.music.astrotune.data.discord.discordAudioQualityLine
+import com.music.astrotune.data.innertube.PlaybackTracker
+import com.music.astrotune.data.stats.ListeningRecorder
+import com.music.astrotune.data.innertube.PlayerClient
+import com.music.astrotune.data.innertube.StreamResolver
+import com.music.astrotune.data.model.LikeStatus
+import com.music.astrotune.data.model.Song
+import com.music.astrotune.data.model.isUnresolvedSpotify
+import com.music.astrotune.data.scrobbling.LastFM
+import com.music.astrotune.data.scrobbling.ListenBrainzManager
+import com.music.astrotune.data.scrobbling.ScrobbleManager
+import com.music.astrotune.data.settings.AppSettings
+import com.music.astrotune.data.settings.AudioQuality
+import com.music.astrotune.data.settings.BitPerfectMode
+import com.music.astrotune.data.settings.permits
+import com.music.astrotune.data.settings.EqualizerMode
+import com.music.astrotune.data.settings.OutputPcmMode
+import com.music.astrotune.data.sources.SourceKind
+import com.music.astrotune.data.sources.SourceResolver
+import com.music.astrotune.data.sources.SourceStream
+import com.music.astrotune.data.sources.StreamFormat
+import com.music.astrotune.data.sources.TrackMatcher
+import com.music.astrotune.playback.smart.AutomixAnalysisSource
+import com.music.astrotune.playback.smart.VersionAudioAligner
+import com.music.astrotune.widget.MediaWidget
+import com.music.astrotune.widget.MediaWidgetSnapshot
+import com.music.astrotune.wear.WearBridge
 import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Deferred
@@ -191,14 +191,14 @@ import java.util.UUID
 
 
 /** Session command used by both the player UI and the media notification. */
-const val ACTION_TOGGLE_AUTOPLAY = "com.music.bitchord.action.TOGGLE_AUTOPLAY"
+const val ACTION_TOGGLE_AUTOPLAY = "com.music.astrotune.action.TOGGLE_AUTOPLAY"
 
 /** Backoff before each retry of a failed bounded continuation page. */
 private val BOUNDED_CONTINUATION_RETRIES_MS = longArrayOf(2_000L, 5_000L, 15_000L)
 
 /** Session command used by album/playlist playback to install a bounded context. */
-const val ACTION_START_BOUNDED_CONTEXT = "com.music.bitchord.action.START_BOUNDED_CONTEXT"
-const val ACTION_CLEAR_BOUNDED_CONTEXT = "com.music.bitchord.action.CLEAR_BOUNDED_CONTEXT"
+const val ACTION_START_BOUNDED_CONTEXT = "com.music.astrotune.action.START_BOUNDED_CONTEXT"
+const val ACTION_CLEAR_BOUNDED_CONTEXT = "com.music.astrotune.action.CLEAR_BOUNDED_CONTEXT"
 const val EXTRA_BOUNDED_CONTEXT_SONGS = "bitchord.boundedContext.songs"
 const val EXTRA_BOUNDED_CONTEXT_START_INDEX = "bitchord.boundedContext.startIndex"
 const val EXTRA_BOUNDED_CONTEXT_SOURCE_TITLE = "bitchord.boundedContext.sourceTitle"
@@ -207,29 +207,29 @@ const val EXTRA_BOUNDED_CONTEXT_SOURCE_ID = "bitchord.boundedContext.sourceId"
 const val EXTRA_BOUNDED_CONTEXT_CONTINUATION = "bitchord.boundedContext.continuation"
 
 /** Session command used to smoothly swap the current track's version (film vs release). */
-const val ACTION_SWAP_VERSION = "com.music.bitchord.action.SWAP_VERSION"
+const val ACTION_SWAP_VERSION = "com.music.astrotune.action.SWAP_VERSION"
 const val EXTRA_SWAP_MEDIA_ITEM = "bitchord.swap.media_item"
 
 /** Session command used by the media notification's and the 4×1 widget's Favorite button. */
 /** How long the service may stay in the foreground, paused, while the watch plays. */
 private const val WATCH_SESSION_FOREGROUND_MS = 6 * 60 * 60 * 1000L
 
-const val ACTION_TOGGLE_FAVORITE = "com.music.bitchord.action.TOGGLE_FAVORITE"
+const val ACTION_TOGGLE_FAVORITE = "com.music.astrotune.action.TOGGLE_FAVORITE"
 
 /** Session command used by the media notification's and the 4×1 widget's Shuffle button. */
-const val ACTION_TOGGLE_SHUFFLE = "com.music.bitchord.action.TOGGLE_SHUFFLE"
+const val ACTION_TOGGLE_SHUFFLE = "com.music.astrotune.action.TOGGLE_SHUFFLE"
 
 /** Session actions exposed to Android Auto for the track that is playing. */
-const val ACTION_START_STATION = "com.music.bitchord.action.START_STATION"
-const val ACTION_REVERT_TO_ORIGINAL = "com.music.bitchord.action.REVERT_TO_ORIGINAL"
-const val ACTION_SWAP_TO_VERSION = "com.music.bitchord.action.SWAP_TO_VERSION"
+const val ACTION_START_STATION = "com.music.astrotune.action.START_STATION"
+const val ACTION_REVERT_TO_ORIGINAL = "com.music.astrotune.action.REVERT_TO_ORIGINAL"
+const val ACTION_SWAP_TO_VERSION = "com.music.astrotune.action.SWAP_TO_VERSION"
 
 /** Session commands bracketing an explicit radio queue replacement. */
-const val ACTION_BEGIN_RADIO_QUEUE = "com.music.bitchord.action.BEGIN_RADIO_QUEUE"
-const val ACTION_COMMIT_RADIO_QUEUE = "com.music.bitchord.action.COMMIT_RADIO_QUEUE"
+const val ACTION_BEGIN_RADIO_QUEUE = "com.music.astrotune.action.BEGIN_RADIO_QUEUE"
+const val ACTION_COMMIT_RADIO_QUEUE = "com.music.astrotune.action.COMMIT_RADIO_QUEUE"
 
 /** Session command behind the player menu's "Upgrade quality". */
-const val ACTION_UPGRADE_QUALITY = "com.music.bitchord.action.UPGRADE_QUALITY"
+const val ACTION_UPGRADE_QUALITY = "com.music.astrotune.action.UPGRADE_QUALITY"
 
 /**
  * App-side gate for explicit quality retries.
@@ -261,7 +261,7 @@ internal class ManualUpgradeThrottle(private val cooldownMs: Long) {
  * party publish those moves would otherwise trigger one at a time, so a jam
  * hears about the reorder once, when the row is dropped, not mid-drag.
  */
-const val ACTION_QUEUE_DRAG = "com.music.bitchord.action.QUEUE_DRAG"
+const val ACTION_QUEUE_DRAG = "com.music.astrotune.action.QUEUE_DRAG"
 const val EXTRA_QUEUE_DRAG_ACTIVE = "bitchord.queueDrag.active"
 
 /** A full first page for an explicitly requested station. */
@@ -269,7 +269,7 @@ private const val INITIAL_STATION_TRACKS = 24
 
 /**
  * How long a version switch will sit on a not-yet-downloaded opening before
- * it gives up on the head — [com.music.bitchord.playback.AudioCache.awaitAnalysisHead]
+ * it gives up on the head — [com.music.astrotune.playback.AudioCache.awaitAnalysisHead]
  * both starts the fetch and waits on it, so this is the wait a listener sees
  * with the bar running. Shared by the two heads, which are fetched in
  * parallel, so it bounds the pair rather than being paid twice.
@@ -388,7 +388,7 @@ class PlaybackService : MediaLibraryService() {
     private val LIKED_CACHE_TTL_MS = 60_000L
 
     private suspend fun cachedLikedSongs(): List<Song> = likedMutex.withLock {
-        val cookie = com.music.bitchord.data.innertube.Innertube.cookie
+        val cookie = com.music.astrotune.data.innertube.Innertube.cookie
         if (cookie == null) {
             cachedLiked = null
             cachedLikedCookie = null
@@ -428,12 +428,12 @@ class PlaybackService : MediaLibraryService() {
         songs
     }
 
-    private var cachedHome: Pair<Long, com.music.bitchord.data.model.HomeFeed>? = null
+    private var cachedHome: Pair<Long, com.music.astrotune.data.model.HomeFeed>? = null
     private val homeMutex = Mutex()
     private val HOME_CACHE_TTL_MS = 60_000L
     private val HOME_NETWORK_TIMEOUT_MS = 2_500L
 
-    private suspend fun cachedHomeFeed(): com.music.bitchord.data.model.HomeFeed? = homeMutex.withLock {
+    private suspend fun cachedHomeFeed(): com.music.astrotune.data.model.HomeFeed? = homeMutex.withLock {
         cachedHome?.let { (at, feed) ->
             if (SystemClock.elapsedRealtime() - at < HOME_CACHE_TTL_MS) return feed
         }
@@ -471,7 +471,7 @@ class PlaybackService : MediaLibraryService() {
     }
 
     private suspend fun cachedPlaylistCards(): List<ShelfItem> = playlistsMutex.withLock {
-        val cookie = com.music.bitchord.data.innertube.Innertube.cookie
+        val cookie = com.music.astrotune.data.innertube.Innertube.cookie
         if (cookie == null) {
             cachedPlaylistCards = null
             cachedPlaylistCookie = null
@@ -494,14 +494,14 @@ class PlaybackService : MediaLibraryService() {
     private fun snapshotRecents(): List<Song> = cachedRecents?.second.orEmpty()
     private fun snapshotQuickPicks(): List<Song> = cachedQuickPicks?.second.orEmpty()
     private fun snapshotLiked(): List<Song> {
-        val cookie = com.music.bitchord.data.innertube.Innertube.cookie
+        val cookie = com.music.astrotune.data.innertube.Innertube.cookie
         return if (cookie != null && cookie == cachedLikedCookie) cachedLiked?.second.orEmpty() else emptyList()
     }
     private fun snapshotPlaylistCards(): List<ShelfItem> {
-        val cookie = com.music.bitchord.data.innertube.Innertube.cookie
+        val cookie = com.music.astrotune.data.innertube.Innertube.cookie
         return if (cookie != null && cookie == cachedPlaylistCookie) cachedPlaylistCards?.second.orEmpty() else emptyList()
     }
-    private fun snapshotHome(): com.music.bitchord.data.model.HomeFeed? = cachedHome?.second
+    private fun snapshotHome(): com.music.astrotune.data.model.HomeFeed? = cachedHome?.second
 
     private fun isFresh(at: Long, ttlMs: Long): Boolean =
         SystemClock.elapsedRealtime() - at < ttlMs
@@ -638,8 +638,8 @@ class PlaybackService : MediaLibraryService() {
     private fun spareLoudness(): LoudnessProcessor =
         if (activeFilter === transitionFilterA) loudnessB else loudnessA
 
-    /** Automix's DSP analyzer — see [com.music.bitchord.playback.smart.TrackAnalyzer]. */
-    private val trackAnalyzer = com.music.bitchord.playback.smart.TrackAnalyzer(this, AudioCache)
+    /** Automix's DSP analyzer — see [com.music.astrotune.playback.smart.TrackAnalyzer]. */
+    private val trackAnalyzer = com.music.astrotune.playback.smart.TrackAnalyzer(this, AudioCache)
 
     /** Shared with the crossfade's tail player, so both read the same disk cache. */
     private var mediaSourceFactory: DefaultMediaSourceFactory? = null
@@ -814,7 +814,7 @@ class PlaybackService : MediaLibraryService() {
      * replacement mix afterwards is the obvious thing to do and the wrong one:
      * the track that was queued next has usually been analysed for the
      * transition into it by then (see
-     * [com.music.bitchord.playback.smart.TrackAnalyzer]), and a different track
+     * [com.music.astrotune.playback.smart.TrackAnalyzer]), and a different track
      * in its place means that several-second decode is spent again, on a song
      * that is now much closer than it was. Turning repeat on and back off
      * should leave the queue where it found it.
@@ -1282,8 +1282,8 @@ class PlaybackService : MediaLibraryService() {
     override fun onCreate() {
         super.onCreate()
 
-        if (com.music.bitchord.data.innertube.Innertube.cookie == null) {
-            com.music.bitchord.data.innertube.Innertube.cookie = com.music.bitchord.auth.AuthStore(this).cookie
+        if (com.music.astrotune.data.innertube.Innertube.cookie == null) {
+            com.music.astrotune.data.innertube.Innertube.cookie = com.music.astrotune.auth.AuthStore(this).cookie
         }
 
         // First, because everything below assumes it is standing up fresh and
@@ -4420,7 +4420,7 @@ class PlaybackService : MediaLibraryService() {
      * correct end state rather than a failure to recover: the error stays on the
      * player, which is what puts a message in front of the listener — see
      * `rememberPlayerState` in
-     * [PlayerConnection][com.music.bitchord.playback.PlayerConnection].
+     * [PlayerConnection][com.music.astrotune.playback.PlayerConnection].
      */
     private fun skipPastUnplayable(mediaId: String, reason: String) {
         val exoPlayer = player ?: return
@@ -4701,7 +4701,7 @@ class PlaybackService : MediaLibraryService() {
         } ?: return false
         val mime = format.sampleMimeType ?: return false
         val videoId = uri.getQueryParameter("v") ?: return false
-        val downloaded = com.music.bitchord.download.Downloads.savedUri(this, videoId) != null
+        val downloaded = com.music.astrotune.download.Downloads.savedUri(this, videoId) != null
         if (downloaded) return false
         val target = SourceResolver.targetIn(uri)
         val expectedSec = target.durationSec
@@ -5006,7 +5006,7 @@ class PlaybackService : MediaLibraryService() {
             // Which in a party it cannot be: the transition there is the plain
             // one everybody moves through together, and nothing is analysed for
             // it — see [CrossfadeController] and
-            // [com.music.bitchord.playback.smart.TrackAnalyzer]. This is the one
+            // [com.music.astrotune.playback.smart.TrackAnalyzer]. This is the one
             // fetch Automix makes that neither of those two gates, and a
             // megabyte pulled for an analysis that will not run is a megabyte
             // taken off the connection the party is syncing over.
@@ -7191,7 +7191,7 @@ class PlaybackService : MediaLibraryService() {
     /**
      * The linear gain [LoudnessProcessor] applies to [mediaId]: YouTube's own
      * normalization figure — see
-     * [com.music.bitchord.data.innertube.StreamResolver.loudnessDbFor] —
+     * [com.music.astrotune.data.innertube.StreamResolver.loudnessDbFor] —
      * bounded the way the platform effect this replaced was, or exactly 1 when
      * nothing is known yet or the setting is off.
      *
@@ -8605,7 +8605,7 @@ class PlaybackService : MediaLibraryService() {
                     )
                 }
                 MEDIA_LIKED_ID -> {
-                    if (com.music.bitchord.data.innertube.Innertube.cookie == null) {
+                    if (com.music.astrotune.data.innertube.Innertube.cookie == null) {
                         listOf(createLoginPromptItem())
                     } else {
                         val snapshot = snapshotLiked()
@@ -8645,7 +8645,7 @@ class PlaybackService : MediaLibraryService() {
                     )
                 }
                 MEDIA_PLAYLISTS_ID -> {
-                    if (com.music.bitchord.data.innertube.Innertube.cookie == null) {
+                    if (com.music.astrotune.data.innertube.Innertube.cookie == null) {
                         listOf(createLoginPromptItem())
                     } else {
                         val snapshot = snapshotPlaylistCards()

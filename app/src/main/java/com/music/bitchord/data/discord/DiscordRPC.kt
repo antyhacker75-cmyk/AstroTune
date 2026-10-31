@@ -1,9 +1,9 @@
-package com.music.bitchord.data.discord
+package com.music.astrotune.data.discord
 
 import android.content.Context
-import com.music.bitchord.R
-import com.music.bitchord.data.model.Song
-import com.music.bitchord.data.model.artworkAt
+import com.music.astrotune.R
+import com.music.astrotune.data.model.Song
+import com.music.astrotune.data.model.artworkAt
 import com.my.kizzy.rpc.KizzyRPC
 import com.my.kizzy.rpc.RpcImage
 import java.util.Locale

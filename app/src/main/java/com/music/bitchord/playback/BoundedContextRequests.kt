@@ -1,6 +1,6 @@
-package com.music.bitchord.playback
+package com.music.astrotune.playback
 
-import com.music.bitchord.data.model.Song
+import com.music.astrotune.data.model.Song
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow

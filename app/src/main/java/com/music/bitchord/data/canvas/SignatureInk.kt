@@ -1,4 +1,4 @@
-package com.music.bitchord.data.canvas
+package com.music.astrotune.data.canvas
 
 import android.graphics.Bitmap
 import coil3.size.Size

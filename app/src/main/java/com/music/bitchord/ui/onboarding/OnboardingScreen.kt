@@ -1,4 +1,4 @@
-package com.music.bitchord.ui.onboarding
+package com.music.astrotune.ui.onboarding
 
 import androidx.activity.compose.BackHandler
 import androidx.compose.animation.AnimatedContent
@@ -69,17 +69,17 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.music.bitchord.R
-import com.music.bitchord.sharedui.resources.Res
-import com.music.bitchord.sharedui.resources.ic_google_g
-import com.music.bitchord.sharedui.resources.ic_logo
+import com.music.astrotune.R
+import com.music.astrotune.sharedui.resources.Res
+import com.music.astrotune.sharedui.resources.ic_google_g
+import com.music.astrotune.sharedui.resources.ic_logo
 import org.jetbrains.compose.resources.painterResource
-import com.music.bitchord.ui.icons.BitChordIcons
-import com.music.bitchord.ui.player.MeshGradientBackground
-import com.music.bitchord.ui.player.MESH_CYCLE_MILLIS
-import com.music.bitchord.ui.player.MeshPalette
-import com.music.bitchord.ui.player.WelcomeMeshPalettes
-import com.music.bitchord.ui.player.cyclingMeshPalette
+import com.music.astrotune.ui.icons.BitChordIcons
+import com.music.astrotune.ui.player.MeshGradientBackground
+import com.music.astrotune.ui.player.MESH_CYCLE_MILLIS
+import com.music.astrotune.ui.player.MeshPalette
+import com.music.astrotune.ui.player.WelcomeMeshPalettes
+import com.music.astrotune.ui.player.cyclingMeshPalette
 
 /**
  * The two welcome pages: a name for Listen Together, then the YouTube sign-in.

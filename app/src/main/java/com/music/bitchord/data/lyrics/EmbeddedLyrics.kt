@@ -1,8 +1,8 @@
-package com.music.bitchord.data.lyrics
+package com.music.astrotune.data.lyrics
 
 import android.content.Context
 import android.net.Uri
-import com.music.bitchord.data.DebugLog as Log
+import com.music.astrotune.data.DebugLog as Log
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.io.ByteArrayOutputStream

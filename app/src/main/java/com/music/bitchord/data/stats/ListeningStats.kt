@@ -1,8 +1,8 @@
-package com.music.bitchord.data.stats
+package com.music.astrotune.data.stats
 
 import android.content.Context
 import android.util.Log
-import com.music.bitchord.data.model.Song
+import com.music.astrotune.data.model.Song
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob

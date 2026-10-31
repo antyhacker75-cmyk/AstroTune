@@ -1,11 +1,11 @@
-package com.music.bitchord.data.webdav
+package com.music.astrotune.data.webdav
 
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.Context
 import androidx.core.app.NotificationCompat
-import com.music.bitchord.R
-import com.music.bitchord.data.model.Song
+import com.music.astrotune.R
+import com.music.astrotune.data.model.Song
 
 /**
  * The shade presence for uploads, shaped like the download one: an ongoing
@@ -104,6 +104,6 @@ object WebDavUploadNotifications {
 
     private const val CHANNEL_ID = "webdav_uploads"
 
-    /** Distinct from downloads', which [DownloadService][com.music.bitchord.download.DownloadService] owns. */
+    /** Distinct from downloads', which [DownloadService][com.music.astrotune.download.DownloadService] owns. */
     private const val NOTIFICATION_ID = 0x8176
 }

@@ -1,4 +1,4 @@
-package com.music.bitchord.ui.replay
+package com.music.astrotune.ui.replay
 
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.LinearEasing
@@ -67,16 +67,16 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.graphics.ColorUtils
 import coil3.compose.AsyncImage
-import com.music.bitchord.R
-import com.music.bitchord.data.model.CARD_ART_PX
-import com.music.bitchord.data.model.HEADER_ART_PX
-import com.music.bitchord.data.model.ROW_ART_PX
-import com.music.bitchord.data.model.artworkAt
-import com.music.bitchord.data.stats.ReplaySummary
-import com.music.bitchord.ui.player.MeshGradientBackground
-import com.music.bitchord.ui.player.MeshPalette
-import com.music.bitchord.ui.player.rememberArtworkColors
-import com.music.bitchord.ui.theme.AccentRed
+import com.music.astrotune.R
+import com.music.astrotune.data.model.CARD_ART_PX
+import com.music.astrotune.data.model.HEADER_ART_PX
+import com.music.astrotune.data.model.ROW_ART_PX
+import com.music.astrotune.data.model.artworkAt
+import com.music.astrotune.data.stats.ReplaySummary
+import com.music.astrotune.ui.player.MeshGradientBackground
+import com.music.astrotune.ui.player.MeshPalette
+import com.music.astrotune.ui.player.rememberArtworkColors
+import com.music.astrotune.ui.theme.AccentRed
 import kotlinx.coroutines.launch
 
 /**

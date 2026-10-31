@@ -1,4 +1,4 @@
-package com.music.bitchord.ui.components
+package com.music.astrotune.ui.components
 
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.background
@@ -28,7 +28,7 @@ import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
-import com.music.bitchord.ui.icons.SfIcons
+import com.music.astrotune.ui.icons.SfIcons
 import androidx.compose.material.icons.rounded.CheckCircle
 import androidx.compose.material.icons.rounded.Close
 import androidx.compose.material.icons.rounded.Link
@@ -68,14 +68,14 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
-import com.music.bitchord.R
-import com.music.bitchord.data.model.PlaylistPrivacy
-import com.music.bitchord.data.model.ROW_ART_PX
-import com.music.bitchord.data.model.Song
-import com.music.bitchord.data.model.UserPlaylist
-import com.music.bitchord.data.model.artworkAt
-import com.music.bitchord.ui.components.thumbnailBorder
-import com.music.bitchord.ui.icons.BitChordIcons
+import com.music.astrotune.R
+import com.music.astrotune.data.model.PlaylistPrivacy
+import com.music.astrotune.data.model.ROW_ART_PX
+import com.music.astrotune.data.model.Song
+import com.music.astrotune.data.model.UserPlaylist
+import com.music.astrotune.data.model.artworkAt
+import com.music.astrotune.ui.components.thumbnailBorder
+import com.music.astrotune.ui.icons.BitChordIcons
 import java.util.Locale
 import kotlinx.coroutines.launch
 

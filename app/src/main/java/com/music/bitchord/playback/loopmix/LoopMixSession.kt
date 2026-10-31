@@ -1,7 +1,7 @@
-package com.music.bitchord.playback.loopmix
+package com.music.astrotune.playback.loopmix
 
 import android.util.Log
-import com.music.bitchord.playback.smart.LoopMix
+import com.music.astrotune.playback.smart.LoopMix
 import kotlin.math.abs
 import kotlin.math.max
 import kotlin.math.roundToLong

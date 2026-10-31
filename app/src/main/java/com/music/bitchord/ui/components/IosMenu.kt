@@ -1,12 +1,12 @@
-package com.music.bitchord.ui.components
+package com.music.astrotune.ui.components
 
 import android.provider.Settings
-import com.music.bitchord.ui.player.PlayerBackHandler
-import com.music.bitchord.ui.utils.containSheetGestures
-import com.music.bitchord.ui.components.backdrop.Backdrop
-import com.music.bitchord.ui.components.backdrop.drawBackdrop
-import com.music.bitchord.ui.components.backdrop.effects.blur
-import com.music.bitchord.ui.components.backdrop.effects.colorControls
+import com.music.astrotune.ui.player.PlayerBackHandler
+import com.music.astrotune.ui.utils.containSheetGestures
+import com.music.astrotune.ui.components.backdrop.Backdrop
+import com.music.astrotune.ui.components.backdrop.drawBackdrop
+import com.music.astrotune.ui.components.backdrop.effects.blur
+import com.music.astrotune.ui.components.backdrop.effects.colorControls
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.FastOutSlowInEasing
 import androidx.compose.animation.core.LinearEasing
@@ -74,8 +74,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.util.lerp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.music.bitchord.data.settings.AppSettings
-import com.music.bitchord.ui.components.backdrop.backdrops.SnapshotBackdrop
+import com.music.astrotune.data.settings.AppSettings
+import com.music.astrotune.ui.components.backdrop.backdrops.SnapshotBackdrop
 import dev.chrisbanes.haze.HazeState
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.withTimeoutOrNull
@@ -192,7 +192,7 @@ fun Modifier.iosMenuShadow(shape: Shape = IosMenuShape): Modifier = shadow(
 /**
  * The menu panel's frost drawn from a recorded [backdrop], in [shape] under
  * [fill] — the panel's own, and the player's drawers' and popups', so the two
- * are one material (see [com.music.bitchord.ui.player.PlayerFrost]).
+ * are one material (see [com.music.astrotune.ui.player.PlayerFrost]).
  */
 fun Modifier.menuBackdropFrost(backdrop: Backdrop, shape: Shape, fill: Color): Modifier = drawBackdrop(
     backdrop = backdrop,

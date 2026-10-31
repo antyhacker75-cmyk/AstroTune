@@ -1,9 +1,9 @@
-package com.music.bitchord.data.sources
+package com.music.astrotune.data.sources
 
-import com.music.bitchord.data.TrackLog
-import com.music.bitchord.data.jiosaavn.JioSaavnService
-import com.music.bitchord.data.jiosaavn.prioritizeExplicit
-import com.music.bitchord.data.model.Song
+import com.music.astrotune.data.TrackLog
+import com.music.astrotune.data.jiosaavn.JioSaavnService
+import com.music.astrotune.data.jiosaavn.prioritizeExplicit
+import com.music.astrotune.data.model.Song
 
 private const val TAG = "BitChord"
 

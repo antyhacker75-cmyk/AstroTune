@@ -1,15 +1,15 @@
-package com.music.bitchord.data.sources
+package com.music.astrotune.data.sources
 
-import com.music.bitchord.data.TrackLog
-import com.music.bitchord.data.model.Song
-import com.music.bitchord.data.settings.AppSettings
-import com.music.bitchord.data.sources.addon.AddonClient
-import com.music.bitchord.data.sources.addon.AddonException
-import com.music.bitchord.data.sources.addon.AddonManifest
-import com.music.bitchord.data.sources.addon.AddonNotFound
-import com.music.bitchord.data.sources.addon.AddonStream
-import com.music.bitchord.data.sources.addon.AddonTrack
-import com.music.bitchord.playback.StreamContainer
+import com.music.astrotune.data.TrackLog
+import com.music.astrotune.data.model.Song
+import com.music.astrotune.data.settings.AppSettings
+import com.music.astrotune.data.sources.addon.AddonClient
+import com.music.astrotune.data.sources.addon.AddonException
+import com.music.astrotune.data.sources.addon.AddonManifest
+import com.music.astrotune.data.sources.addon.AddonNotFound
+import com.music.astrotune.data.sources.addon.AddonStream
+import com.music.astrotune.data.sources.addon.AddonTrack
+import com.music.astrotune.playback.StreamContainer
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.util.Collections
@@ -45,7 +45,7 @@ class AddonSource(
      *
      * Two things need them after the fact and neither is reachable from a bare
      * id. The first is the duration the catalogue claimed, which
-     * [QualityUpgrade][com.music.bitchord.playback.QualityUpgrade] checks a
+     * [QualityUpgrade][com.music.astrotune.playback.QualityUpgrade] checks a
      * substitute against before cutting it into a track already playing — a
      * match on title and artist alone has put a 189s cut under a 163s
      * recording before. The second is the row's own `streamURL`, which the
@@ -178,7 +178,7 @@ class AddonSource(
      * where the best the catalogue holds is exactly what should be shown.
      *
      * The order is left exactly as it arrived.
-     * [TrackMatcher][com.music.bitchord.data.sources.TrackMatcher] decides which
+     * [TrackMatcher][com.music.astrotune.data.sources.TrackMatcher] decides which
      * rows are the recording and [SourceResolver] decides which to open; an
      * addon knows its own catalogue better than a re-sort here would.
      */

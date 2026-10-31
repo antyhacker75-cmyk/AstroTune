@@ -1,16 +1,16 @@
-package com.music.bitchord.ui.player
+package com.music.astrotune.ui.player
 
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
-import com.music.bitchord.ui.replay.Fonts
-import com.music.bitchord.ui.replay.drawArtwork
-import com.music.bitchord.ui.replay.drawBackdrop
-import com.music.bitchord.ui.replay.drawLogo
-import com.music.bitchord.ui.replay.ellipsised
-import com.music.bitchord.ui.replay.loadBitmap
+import com.music.astrotune.ui.replay.Fonts
+import com.music.astrotune.ui.replay.drawArtwork
+import com.music.astrotune.ui.replay.drawBackdrop
+import com.music.astrotune.ui.replay.drawLogo
+import com.music.astrotune.ui.replay.ellipsised
+import com.music.astrotune.ui.replay.loadBitmap
 import kotlin.math.roundToInt
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -32,7 +32,7 @@ import kotlinx.coroutines.withContext
  * ## Why it isn't Compose
  *
  * `Bitmap` + `android.graphics.Canvas`, exactly as
- * [com.music.bitchord.ui.replay.ReplayPoster] does it, and for the same
+ * [com.music.astrotune.ui.replay.ReplayPoster] does it, and for the same
  * reasons written up there: Compose offscreen on minSdk 26 is a cascade of
  * hardware bitmaps and layers that fails differently per device, while a
  * software canvas draws identically from API 26 up. The backdrop, the logo, the

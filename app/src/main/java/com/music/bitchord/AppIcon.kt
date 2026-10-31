@@ -1,4 +1,4 @@
-package com.music.bitchord
+package com.music.astrotune
 
 import android.content.ComponentName
 import android.content.Context
@@ -40,7 +40,7 @@ enum class AppIcon(val alias: String, val iconRes: Int, val labelRes: Int, val p
     PixelNeonViolet("LauncherPixelNeonViolet", R.mipmap.ic_pixel_neon_violet, R.string.app_icon_pixel_neon_violet, R.mipmap.ic_pixel_neon_violet_foreground);
 
     private fun component(context: Context) =
-        ComponentName(context.packageName, "com.music.bitchord.$alias")
+        ComponentName(context.packageName, "com.music.astrotune.$alias")
 
     companion object {
         fun current(context: Context): AppIcon {

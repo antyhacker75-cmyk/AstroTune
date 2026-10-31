@@ -1,11 +1,11 @@
-package com.music.bitchord.playback
+package com.music.astrotune.playback
 
 import android.os.Bundle
 import androidx.media3.common.MediaItem
 import androidx.media3.common.Player
-import com.music.bitchord.data.model.QueueTier
-import com.music.bitchord.data.model.Song
-import com.music.bitchord.data.settings.AppSettings
+import com.music.astrotune.data.model.QueueTier
+import com.music.astrotune.data.model.Song
+import com.music.astrotune.data.settings.AppSettings
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow

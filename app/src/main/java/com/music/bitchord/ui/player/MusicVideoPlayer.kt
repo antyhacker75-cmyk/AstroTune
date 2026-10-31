@@ -1,4 +1,4 @@
-package com.music.bitchord.ui.player
+package com.music.astrotune.ui.player
 
 import android.content.Context
 import android.view.TextureView
@@ -33,14 +33,14 @@ import androidx.media3.datasource.okhttp.OkHttpDataSource
 import androidx.media3.exoplayer.ExoPlayer
 import androidx.media3.exoplayer.source.ProgressiveMediaSource
 import com.metrolist.innertubex.extraction.StreamResolveException
-import com.music.bitchord.data.Http
-import com.music.bitchord.data.TrackLog
-import com.music.bitchord.data.innertube.InnerTubeXResolver
-import com.music.bitchord.data.model.Song
-import com.music.bitchord.data.settings.AppSettings
-import com.music.bitchord.playback.ChunkedDataSource
-import com.music.bitchord.playback.toSong
-import com.music.bitchord.ui.rememberIsForeground
+import com.music.astrotune.data.Http
+import com.music.astrotune.data.TrackLog
+import com.music.astrotune.data.innertube.InnerTubeXResolver
+import com.music.astrotune.data.model.Song
+import com.music.astrotune.data.settings.AppSettings
+import com.music.astrotune.playback.ChunkedDataSource
+import com.music.astrotune.playback.toSong
+import com.music.astrotune.ui.rememberIsForeground
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -60,7 +60,7 @@ import kotlin.math.roundToInt
  * A music video's picture, the way the web player's videoDeck plays one: a
  * second ExoPlayer, video only and silent, held to the main player's clock.
  *
- * The audio is untouched — it stays in [com.music.bitchord.playback.PlaybackService]
+ * The audio is untouched — it stays in [com.music.astrotune.playback.PlaybackService]
  * with everything that runs on it (the cache, the EQ, crossfade, Listen
  * Together) — and stays the clock. The picture follows it: its rate nudged a
  * few percent for small drift, a seek for a large one. It streams only while a

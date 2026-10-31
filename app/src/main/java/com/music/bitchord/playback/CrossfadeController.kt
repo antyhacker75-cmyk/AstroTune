@@ -1,4 +1,4 @@
-package com.music.bitchord.playback
+package com.music.astrotune.playback
 
 import android.os.SystemClock
 import android.util.Log
@@ -9,31 +9,31 @@ import androidx.media3.common.Player
 import androidx.media3.common.Timeline
 import androidx.media3.common.util.UnstableApi
 import androidx.media3.exoplayer.ExoPlayer
-import com.music.bitchord.data.listentogether.ListenTogether
-import com.music.bitchord.data.settings.AppSettings
-import com.music.bitchord.data.settings.MixBlend
-import com.music.bitchord.data.settings.MixDeck
-import com.music.bitchord.data.settings.MixTransitionView
-import com.music.bitchord.playback.audio.bitperfect.BitPerfectOutput
-import com.music.bitchord.data.settings.SmartAnalysis
-import com.music.bitchord.data.settings.TrackAnalysisState
-import com.music.bitchord.data.settings.TransitionWindow
-import com.music.bitchord.data.lyrics.LyricLine
-import com.music.bitchord.playback.loopmix.LoopMixPort
-import com.music.bitchord.playback.loopmix.LoopMixRenderer
-import com.music.bitchord.playback.loopmix.LoopMixSession
-import com.music.bitchord.playback.loopmix.LoopRegion
-import com.music.bitchord.playback.smart.CrossfadeMode
-import com.music.bitchord.playback.smart.LoopMix
-import com.music.bitchord.playback.smart.FILTER_ECHO_AT
-import com.music.bitchord.playback.smart.FilterTransitionVariant
-import com.music.bitchord.playback.smart.MixWaveform
-import com.music.bitchord.playback.smart.TrackAnalysis
-import com.music.bitchord.playback.smart.TransitionPlan
-import com.music.bitchord.playback.smart.TransitionStyle
-import com.music.bitchord.playback.smart.TransitionTrackInfo
-import com.music.bitchord.playback.smart.echoTailSeconds
-import com.music.bitchord.playback.smart.planTransition
+import com.music.astrotune.data.listentogether.ListenTogether
+import com.music.astrotune.data.settings.AppSettings
+import com.music.astrotune.data.settings.MixBlend
+import com.music.astrotune.data.settings.MixDeck
+import com.music.astrotune.data.settings.MixTransitionView
+import com.music.astrotune.playback.audio.bitperfect.BitPerfectOutput
+import com.music.astrotune.data.settings.SmartAnalysis
+import com.music.astrotune.data.settings.TrackAnalysisState
+import com.music.astrotune.data.settings.TransitionWindow
+import com.music.astrotune.data.lyrics.LyricLine
+import com.music.astrotune.playback.loopmix.LoopMixPort
+import com.music.astrotune.playback.loopmix.LoopMixRenderer
+import com.music.astrotune.playback.loopmix.LoopMixSession
+import com.music.astrotune.playback.loopmix.LoopRegion
+import com.music.astrotune.playback.smart.CrossfadeMode
+import com.music.astrotune.playback.smart.LoopMix
+import com.music.astrotune.playback.smart.FILTER_ECHO_AT
+import com.music.astrotune.playback.smart.FilterTransitionVariant
+import com.music.astrotune.playback.smart.MixWaveform
+import com.music.astrotune.playback.smart.TrackAnalysis
+import com.music.astrotune.playback.smart.TransitionPlan
+import com.music.astrotune.playback.smart.TransitionStyle
+import com.music.astrotune.playback.smart.TransitionTrackInfo
+import com.music.astrotune.playback.smart.echoTailSeconds
+import com.music.astrotune.playback.smart.planTransition
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -156,7 +156,7 @@ class CrossfadeController(
     /**
      * The low-pass and high-pass riding each side of a transition. This is what
      * makes a plan's
-     * [com.music.bitchord.playback.smart.TransitionPlan.transitionStyle] audible
+     * [com.music.astrotune.playback.smart.TransitionPlan.transitionStyle] audible
      * rather than advisory: see [rideFilters]. Defaults to
      * [TransitionFilters.None], which renders every style as the plain
      * equal-power blend this class ran before.
@@ -393,7 +393,7 @@ class CrossfadeController(
     private var mixViewJob: Job? = null
 
     /**
-     * The style fields of a [com.music.bitchord.playback.smart.TransitionPlan],
+     * The style fields of a [com.music.astrotune.playback.smart.TransitionPlan],
      * separated out so the standard (non-Smart) path can pass defaults without
      * constructing a plan it never made.
      *
@@ -951,7 +951,7 @@ class CrossfadeController(
         // [PartySync].
         //
         // The analysis behind it stops too, including a pass already running —
-        // see [com.music.bitchord.playback.smart.TrackAnalyzer], which reads
+        // see [com.music.astrotune.playback.smart.TrackAnalyzer], which reads
         // the party for itself. Nothing here asks for one while this returns,
         // but a request made a tick before the party started would otherwise
         // run to completion: a whole-track decode and two model passes, spent
@@ -1044,12 +1044,12 @@ class CrossfadeController(
      *
      * Reads the plan's timing (where the fade starts and how long it runs),
      * where the incoming track should be cued
-     * ([com.music.bitchord.playback.smart.TransitionPlan.incomingCueTime]),
+     * ([com.music.astrotune.playback.smart.TransitionPlan.incomingCueTime]),
      * and the tempo-stretch to align it with the outgoing track
-     * ([com.music.bitchord.playback.smart.TransitionPlan.incomingPlaybackRate])
+     * ([com.music.astrotune.playback.smart.TransitionPlan.incomingPlaybackRate])
      * — see [driveLap], which applies both at the handoff — and the style the
      * blend is rendered in
-     * ([com.music.bitchord.playback.smart.TransitionPlan.transitionStyle]),
+     * ([com.music.astrotune.playback.smart.TransitionPlan.transitionStyle]),
      * which [rideFilters] turns into a filter ride or a bass swap over the same
      * equal-power gain curve.
      */
@@ -1334,7 +1334,7 @@ class CrossfadeController(
      * which for the track after this one happens a few seconds before it starts
      * playing. So for almost the whole of the current track this answered zero —
      * and zero is not a harmless "don't know" downstream. It reaches
-     * [com.music.bitchord.playback.smart.TrackAnalyzer.request] as the next
+     * [com.music.astrotune.playback.smart.TrackAnalyzer.request] as the next
      * track's duration, and with no duration to check a sibling copy against the
      * analyzer will only read the rendition the cache key resolves to *right
      * now*, which with source substitution on is the `#alt` entry — while the

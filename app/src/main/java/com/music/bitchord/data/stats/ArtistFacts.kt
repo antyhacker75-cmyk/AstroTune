@@ -1,14 +1,14 @@
-package com.music.bitchord.data.stats
+package com.music.astrotune.data.stats
 
 import android.content.Context
 import android.net.Uri
 import android.util.Log
-import com.music.bitchord.BuildConfig
-import com.music.bitchord.data.Http
-import com.music.bitchord.data.YtMusicRepository
-import com.music.bitchord.data.model.SearchFilter
-import com.music.bitchord.data.model.SearchResult
-import com.music.bitchord.data.settings.AppSettings
+import com.music.astrotune.BuildConfig
+import com.music.astrotune.data.Http
+import com.music.astrotune.data.YtMusicRepository
+import com.music.astrotune.data.model.SearchFilter
+import com.music.astrotune.data.model.SearchResult
+import com.music.astrotune.data.settings.AppSettings
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob

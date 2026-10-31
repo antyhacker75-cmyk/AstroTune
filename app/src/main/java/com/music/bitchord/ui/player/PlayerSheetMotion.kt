@@ -1,4 +1,4 @@
-package com.music.bitchord.ui.player
+package com.music.astrotune.ui.player
 
 import android.view.Window
 import android.view.WindowManager
@@ -14,7 +14,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.platform.WindowInfo
-import com.music.bitchord.ui.components.MiniPlayerPull
+import com.music.astrotune.ui.components.MiniPlayerPull
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay

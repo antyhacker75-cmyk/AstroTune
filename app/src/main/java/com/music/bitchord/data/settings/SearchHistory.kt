@@ -1,4 +1,4 @@
-package com.music.bitchord.data.settings
+package com.music.astrotune.data.settings
 
 import android.content.Context
 import android.content.SharedPreferences
@@ -8,8 +8,8 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.serialization.builtins.ListSerializer
 import kotlinx.serialization.builtins.serializer
 import kotlinx.serialization.json.Json
-import com.music.bitchord.data.model.SearchHistoryEntity
-import com.music.bitchord.data.model.withCorrectedType
+import com.music.astrotune.data.model.SearchHistoryEntity
+import com.music.astrotune.data.model.withCorrectedType
 
 /**
  * What's been searched for lately, kept on this device only.

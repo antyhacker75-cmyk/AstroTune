@@ -1,4 +1,4 @@
-package com.music.bitchord.ui.replay
+package com.music.astrotune.ui.replay
 
 import android.content.Context
 import android.graphics.Bitmap
@@ -19,10 +19,10 @@ import coil3.request.ImageRequest
 import coil3.request.SuccessResult
 import coil3.request.allowHardware
 import coil3.toBitmap
-import com.music.bitchord.R
-import com.music.bitchord.data.model.CARD_ART_PX
-import com.music.bitchord.data.model.artworkAt
-import com.music.bitchord.data.stats.ReplaySummary
+import com.music.astrotune.R
+import com.music.astrotune.data.model.CARD_ART_PX
+import com.music.astrotune.data.model.artworkAt
+import com.music.astrotune.data.stats.ReplaySummary
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope

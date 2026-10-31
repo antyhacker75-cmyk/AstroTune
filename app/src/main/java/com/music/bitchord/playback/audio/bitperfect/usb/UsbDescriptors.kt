@@ -7,9 +7,9 @@
  *
  * SPDX-License-Identifier: LGPL-3.0-only
  */
-package com.music.bitchord.playback.audio.bitperfect.usb
+package com.music.astrotune.playback.audio.bitperfect.usb
 
-import com.music.bitchord.playback.audio.bitperfect.BitPerfectPcm
+import com.music.astrotune.playback.audio.bitperfect.BitPerfectPcm
 
 /**
  * USB Audio Class descriptor parsing and format selection for the direct USB

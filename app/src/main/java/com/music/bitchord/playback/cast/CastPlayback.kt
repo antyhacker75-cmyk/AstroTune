@@ -1,4 +1,4 @@
-package com.music.bitchord.playback.cast
+package com.music.astrotune.playback.cast
 
 import android.net.Uri
 import android.os.SystemClock
@@ -19,7 +19,7 @@ import com.google.android.gms.cast.framework.media.RemoteMediaClient
 import com.google.android.gms.common.api.PendingResult
 import com.google.android.gms.common.api.Result
 import com.google.android.gms.common.images.WebImage
-import com.music.bitchord.R
+import com.music.astrotune.R
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay

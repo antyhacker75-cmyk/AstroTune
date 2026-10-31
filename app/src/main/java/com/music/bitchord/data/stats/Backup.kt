@@ -1,10 +1,10 @@
-package com.music.bitchord.data.stats
+package com.music.astrotune.data.stats
 
 import android.content.Context
 import android.net.Uri
-import com.music.bitchord.BuildConfig
-import com.music.bitchord.data.settings.AppSettings
-import com.music.bitchord.data.settings.SearchHistory
+import com.music.astrotune.BuildConfig
+import com.music.astrotune.data.settings.AppSettings
+import com.music.astrotune.data.settings.SearchHistory
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import kotlinx.serialization.Serializable

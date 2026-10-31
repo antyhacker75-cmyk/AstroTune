@@ -1,4 +1,4 @@
-package com.music.bitchord.data.canvas
+package com.music.astrotune.data.canvas
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -8,9 +8,9 @@ import android.webkit.JavascriptInterface
 import android.webkit.WebStorage
 import android.webkit.WebView
 import android.webkit.WebViewClient
-import com.music.bitchord.data.DebugLog as Log
-import com.music.bitchord.data.Http
-import com.music.bitchord.data.settings.AppSettings
+import com.music.astrotune.data.DebugLog as Log
+import com.music.astrotune.data.Http
+import com.music.astrotune.data.settings.AppSettings
 import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.sync.Mutex

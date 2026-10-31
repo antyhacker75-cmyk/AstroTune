@@ -1,4 +1,4 @@
-package com.music.bitchord.ui.screens
+package com.music.astrotune.ui.screens
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -17,8 +17,8 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import org.jetbrains.compose.resources.painterResource
-import com.music.bitchord.sharedui.resources.spotify_logo
-import com.music.bitchord.sharedui.resources.Res
+import com.music.astrotune.sharedui.resources.spotify_logo
+import com.music.astrotune.sharedui.resources.Res
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Icon
 import androidx.compose.material3.CircularProgressIndicator
@@ -41,11 +41,11 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil3.compose.AsyncImage
-import com.music.bitchord.R
-import com.music.bitchord.data.settings.AppSettings
-import com.music.bitchord.data.spotify.SpotifyLibrary
-import com.music.bitchord.data.spotify.SpotifyPlaylist
-import com.music.bitchord.data.spotify.SpotifyTrack
+import com.music.astrotune.R
+import com.music.astrotune.data.settings.AppSettings
+import com.music.astrotune.data.spotify.SpotifyLibrary
+import com.music.astrotune.data.spotify.SpotifyPlaylist
+import com.music.astrotune.data.spotify.SpotifyTrack
 
 /**
  * The signed-in Spotify account's playlists. A tap opens one as an ordinary

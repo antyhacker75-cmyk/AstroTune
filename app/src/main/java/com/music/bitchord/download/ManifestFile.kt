@@ -1,10 +1,10 @@
-package com.music.bitchord.download
+package com.music.astrotune.download
 
-import com.music.bitchord.data.Http
-import com.music.bitchord.download.Mp4Boxes.boxes
-import com.music.bitchord.download.Mp4Boxes.child
-import com.music.bitchord.download.Mp4Boxes.find
-import com.music.bitchord.download.Mp4Boxes.readU32
+import com.music.astrotune.data.Http
+import com.music.astrotune.download.Mp4Boxes.boxes
+import com.music.astrotune.download.Mp4Boxes.child
+import com.music.astrotune.download.Mp4Boxes.find
+import com.music.astrotune.download.Mp4Boxes.readU32
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ensureActive
 import kotlinx.coroutines.withContext

@@ -1,8 +1,8 @@
-package com.music.bitchord.data.remote
+package com.music.astrotune.data.remote
 
-import com.music.bitchord.data.Http
-import com.music.bitchord.data.smb.SmbClient
-import com.music.bitchord.data.smb.SmbConfig
+import com.music.astrotune.data.Http
+import com.music.astrotune.data.smb.SmbClient
+import com.music.astrotune.data.smb.SmbConfig
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import okhttp3.Request
@@ -68,7 +68,7 @@ object RemoteArtReader {
 
         private fun handle(): com.hierynomus.smbj.share.File {
             file?.let { return it }
-            val share = com.music.bitchord.data.smb.SmbAuth.share
+            val share = com.music.astrotune.data.smb.SmbAuth.share
             val resolved = SmbConfig.relativePath(streamUrl, share)
                 ?: throw java.io.IOException("Not an SMB file: $streamUrl")
             path = resolved

@@ -17,7 +17,7 @@ plugins {
  * It has to share the phone app's application id *and* signing key, because the
  * Wearable Data Layer only delivers between apps that match on both. So:
  *   dev  -> com.dev.bitchord   pairs only with the phone's dev build
- *   prod -> com.music.bitchord pairs only with the phone's prod build
+ *   prod -> com.music.astrotune pairs only with the phone's prod build
  * and each build type is signed exactly the way the phone's is (debug key for
  * debug, the release keystore for release), so a watch build pairs with the
  * phone build of the same variant.
@@ -31,11 +31,11 @@ val signing = Properties().apply {
 val betaSuffix = rootProject.extra["bitchordBetaSuffix"] as String
 
 android {
-    namespace = "com.music.bitchord.wear"
+    namespace = "com.music.astrotune.wear"
     compileSdk = 36
 
     defaultConfig {
-        applicationId = "com.music.bitchord"
+        applicationId = "com.music.astrotune"
         // Wear OS 3, the oldest a Galaxy Watch 4 ever shipped with.
         minSdk = 30
         targetSdk = 36

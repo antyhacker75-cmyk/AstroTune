@@ -7,7 +7,7 @@
  *
  * SPDX-License-Identifier: LGPL-3.0-only
  */
-package com.music.bitchord.playback.audio.bitperfect.usb
+package com.music.astrotune.playback.audio.bitperfect.usb
 
 import android.app.PendingIntent
 import android.content.BroadcastReceiver

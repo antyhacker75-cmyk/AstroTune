@@ -1,6 +1,6 @@
-package com.music.bitchord.data.discord
+package com.music.astrotune.data.discord
 
-import com.music.bitchord.data.NerdStats
+import com.music.astrotune.data.NerdStats
 import java.util.Locale
 
 /**

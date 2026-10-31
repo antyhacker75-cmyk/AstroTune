@@ -1,4 +1,4 @@
-package com.music.bitchord.playback
+package com.music.astrotune.playback
 
 import android.bluetooth.BluetoothAdapter
 import android.bluetooth.BluetoothClass

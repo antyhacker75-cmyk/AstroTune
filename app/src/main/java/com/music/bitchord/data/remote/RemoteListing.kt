@@ -1,6 +1,6 @@
-package com.music.bitchord.data.remote
+package com.music.astrotune.data.remote
 
-import com.music.bitchord.data.model.UiState
+import com.music.astrotune.data.model.UiState
 
 /**
  * What a remote library page shows for a listing. A failed listing names

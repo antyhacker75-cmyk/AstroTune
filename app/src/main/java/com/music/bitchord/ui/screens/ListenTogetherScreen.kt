@@ -1,6 +1,6 @@
-package com.music.bitchord.ui.screens
+package com.music.astrotune.ui.screens
 
-import com.music.bitchord.ui.icons.SfIcons
+import com.music.astrotune.ui.icons.SfIcons
 import android.content.Intent
 import android.text.format.DateFormat
 import android.widget.Toast
@@ -49,7 +49,7 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
-import com.music.bitchord.ui.components.IosSwitch
+import com.music.astrotune.ui.components.IosSwitch
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.rememberModalBottomSheetState
@@ -87,13 +87,13 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil3.compose.AsyncImage
-import com.music.bitchord.R
-import com.music.bitchord.data.listentogether.JamInviteLink
-import com.music.bitchord.data.listentogether.ListenTogether
-import com.music.bitchord.data.listentogether.PartyActivity
-import com.music.bitchord.data.listentogether.PartyMember
-import com.music.bitchord.data.listentogether.ServerConnectionState
-import com.music.bitchord.data.listentogether.ServerUrlError
+import com.music.astrotune.R
+import com.music.astrotune.data.listentogether.JamInviteLink
+import com.music.astrotune.data.listentogether.ListenTogether
+import com.music.astrotune.data.listentogether.PartyActivity
+import com.music.astrotune.data.listentogether.PartyMember
+import com.music.astrotune.data.listentogether.ServerConnectionState
+import com.music.astrotune.data.listentogether.ServerUrlError
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
@@ -122,7 +122,7 @@ internal fun ServerUrlError.toMessageRes(): Int = when (this) {
  * There is no player binding yet. Controls sent from here move the party's
  * state and every other device sees them; nothing starts playing. That join is
  * the next piece of work and is the reason
- * [ListenTogether.partyPositionMs][com.music.bitchord.data.listentogether.ListenTogether.partyPositionMs]
+ * [ListenTogether.partyPositionMs][com.music.astrotune.data.listentogether.ListenTogether.partyPositionMs]
  * exists.
  */
 @OptIn(ExperimentalMaterial3Api::class)

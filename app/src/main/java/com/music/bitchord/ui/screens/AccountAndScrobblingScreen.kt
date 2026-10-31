@@ -1,11 +1,11 @@
-package com.music.bitchord.ui.screens
+package com.music.astrotune.ui.screens
 
-import com.music.bitchord.ui.icons.SfIcons
-import com.music.bitchord.auth.clearSpotifyWebSession
+import com.music.astrotune.ui.icons.SfIcons
+import com.music.astrotune.auth.clearSpotifyWebSession
 import androidx.compose.foundation.layout.Column
 import androidx.compose.material3.HorizontalDivider
-import com.music.bitchord.sharedui.resources.Res
-import com.music.bitchord.sharedui.resources.spotify_logo
+import com.music.astrotune.sharedui.resources.Res
+import com.music.astrotune.sharedui.resources.spotify_logo
 import org.jetbrains.compose.resources.painterResource
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
@@ -20,7 +20,7 @@ import androidx.compose.material.icons.rounded.History
 import androidx.compose.material.icons.rounded.SwitchAccount
 import androidx.compose.material.icons.rounded.Tune
 import androidx.compose.material3.MaterialTheme
-import com.music.bitchord.ui.components.IosSwitch
+import com.music.astrotune.ui.components.IosSwitch
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -30,9 +30,9 @@ import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.music.bitchord.R
-import com.music.bitchord.data.model.Account
-import com.music.bitchord.data.settings.AppSettings
+import com.music.astrotune.R
+import com.music.astrotune.data.model.Account
+import com.music.astrotune.data.settings.AppSettings
 import kotlin.math.roundToInt
 
 @Composable

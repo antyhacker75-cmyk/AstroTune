@@ -1,4 +1,4 @@
-package com.music.bitchord.playback.audio
+package com.music.astrotune.playback.audio
 
 import android.util.Log
 import androidx.media3.common.C
@@ -9,9 +9,9 @@ import androidx.media3.common.util.Util
 import androidx.media3.exoplayer.audio.AudioSink
 import androidx.media3.exoplayer.audio.DefaultAudioSink
 import androidx.media3.exoplayer.audio.ForwardingAudioSink
-import com.music.bitchord.BuildConfig
-import com.music.bitchord.playback.AudioOutputStatus
-import com.music.bitchord.playback.loopmix.LoopMixPort
+import com.music.astrotune.BuildConfig
+import com.music.astrotune.playback.AudioOutputStatus
+import com.music.astrotune.playback.loopmix.LoopMixPort
 import java.nio.ByteBuffer
 import java.nio.ByteOrder
 
@@ -489,7 +489,7 @@ class PrecisionAudioSink(
     /**
      * Passed straight through, noting on the way how far the DSP chain is
      * running ahead of it — see
-     * [com.music.bitchord.playback.TransitionFilterProcessor.leadUs]. The
+     * [com.music.astrotune.playback.TransitionFilterProcessor.leadUs]. The
      * renderer polls this on every clock tick, so the lead stays current for
      * free.
      */

@@ -1,4 +1,4 @@
-package com.music.bitchord.playback.audio
+package com.music.astrotune.playback.audio
 
 import android.content.Context
 import android.media.AudioDeviceCallback
@@ -6,8 +6,8 @@ import android.media.AudioDeviceInfo
 import android.media.AudioManager
 import android.os.Handler
 import android.os.Looper
-import com.music.bitchord.data.TrackLog
-import com.music.bitchord.playback.audio.bluetooth.BluetoothAudioTracker
+import com.music.astrotune.data.TrackLog
+import com.music.astrotune.playback.audio.bluetooth.BluetoothAudioTracker
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob

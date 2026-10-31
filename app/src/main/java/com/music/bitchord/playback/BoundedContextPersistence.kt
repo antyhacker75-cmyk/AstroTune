@@ -1,11 +1,11 @@
-package com.music.bitchord.playback
+package com.music.astrotune.playback
 
 import android.content.Context
 import android.content.SharedPreferences
-import com.music.bitchord.data.model.ArtistRef
-import com.music.bitchord.data.model.PlaybackSourceType
-import com.music.bitchord.data.model.QueueTier
-import com.music.bitchord.data.model.Song
+import com.music.astrotune.data.model.ArtistRef
+import com.music.astrotune.data.model.PlaybackSourceType
+import com.music.astrotune.data.model.QueueTier
+import com.music.astrotune.data.model.Song
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json

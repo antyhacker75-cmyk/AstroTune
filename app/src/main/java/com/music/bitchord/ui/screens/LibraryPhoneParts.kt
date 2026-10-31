@@ -1,4 +1,4 @@
-package com.music.bitchord.ui.screens
+package com.music.astrotune.ui.screens
 
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
@@ -15,18 +15,18 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.music.bitchord.R
-import com.music.bitchord.sharedui.resources.Res
-import com.music.bitchord.sharedui.resources.spotify_logo
-import com.music.bitchord.data.model.ShelfItem
-import com.music.bitchord.data.settings.AppSettings
-import com.music.bitchord.download.Downloads
-import com.music.bitchord.download.SavedCollection
-import com.music.bitchord.ui.components.PAGE_GUTTER
-import com.music.bitchord.ui.components.ReplayCardRowSkeleton
-import com.music.bitchord.ui.replay.ReplayCardRow
-import com.music.bitchord.ui.replay.ReplayHeroCard
-import com.music.bitchord.ui.replay.ReplayStoryPage
+import com.music.astrotune.R
+import com.music.astrotune.sharedui.resources.Res
+import com.music.astrotune.sharedui.resources.spotify_logo
+import com.music.astrotune.data.model.ShelfItem
+import com.music.astrotune.data.settings.AppSettings
+import com.music.astrotune.download.Downloads
+import com.music.astrotune.download.SavedCollection
+import com.music.astrotune.ui.components.PAGE_GUTTER
+import com.music.astrotune.ui.components.ReplayCardRowSkeleton
+import com.music.astrotune.ui.replay.ReplayCardRow
+import com.music.astrotune.ui.replay.ReplayHeroCard
+import com.music.astrotune.ui.replay.ReplayStoryPage
 
 // The phone's halves of the shared Library page: its list of folders, what
 // sits on its "On device" shelf, and the way in to Replay at its head.
@@ -65,7 +65,7 @@ fun libraryLinks(): List<LibraryLink> {
             "local:all",
         ),
         // Opt-in from Settings → Storage: what the song cache is holding from
-        // YouTube and JioSaavn. See [com.music.bitchord.playback.AudioCache.cachedSongs].
+        // YouTube and JioSaavn. See [com.music.astrotune.playback.AudioCache.cachedSongs].
         link(
             stringResource(R.string.cached_songs),
             stringResource(R.string.cached_songs_subtitle),
@@ -75,12 +75,12 @@ fun libraryLinks(): List<LibraryLink> {
         link(
             stringResource(R.string.webdav),
             stringResource(R.string.webdav_subtitle),
-            com.music.bitchord.data.webdav.WebDavConfig.BROWSE_ID,
+            com.music.astrotune.data.webdav.WebDavConfig.BROWSE_ID,
         ).takeIf { webdavConfigured.isNotBlank() },
         link(
             stringResource(R.string.smb),
             stringResource(R.string.smb_subtitle),
-            com.music.bitchord.data.smb.SmbConfig.BROWSE_ID,
+            com.music.astrotune.data.smb.SmbConfig.BROWSE_ID,
         ).takeIf { smbHost.isNotBlank() && smbShare.isNotBlank() },
         // Only while signed in to Spotify in Settings → Accounts; it opens that
         // account's playlists rather than a browse page.
@@ -127,8 +127,8 @@ fun deviceFolderIcon(browseId: String): ImageVector? = when (browseId) {
     "local:downloads" -> Icons.Rounded.Download
     "local:all" -> Icons.Rounded.Folder
     CACHE_FOLDER_BROWSE_ID -> Icons.Rounded.Storage
-    com.music.bitchord.data.webdav.WebDavConfig.BROWSE_ID -> Icons.Rounded.Cloud
-    com.music.bitchord.data.smb.SmbConfig.BROWSE_ID -> Icons.Rounded.Lan
+    com.music.astrotune.data.webdav.WebDavConfig.BROWSE_ID -> Icons.Rounded.Cloud
+    com.music.astrotune.data.smb.SmbConfig.BROWSE_ID -> Icons.Rounded.Lan
     else -> null
 }
 

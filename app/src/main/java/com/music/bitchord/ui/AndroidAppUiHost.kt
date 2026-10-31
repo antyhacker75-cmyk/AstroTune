@@ -1,15 +1,15 @@
-package com.music.bitchord.ui
+package com.music.astrotune.ui
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.music.bitchord.data.AppleCatalogue
-import com.music.bitchord.data.YtMusicRepository
-import com.music.bitchord.data.canvas.AppleArtistArtRepository
-import com.music.bitchord.data.canvas.CanvasArtwork
-import com.music.bitchord.data.canvas.CanvasRepository
-import com.music.bitchord.data.settings.AppSettings
-import com.music.bitchord.download.Downloads
+import com.music.astrotune.data.AppleCatalogue
+import com.music.astrotune.data.YtMusicRepository
+import com.music.astrotune.data.canvas.AppleArtistArtRepository
+import com.music.astrotune.data.canvas.CanvasArtwork
+import com.music.astrotune.data.canvas.CanvasRepository
+import com.music.astrotune.data.settings.AppSettings
+import com.music.astrotune.download.Downloads
 
 /** The shared pages' settings and downloads, answered from the phone's own stores. */
 object AndroidAppUiHost : AppUiHost {

@@ -1,4 +1,4 @@
-package com.music.bitchord.playback
+package com.music.astrotune.playback
 
 /**
  * Pending logical edits for a bounded context queue.

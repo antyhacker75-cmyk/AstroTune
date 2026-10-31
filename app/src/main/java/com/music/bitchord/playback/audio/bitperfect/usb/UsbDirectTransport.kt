@@ -7,14 +7,14 @@
  *
  * SPDX-License-Identifier: LGPL-3.0-only
  */
-package com.music.bitchord.playback.audio.bitperfect.usb
+package com.music.astrotune.playback.audio.bitperfect.usb
 
 import android.hardware.usb.UsbDevice
 import android.hardware.usb.UsbDeviceConnection
 import android.hardware.usb.UsbManager
-import com.music.bitchord.playback.audio.bitperfect.BitPerfectDriver
-import com.music.bitchord.playback.audio.bitperfect.BitPerfectTransport
-import com.music.bitchord.playback.audio.bitperfect.BitPerfectTransportException
+import com.music.astrotune.playback.audio.bitperfect.BitPerfectDriver
+import com.music.astrotune.playback.audio.bitperfect.BitPerfectTransport
+import com.music.astrotune.playback.audio.bitperfect.BitPerfectTransportException
 import java.nio.ByteBuffer
 
 /** JNI over `usb_transport.cpp`. Handles are opaque ids, never pointers. */

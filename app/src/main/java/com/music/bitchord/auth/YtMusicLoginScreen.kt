@@ -1,4 +1,4 @@
-package com.music.bitchord.auth
+package com.music.astrotune.auth
 
 import android.annotation.SuppressLint
 import android.webkit.CookieManager
@@ -14,7 +14,7 @@ import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.viewinterop.AndroidView
-import com.music.bitchord.data.DebugLog as Log
+import com.music.astrotune.data.DebugLog as Log
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.JsonPrimitive

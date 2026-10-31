@@ -1,4 +1,4 @@
-package com.music.bitchord.data.listentogether
+package com.music.astrotune.data.listentogether
 
 import android.content.Intent
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -13,10 +13,10 @@ data class ParsedJamInvite(
     val serverUrl: String? = null,
 )
 
-/** Relays a BitChord web or scheme invite from [com.music.bitchord.MainActivity] to Compose. */
+/** Relays a BitChord web or scheme invite from [com.music.astrotune.MainActivity] to Compose. */
 object JamInviteLink {
 
-    const val ORIGIN = "https://bitchord.kushagrasingh.in"
+    const val ORIGIN = "https://bitchord-b96t.onrender.com"
 
     private const val EXTRA_CONSUMED = "bitchord.jamInviteConsumed"
     private const val HOST = "bitchord.kushagrasingh.in"
@@ -50,7 +50,7 @@ object JamInviteLink {
     /**
      * Parses an incoming invite:
      * 1. bitchord://party/<CODE>?server=<SERVER>
-     * 2. https://bitchord.kushagrasingh.in/invite/<CODE>?server=<SERVER>
+     * 2. https://bitchord-b96t.onrender.com/invite/<CODE>?server=<SERVER>
      */
     fun parseInvite(value: String?): ParsedJamInvite? {
         val uri = runCatching { URI(value ?: return null) }.getOrNull() ?: return null
@@ -67,7 +67,7 @@ object JamInviteLink {
             return ParsedJamInvite(code = code, serverUrl = server)
         }
 
-        // 2. Official web domain: https://bitchord.kushagrasingh.in/invite/<CODE>
+        // 2. Official web domain: https://bitchord-b96t.onrender.com/invite/<CODE>
         if (scheme == "https" && host == HOST) {
             val match = INVITE_PATH.matchEntire(uri.path.orEmpty()) ?: return null
             val code = match.groupValues[1].uppercase()

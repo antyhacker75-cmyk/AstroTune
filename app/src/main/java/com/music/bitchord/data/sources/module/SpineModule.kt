@@ -1,4 +1,4 @@
-package com.music.bitchord.data.sources.module
+package com.music.astrotune.data.sources.module
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable

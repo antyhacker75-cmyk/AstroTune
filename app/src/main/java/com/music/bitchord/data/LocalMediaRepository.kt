@@ -1,4 +1,4 @@
-package com.music.bitchord.data
+package com.music.astrotune.data
 
 import android.Manifest
 import android.content.ContentUris
@@ -11,12 +11,12 @@ import android.os.Build
 import android.provider.DocumentsContract
 import android.provider.MediaStore
 import android.provider.OpenableColumns
-import com.music.bitchord.data.DebugLog as Log
+import com.music.astrotune.data.DebugLog as Log
 import androidx.core.content.ContextCompat
-import com.music.bitchord.data.model.Song
-import com.music.bitchord.data.settings.AppSettings
-import com.music.bitchord.download.DownloadStore
-import com.music.bitchord.download.Downloads
+import com.music.astrotune.data.model.Song
+import com.music.astrotune.data.settings.AppSettings
+import com.music.astrotune.download.DownloadStore
+import com.music.astrotune.download.Downloads
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.io.File

@@ -1,7 +1,7 @@
-package com.music.bitchord.ui.screens
+package com.music.astrotune.ui.screens
 
-import com.music.bitchord.ui.icons.SfIcons
-import com.music.bitchord.wear.WatchInstaller
+import com.music.astrotune.ui.icons.SfIcons
+import com.music.astrotune.wear.WatchInstaller
 import android.content.Context
 import androidx.annotation.StringRes
 import android.content.Intent
@@ -83,7 +83,7 @@ import androidx.compose.material.icons.rounded.Wifi
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatDelegate
-import com.music.bitchord.data.lyrics.translationLanguageName
+import com.music.astrotune.data.lyrics.translationLanguageName
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
@@ -92,7 +92,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Slider
 import androidx.compose.material3.SliderDefaults
-import com.music.bitchord.ui.components.IosSwitch
+import com.music.astrotune.ui.components.IosSwitch
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
@@ -129,7 +129,7 @@ import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.viewinterop.AndroidView
-import com.music.bitchord.AppIcon
+import com.music.astrotune.AppIcon
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.LinkAnnotation
 import androidx.compose.ui.text.SpanStyle
@@ -144,34 +144,34 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil3.SingletonImageLoader
 import coil3.compose.AsyncImage
-import com.music.bitchord.ui.components.PillSegmentedControl
-import com.music.bitchord.ui.components.isGlassSupported
-import com.music.bitchord.ui.components.languageDisplayNameRes
-import com.music.bitchord.ui.components.MessageState
-import com.music.bitchord.ui.components.SearchField
-import com.music.bitchord.ui.components.thumbnailBorder
-import com.music.bitchord.ui.performance.resolvePerformanceRefreshRate
-import com.music.bitchord.ui.performance.supportedPerformanceRefreshRates
-import com.music.bitchord.data.model.Account
-import com.music.bitchord.data.LocalMediaRepository
-import com.music.bitchord.data.NerdStats
-import com.music.bitchord.data.scrobbling.LastFM
-import com.music.bitchord.data.listentogether.ListenTogether
-import com.music.bitchord.data.settings.AppSettings
-import com.music.bitchord.data.settings.OutputPcmMode
-import com.music.bitchord.data.settings.BitPerfectMode
-import com.music.bitchord.playback.AudioOutputStatus
-import com.music.bitchord.playback.audio.bitperfect.BitPerfectOutput
-import com.music.bitchord.data.settings.AutomixPerformanceMode
-import com.music.bitchord.R
-import com.music.bitchord.data.sources.DeviceCodecs
-import com.music.bitchord.data.settings.AudioQuality
-import com.music.bitchord.data.settings.DownloadQuality
-import com.music.bitchord.data.settings.ThemeMode
-import com.music.bitchord.data.settings.AppFont
-import com.music.bitchord.data.stats.Backup
-import com.music.bitchord.playback.AudioCache
-import com.music.bitchord.ui.player.fullBleedArtworkAvailable
+import com.music.astrotune.ui.components.PillSegmentedControl
+import com.music.astrotune.ui.components.isGlassSupported
+import com.music.astrotune.ui.components.languageDisplayNameRes
+import com.music.astrotune.ui.components.MessageState
+import com.music.astrotune.ui.components.SearchField
+import com.music.astrotune.ui.components.thumbnailBorder
+import com.music.astrotune.ui.performance.resolvePerformanceRefreshRate
+import com.music.astrotune.ui.performance.supportedPerformanceRefreshRates
+import com.music.astrotune.data.model.Account
+import com.music.astrotune.data.LocalMediaRepository
+import com.music.astrotune.data.NerdStats
+import com.music.astrotune.data.scrobbling.LastFM
+import com.music.astrotune.data.listentogether.ListenTogether
+import com.music.astrotune.data.settings.AppSettings
+import com.music.astrotune.data.settings.OutputPcmMode
+import com.music.astrotune.data.settings.BitPerfectMode
+import com.music.astrotune.playback.AudioOutputStatus
+import com.music.astrotune.playback.audio.bitperfect.BitPerfectOutput
+import com.music.astrotune.data.settings.AutomixPerformanceMode
+import com.music.astrotune.R
+import com.music.astrotune.data.sources.DeviceCodecs
+import com.music.astrotune.data.settings.AudioQuality
+import com.music.astrotune.data.settings.DownloadQuality
+import com.music.astrotune.data.settings.ThemeMode
+import com.music.astrotune.data.settings.AppFont
+import com.music.astrotune.data.stats.Backup
+import com.music.astrotune.playback.AudioCache
+import com.music.astrotune.ui.player.fullBleedArtworkAvailable
 import kotlinx.coroutines.launch
 import kotlin.math.roundToInt
 import java.util.Locale
@@ -483,7 +483,7 @@ fun SettingsScreen(
             // it switched the *module source* on and off, not lossless. Sources
             // above lists that as the module's own row now. Lossless itself is no
             // longer a setting at all — see
-            // [SourceResolver.requestForNow][com.music.bitchord.data.sources.SourceResolver.requestForNow].
+            // [SourceResolver.requestForNow][com.music.astrotune.data.sources.SourceResolver.requestForNow].
             SearchableSettingsGroup(search, header = stringResource(R.string.audio_quality)) {
                 val sourceTitle = stringResource(R.string.source)
                 val sourceSubtitle = stringResource(R.string.sources_subtitle)
@@ -1661,7 +1661,7 @@ fun SettingsScreen(
                     append("Discord")
                 }
                 append("  ")
-                withLink(LinkAnnotation.Url("https://bitchord.kushagrasingh.in/", linkStyles)) {
+                withLink(LinkAnnotation.Url("https://bitchord-b96t.onrender.com/", linkStyles)) {
                     append("Website")
                 }
                 append("\n~YouTube Music & Listen Together Backend")

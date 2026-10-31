@@ -8,18 +8,18 @@
  *      http://www.apache.org/licenses/LICENSE-2.0
  */
 
-package com.music.bitchord.playback
+package com.music.astrotune.playback
 
 import android.media.AudioDeviceInfo
 import android.media.AudioFormat
 import android.media.AudioManager
-import com.music.bitchord.data.settings.OutputPcmMode
-import com.music.bitchord.playback.audio.DirectAudioProbe
-import com.music.bitchord.playback.audio.FallbackReason
-import com.music.bitchord.playback.audio.OutputNegotiationResult
-import com.music.bitchord.playback.audio.PcmEncoding
-import com.music.bitchord.playback.audio.TransportType
-import com.music.bitchord.playback.audio.bluetooth.BluetoothTelemetry
+import com.music.astrotune.data.settings.OutputPcmMode
+import com.music.astrotune.playback.audio.DirectAudioProbe
+import com.music.astrotune.playback.audio.FallbackReason
+import com.music.astrotune.playback.audio.OutputNegotiationResult
+import com.music.astrotune.playback.audio.PcmEncoding
+import com.music.astrotune.playback.audio.TransportType
+import com.music.astrotune.playback.audio.bluetooth.BluetoothTelemetry
 import kotlinx.coroutines.flow.MutableStateFlow
 
 /**

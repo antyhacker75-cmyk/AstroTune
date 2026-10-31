@@ -1,4 +1,4 @@
-package com.music.bitchord.ui.player
+package com.music.astrotune.ui.player
 
 import android.content.Intent
 import android.graphics.Bitmap
@@ -37,13 +37,13 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import com.music.bitchord.R
-import com.music.bitchord.ui.haptics.Haptic
-import com.music.bitchord.ui.haptics.rememberHaptics
-import com.music.bitchord.ui.replay.ShareAction
-import com.music.bitchord.ui.replay.cacheForSharing
-import com.music.bitchord.ui.replay.saveToGallery
-import com.music.bitchord.ui.replay.sendIntent
+import com.music.astrotune.R
+import com.music.astrotune.ui.haptics.Haptic
+import com.music.astrotune.ui.haptics.rememberHaptics
+import com.music.astrotune.ui.replay.ShareAction
+import com.music.astrotune.ui.replay.cacheForSharing
+import com.music.astrotune.ui.replay.saveToGallery
+import com.music.astrotune.ui.replay.sendIntent
 import dev.chrisbanes.haze.HazeState
 import kotlinx.coroutines.launch
 

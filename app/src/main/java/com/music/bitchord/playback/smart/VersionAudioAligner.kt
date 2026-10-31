@@ -1,13 +1,13 @@
-package com.music.bitchord.playback.smart
+package com.music.astrotune.playback.smart
 
 import android.content.Context
 import android.media.MediaDataSource
 import android.net.Uri
 import android.util.Log
 import androidx.media3.common.util.UnstableApi
-import com.music.bitchord.data.TrackLog
-import com.music.bitchord.data.model.Song
-import com.music.bitchord.playback.AudioCache
+import com.music.astrotune.data.TrackLog
+import com.music.astrotune.data.model.Song
+import com.music.astrotune.playback.AudioCache
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope

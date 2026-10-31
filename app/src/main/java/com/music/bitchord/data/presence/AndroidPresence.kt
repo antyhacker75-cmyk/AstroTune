@@ -1,4 +1,4 @@
-package com.music.bitchord.data.presence
+package com.music.astrotune.data.presence
 
 import android.app.Application
 import android.content.Context

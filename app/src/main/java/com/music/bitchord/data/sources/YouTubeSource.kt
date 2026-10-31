@@ -1,10 +1,10 @@
-package com.music.bitchord.data.sources
+package com.music.astrotune.data.sources
 
-import com.music.bitchord.data.YtMusicRepository
-import com.music.bitchord.data.innertube.StreamResolver
-import com.music.bitchord.data.model.SearchFilter
-import com.music.bitchord.data.model.SearchResult
-import com.music.bitchord.data.model.Song
+import com.music.astrotune.data.YtMusicRepository
+import com.music.astrotune.data.innertube.StreamResolver
+import com.music.astrotune.data.model.SearchFilter
+import com.music.astrotune.data.model.SearchResult
+import com.music.astrotune.data.model.Song
 
 /**
  * YouTube Music, wrapped so it can be ordered alongside everything else.

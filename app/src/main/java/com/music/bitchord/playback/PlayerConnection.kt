@@ -1,4 +1,4 @@
-package com.music.bitchord.playback
+package com.music.astrotune.playback
 
 import android.content.ComponentName
 import android.net.Uri
@@ -23,18 +23,18 @@ import androidx.media3.common.Timeline
 import androidx.media3.session.MediaController
 import androidx.media3.session.SessionCommand
 import androidx.media3.session.SessionToken
-import com.music.bitchord.data.model.ArtistRef
-import com.music.bitchord.data.model.NOTIFICATION_ART_PX
-import com.music.bitchord.data.model.PlaybackSourceType
-import com.music.bitchord.data.model.QueueTier
-import com.music.bitchord.data.model.Song
-import com.music.bitchord.data.model.artworkAt
-import com.music.bitchord.data.sources.SourceKind
-import com.music.bitchord.data.sources.SourceRegistry
-import com.music.bitchord.data.sources.SourceResolver
-import com.music.bitchord.data.sources.TrackMatcher
-import com.music.bitchord.download.Downloads
-import com.music.bitchord.ui.rememberIsForeground
+import com.music.astrotune.data.model.ArtistRef
+import com.music.astrotune.data.model.NOTIFICATION_ART_PX
+import com.music.astrotune.data.model.PlaybackSourceType
+import com.music.astrotune.data.model.QueueTier
+import com.music.astrotune.data.model.Song
+import com.music.astrotune.data.model.artworkAt
+import com.music.astrotune.data.sources.SourceKind
+import com.music.astrotune.data.sources.SourceRegistry
+import com.music.astrotune.data.sources.SourceResolver
+import com.music.astrotune.data.sources.TrackMatcher
+import com.music.astrotune.download.Downloads
+import com.music.astrotune.ui.rememberIsForeground
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.guava.await
@@ -267,7 +267,7 @@ fun songFromBundle(b: Bundle): Song {
         localPath = b.getString("localPath"),
         sourceQuality = b.getString("sourceQuality"),
         playbackSource = b.getString("playbackSource"),
-        playbackSourceType = b.getString("playbackSourceType")?.let { runCatching { com.music.bitchord.data.model.PlaybackSourceType.valueOf(it) }.getOrNull() },
+        playbackSourceType = b.getString("playbackSourceType")?.let { runCatching { com.music.astrotune.data.model.PlaybackSourceType.valueOf(it) }.getOrNull() },
         playbackSourceId = b.getString("playbackSourceId"),
         isExplicit = if (b.containsKey("isExplicit")) b.getBoolean("isExplicit") else null,
         queueTier = queueTier,
@@ -615,7 +615,7 @@ private fun resolvePlaybackUri(uriString: String, localPath: String?): String {
 
 /**
  * The `&n=&a=&d=` tail every playback URI carries: what this track is, in the
- * terms [com.music.bitchord.data.sources.TrackMatcher] compares recordings on.
+ * terms [com.music.astrotune.data.sources.TrackMatcher] compares recordings on.
  *
  * The runtime is the one of the three that can rule a candidate *out* on its
  * own, and it is only ever a hint here — a row that never carried a duration
@@ -838,7 +838,7 @@ const val DIRECT_YOUTUBE_PARAMETER = "direct_youtube"
  * has only the URI: the resolver runs on ExoPlayer's loader thread with a
  * DataSpec in hand, and read-ahead means the track being fetched is usually not
  * the one playing. That is what makes it the answer to "whose log line is this"
- * — see [com.music.bitchord.data.TrackLog.about].
+ * — see [com.music.astrotune.data.TrackLog.about].
  *
  * Deliberately not the cache key, which looks similar and is not the same
  * thing: that one splits a track's renditions apart on purpose and spells a

@@ -1,4 +1,4 @@
-package com.music.bitchord.playback.cast
+package com.music.astrotune.playback.cast
 
 import android.content.Context
 import android.util.Log

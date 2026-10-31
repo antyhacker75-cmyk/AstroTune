@@ -1,4 +1,4 @@
-package com.music.bitchord.widget
+package com.music.astrotune.widget
 
 import android.app.PendingIntent
 import android.appwidget.AppWidgetManager
@@ -11,9 +11,9 @@ import android.os.Bundle
 import android.graphics.Bitmap
 import android.view.View
 import android.widget.RemoteViews
-import com.music.bitchord.MainActivity
-import com.music.bitchord.R
-import com.music.bitchord.playback.PlayerDeepLink
+import com.music.astrotune.MainActivity
+import com.music.astrotune.R
+import com.music.astrotune.playback.PlayerDeepLink
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob

@@ -1,9 +1,9 @@
-package com.music.bitchord.download
+package com.music.astrotune.download
 
 import android.content.Context
 import android.net.Uri
-import com.music.bitchord.data.Http
-import com.music.bitchord.data.lyrics.WORD_LYRICS_FIELD
+import com.music.astrotune.data.Http
+import com.music.astrotune.data.lyrics.WORD_LYRICS_FIELD
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ensureActive
 import kotlinx.coroutines.withContext

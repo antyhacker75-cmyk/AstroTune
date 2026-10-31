@@ -1,4 +1,4 @@
-package com.music.bitchord.download
+package com.music.astrotune.download
 
 import android.Manifest
 import android.app.Application
@@ -25,11 +25,11 @@ import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkManager
 import androidx.work.WorkerParameters
 import androidx.work.workDataOf
-import com.music.bitchord.R
-import com.music.bitchord.data.DebugLog as Log
-import com.music.bitchord.data.YtMusicRepository
-import com.music.bitchord.data.model.Song
-import com.music.bitchord.data.settings.AppSettings
+import com.music.astrotune.R
+import com.music.astrotune.data.DebugLog as Log
+import com.music.astrotune.data.YtMusicRepository
+import com.music.astrotune.data.model.Song
+import com.music.astrotune.data.settings.AppSettings
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob

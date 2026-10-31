@@ -1,4 +1,4 @@
-package com.music.bitchord
+package com.music.astrotune
 
 import android.Manifest
 import android.content.Context
@@ -75,7 +75,7 @@ import androidx.compose.material.icons.rounded.MoreHoriz
 import androidx.compose.material.icons.rounded.Person
 import androidx.compose.material.icons.rounded.Sort
 import androidx.compose.material.icons.rounded.Upgrade
-import com.music.bitchord.data.listentogether.ServerConnectionState
+import com.music.astrotune.data.listentogether.ServerConnectionState
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -124,185 +124,185 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.music.bitchord.auth.DiscordLoginScreen
-import com.music.bitchord.auth.SpotifyLoginScreen
-import com.music.bitchord.auth.WebSessionMode
-import com.music.bitchord.auth.YtMusicLoginScreen
-import com.music.bitchord.data.AppUpdateChecker
-import com.music.bitchord.data.LocalMediaRepository
-import com.music.bitchord.data.listentogether.JamInviteLink
-import com.music.bitchord.data.listentogether.ListenTogether
-import com.music.bitchord.data.listentogether.partyQueueIndexOf
-import com.music.bitchord.data.NerdStats
-import com.music.bitchord.data.TrackLog
-import com.music.bitchord.data.innertube.InnertubeParser
-import com.music.bitchord.data.model.BrowseType
-import com.music.bitchord.data.model.HomeShelf
-import com.music.bitchord.data.model.LikeStatus
-import com.music.bitchord.data.model.PlaybackSourceType
-import com.music.bitchord.data.model.SearchFilter
-import com.music.bitchord.data.model.SearchResult
-import com.music.bitchord.data.model.ShelfItem
-import com.music.bitchord.data.model.Song
-import com.music.bitchord.data.model.isUnresolvedSpotify
-import com.music.bitchord.data.model.UiState
-import com.music.bitchord.data.model.UserPlaylist
-import com.music.bitchord.data.model.EntityType
-import com.music.bitchord.data.model.SearchHistoryEntity
+import com.music.astrotune.auth.DiscordLoginScreen
+import com.music.astrotune.auth.SpotifyLoginScreen
+import com.music.astrotune.auth.WebSessionMode
+import com.music.astrotune.auth.YtMusicLoginScreen
+import com.music.astrotune.data.AppUpdateChecker
+import com.music.astrotune.data.LocalMediaRepository
+import com.music.astrotune.data.listentogether.JamInviteLink
+import com.music.astrotune.data.listentogether.ListenTogether
+import com.music.astrotune.data.listentogether.partyQueueIndexOf
+import com.music.astrotune.data.NerdStats
+import com.music.astrotune.data.TrackLog
+import com.music.astrotune.data.innertube.InnertubeParser
+import com.music.astrotune.data.model.BrowseType
+import com.music.astrotune.data.model.HomeShelf
+import com.music.astrotune.data.model.LikeStatus
+import com.music.astrotune.data.model.PlaybackSourceType
+import com.music.astrotune.data.model.SearchFilter
+import com.music.astrotune.data.model.SearchResult
+import com.music.astrotune.data.model.ShelfItem
+import com.music.astrotune.data.model.Song
+import com.music.astrotune.data.model.isUnresolvedSpotify
+import com.music.astrotune.data.model.UiState
+import com.music.astrotune.data.model.UserPlaylist
+import com.music.astrotune.data.model.EntityType
+import com.music.astrotune.data.model.SearchHistoryEntity
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import com.music.bitchord.data.model.durationMillis
-import com.music.bitchord.data.scrobbling.LastFM
-import com.music.bitchord.data.settings.AppSettings
-import com.music.bitchord.data.settings.BitPerfectMode
-import com.music.bitchord.ui.AddonBlockedAlert
-import com.music.bitchord.data.settings.LibrarySort
-import com.music.bitchord.data.settings.ThemeMode
-import com.music.bitchord.ui.components.AccountProfileSelector
-import com.music.bitchord.ui.components.DacVolumeHud
-import com.music.bitchord.ui.components.DacVolumeKeys
-import com.music.bitchord.ui.components.LocalPlayingBarsMotion
-import com.music.bitchord.ui.components.handleDacVolumeKey
-import com.music.bitchord.ui.components.VolumeHud
-import com.music.bitchord.ui.navigation.AppDestination
-import com.music.bitchord.ui.navigation.AppRoute
-import com.music.bitchord.ui.screens.EqualizerPresetPage
-import com.music.bitchord.ui.screens.SettingsChoicePage
-import com.music.bitchord.ui.components.SpotifyImportAlert
-import com.music.bitchord.ui.screens.WearOsScreen
-import com.music.bitchord.ui.screens.AccountAndScrobblingScreen
-import com.music.bitchord.ui.screens.DiscordDialog
-import com.music.bitchord.ui.screens.DiscordDialogHost
-import com.music.bitchord.ui.screens.DiscordScreen
-import com.music.bitchord.ui.screens.EqualizerScreen
-import com.music.bitchord.ui.screens.HistoryScreen
-import com.music.bitchord.ui.screens.LibraryReplayEntry
-import com.music.bitchord.ui.screens.libraryDeviceItems
-import com.music.bitchord.ui.screens.SPOTIFY_BROWSE_ID
-import com.music.bitchord.ui.screens.libraryLinks
-import com.music.bitchord.ui.screens.CACHE_FOLDER_BROWSE_ID
-import com.music.bitchord.ui.screens.ListenTogetherScreen
-import com.music.bitchord.ui.screens.PartyServerEditor
-import com.music.bitchord.ui.screens.SignatureApiEditor
-import com.music.bitchord.ui.screens.SettingsScreen
-import com.music.bitchord.ui.screens.SourceEditorAlert
-import com.music.bitchord.ui.screens.SourcesScreen
-import com.music.bitchord.data.sources.TrackMatcher
-import com.music.bitchord.ui.screens.SpotifyCanvasAuthScreen
-import com.music.bitchord.ui.screens.SpotifyLibraryScreen
-import com.music.bitchord.data.spotify.SPOTIFY_PAGE_PREFIX
-import com.music.bitchord.playback.AudioCache
-import com.music.bitchord.playback.LinkRequest
-import com.music.bitchord.playback.MusicLink
-import com.music.bitchord.playback.OriginalVersion
-import com.music.bitchord.playback.PlayerDeepLink
-import com.music.bitchord.playback.QueueBuilder
-import com.music.bitchord.playback.QueueCoordinator
-import com.music.bitchord.playback.QueueCoordinator.asQueueEntry
-import com.music.bitchord.playback.QueueShuffle
-import com.music.bitchord.playback.QueueSource
-import com.music.bitchord.playback.cast.CastController
-import com.music.bitchord.data.model.QueueTier
-import com.music.bitchord.playback.autoplayEnabledFor
-import com.music.bitchord.playback.autoplaySectionStart
-import com.music.bitchord.playback.beginRadioQueue
-import com.music.bitchord.playback.commitRadioQueue
-import com.music.bitchord.playback.fromAutoplay
-import com.music.bitchord.playback.hasYouTubeOriginal
-import com.music.bitchord.playback.loadAutoplayTracks
-import com.music.bitchord.playback.playSongs
-import com.music.bitchord.playback.BoundedQueuePlanner
-import com.music.bitchord.playback.playBoundedContext
-import com.music.bitchord.playback.contextEntryKey
-import com.music.bitchord.playback.toMediaItem
-import com.music.bitchord.playback.toSong
-import com.music.bitchord.playback.toDirectYouTubeMediaItem
-import com.music.bitchord.playback.toggleAutoplay
-import com.music.bitchord.playback.toggleShuffle
-import com.music.bitchord.playback.upgradeQuality
-import com.music.bitchord.playback.revertToOriginal
-import com.music.bitchord.playback.swapToVersion
-import com.music.bitchord.playback.smart.VersionAudioAligner
-import com.music.bitchord.download.DownloadSession
-import com.music.bitchord.download.DownloadStore
-import com.music.bitchord.download.MediaTagger
-import com.music.bitchord.download.DownloadTarget
-import com.music.bitchord.download.Downloads
-import com.music.bitchord.ui.components.BrowseActionsMenu
-import com.music.bitchord.ui.components.BrowseTarget
-import com.music.bitchord.ui.components.ConfirmationAlert
-import com.music.bitchord.ui.components.InfoAlert
-import com.music.bitchord.ui.components.DownloadManagerPage
-import com.music.bitchord.ui.components.PlaylistPickerSheet
-import com.music.bitchord.ui.components.ReorderPlaylistPage
-import com.music.bitchord.ui.components.LongPressOrigin
-import com.music.bitchord.ui.components.MenuAnchor
-import com.music.bitchord.ui.components.menuAnchor
-import com.music.bitchord.ui.components.IosMenuPopover
-import com.music.bitchord.ui.components.SongActionsMenu
-import com.music.bitchord.ui.components.HeldContextMenu
-import com.music.bitchord.ui.components.HeldItem
+import com.music.astrotune.data.model.durationMillis
+import com.music.astrotune.data.scrobbling.LastFM
+import com.music.astrotune.data.settings.AppSettings
+import com.music.astrotune.data.settings.BitPerfectMode
+import com.music.astrotune.ui.AddonBlockedAlert
+import com.music.astrotune.data.settings.LibrarySort
+import com.music.astrotune.data.settings.ThemeMode
+import com.music.astrotune.ui.components.AccountProfileSelector
+import com.music.astrotune.ui.components.DacVolumeHud
+import com.music.astrotune.ui.components.DacVolumeKeys
+import com.music.astrotune.ui.components.LocalPlayingBarsMotion
+import com.music.astrotune.ui.components.handleDacVolumeKey
+import com.music.astrotune.ui.components.VolumeHud
+import com.music.astrotune.ui.navigation.AppDestination
+import com.music.astrotune.ui.navigation.AppRoute
+import com.music.astrotune.ui.screens.EqualizerPresetPage
+import com.music.astrotune.ui.screens.SettingsChoicePage
+import com.music.astrotune.ui.components.SpotifyImportAlert
+import com.music.astrotune.ui.screens.WearOsScreen
+import com.music.astrotune.ui.screens.AccountAndScrobblingScreen
+import com.music.astrotune.ui.screens.DiscordDialog
+import com.music.astrotune.ui.screens.DiscordDialogHost
+import com.music.astrotune.ui.screens.DiscordScreen
+import com.music.astrotune.ui.screens.EqualizerScreen
+import com.music.astrotune.ui.screens.HistoryScreen
+import com.music.astrotune.ui.screens.LibraryReplayEntry
+import com.music.astrotune.ui.screens.libraryDeviceItems
+import com.music.astrotune.ui.screens.SPOTIFY_BROWSE_ID
+import com.music.astrotune.ui.screens.libraryLinks
+import com.music.astrotune.ui.screens.CACHE_FOLDER_BROWSE_ID
+import com.music.astrotune.ui.screens.ListenTogetherScreen
+import com.music.astrotune.ui.screens.PartyServerEditor
+import com.music.astrotune.ui.screens.SignatureApiEditor
+import com.music.astrotune.ui.screens.SettingsScreen
+import com.music.astrotune.ui.screens.SourceEditorAlert
+import com.music.astrotune.ui.screens.SourcesScreen
+import com.music.astrotune.data.sources.TrackMatcher
+import com.music.astrotune.ui.screens.SpotifyCanvasAuthScreen
+import com.music.astrotune.ui.screens.SpotifyLibraryScreen
+import com.music.astrotune.data.spotify.SPOTIFY_PAGE_PREFIX
+import com.music.astrotune.playback.AudioCache
+import com.music.astrotune.playback.LinkRequest
+import com.music.astrotune.playback.MusicLink
+import com.music.astrotune.playback.OriginalVersion
+import com.music.astrotune.playback.PlayerDeepLink
+import com.music.astrotune.playback.QueueBuilder
+import com.music.astrotune.playback.QueueCoordinator
+import com.music.astrotune.playback.QueueCoordinator.asQueueEntry
+import com.music.astrotune.playback.QueueShuffle
+import com.music.astrotune.playback.QueueSource
+import com.music.astrotune.playback.cast.CastController
+import com.music.astrotune.data.model.QueueTier
+import com.music.astrotune.playback.autoplayEnabledFor
+import com.music.astrotune.playback.autoplaySectionStart
+import com.music.astrotune.playback.beginRadioQueue
+import com.music.astrotune.playback.commitRadioQueue
+import com.music.astrotune.playback.fromAutoplay
+import com.music.astrotune.playback.hasYouTubeOriginal
+import com.music.astrotune.playback.loadAutoplayTracks
+import com.music.astrotune.playback.playSongs
+import com.music.astrotune.playback.BoundedQueuePlanner
+import com.music.astrotune.playback.playBoundedContext
+import com.music.astrotune.playback.contextEntryKey
+import com.music.astrotune.playback.toMediaItem
+import com.music.astrotune.playback.toSong
+import com.music.astrotune.playback.toDirectYouTubeMediaItem
+import com.music.astrotune.playback.toggleAutoplay
+import com.music.astrotune.playback.toggleShuffle
+import com.music.astrotune.playback.upgradeQuality
+import com.music.astrotune.playback.revertToOriginal
+import com.music.astrotune.playback.swapToVersion
+import com.music.astrotune.playback.smart.VersionAudioAligner
+import com.music.astrotune.download.DownloadSession
+import com.music.astrotune.download.DownloadStore
+import com.music.astrotune.download.MediaTagger
+import com.music.astrotune.download.DownloadTarget
+import com.music.astrotune.download.Downloads
+import com.music.astrotune.ui.components.BrowseActionsMenu
+import com.music.astrotune.ui.components.BrowseTarget
+import com.music.astrotune.ui.components.ConfirmationAlert
+import com.music.astrotune.ui.components.InfoAlert
+import com.music.astrotune.ui.components.DownloadManagerPage
+import com.music.astrotune.ui.components.PlaylistPickerSheet
+import com.music.astrotune.ui.components.ReorderPlaylistPage
+import com.music.astrotune.ui.components.LongPressOrigin
+import com.music.astrotune.ui.components.MenuAnchor
+import com.music.astrotune.ui.components.menuAnchor
+import com.music.astrotune.ui.components.IosMenuPopover
+import com.music.astrotune.ui.components.SongActionsMenu
+import com.music.astrotune.ui.components.HeldContextMenu
+import com.music.astrotune.ui.components.HeldItem
 import androidx.media3.session.MediaController
-import com.music.bitchord.playback.QualityUpgrade
-import com.music.bitchord.playback.rememberMediaController
-import com.music.bitchord.playback.rememberPlayerState
-import com.music.bitchord.playback.setQueueDragActive
-import com.music.bitchord.ui.MainViewModel
-import com.music.bitchord.ui.SearchSource
-import com.music.bitchord.ui.components.BottomFadeScrim
-import com.music.bitchord.ui.components.TopFadeBlur
-import com.music.bitchord.ui.components.FloatingBarsTapGuard
-import com.music.bitchord.ui.components.BottomTab
-import com.music.bitchord.ui.components.FLOATING_BAR_MAX_WIDTH
-import com.music.bitchord.ui.components.FloatingBottomBar
-import com.music.bitchord.ui.components.GlassNavBar
-import com.music.bitchord.ui.components.floatingtabbar.rememberFloatingTabBarScrollConnection
-import com.music.bitchord.ui.components.FrostedTopBar
-import com.music.bitchord.ui.components.LastfmLoginAlert
-import com.music.bitchord.ui.components.LocalAppBackdrop
-import com.music.bitchord.ui.components.LocalLiquidGlassEnabled
-import com.music.bitchord.ui.components.backdrop.backdrops.LayerBackdrop
-import com.music.bitchord.ui.components.backdrop.backdrops.layerBackdrop
-import com.music.bitchord.ui.components.backdrop.backdrops.rememberLayerBackdrop
-import com.music.bitchord.ui.components.backdrop.backdrops.rememberSnapshotBackdrop
-import com.music.bitchord.ui.components.backdrop.backdrops.snapshotBackdropSource
-import com.music.bitchord.ui.components.isGlassSupported
-import com.music.bitchord.data.sources.SourceConfig
-import com.music.bitchord.data.sources.SourceKind
-import com.music.bitchord.data.sources.SourceRegistry
-import com.music.bitchord.ui.components.ListenBrainzTokenAlert
-import com.music.bitchord.ui.components.MiniPlayer
-import com.music.bitchord.ui.components.QueueActionNotice
-import com.music.bitchord.ui.components.QueueActionNoticeHost
-import com.music.bitchord.ui.components.TopBarAccountButton
-import com.music.bitchord.ui.screens.SegmentedControl
-import com.music.bitchord.ui.components.SearchField
-import com.music.bitchord.sharedui.resources.Res as SharedRes
-import com.music.bitchord.sharedui.resources.search_hint
-import com.music.bitchord.sharedui.resources.search_addons_hint
-import com.music.bitchord.sharedui.resources.search_library_hint
-import com.music.bitchord.ui.components.TopBarDownloadButton
-import com.music.bitchord.ui.components.optimizedHazeEffect
-import com.music.bitchord.ui.components.topBarContentPadding
-import com.music.bitchord.ui.components.topBarHeight
-import com.music.bitchord.ui.components.AppLanguageDialog
-import com.music.bitchord.ui.components.TranslationLanguageDialog
-import com.music.bitchord.ui.components.LyricsSourcesDialog
-import com.music.bitchord.ui.components.ServerEditorHost
-import com.music.bitchord.ui.components.UpdateAvailableDialog
-import com.music.bitchord.ui.components.WebDavConflictAlert
-import com.music.bitchord.ui.components.FieldConfig
-import com.music.bitchord.ui.icons.BitChordIcons
+import com.music.astrotune.playback.QualityUpgrade
+import com.music.astrotune.playback.rememberMediaController
+import com.music.astrotune.playback.rememberPlayerState
+import com.music.astrotune.playback.setQueueDragActive
+import com.music.astrotune.ui.MainViewModel
+import com.music.astrotune.ui.SearchSource
+import com.music.astrotune.ui.components.BottomFadeScrim
+import com.music.astrotune.ui.components.TopFadeBlur
+import com.music.astrotune.ui.components.FloatingBarsTapGuard
+import com.music.astrotune.ui.components.BottomTab
+import com.music.astrotune.ui.components.FLOATING_BAR_MAX_WIDTH
+import com.music.astrotune.ui.components.FloatingBottomBar
+import com.music.astrotune.ui.components.GlassNavBar
+import com.music.astrotune.ui.components.floatingtabbar.rememberFloatingTabBarScrollConnection
+import com.music.astrotune.ui.components.FrostedTopBar
+import com.music.astrotune.ui.components.LastfmLoginAlert
+import com.music.astrotune.ui.components.LocalAppBackdrop
+import com.music.astrotune.ui.components.LocalLiquidGlassEnabled
+import com.music.astrotune.ui.components.backdrop.backdrops.LayerBackdrop
+import com.music.astrotune.ui.components.backdrop.backdrops.layerBackdrop
+import com.music.astrotune.ui.components.backdrop.backdrops.rememberLayerBackdrop
+import com.music.astrotune.ui.components.backdrop.backdrops.rememberSnapshotBackdrop
+import com.music.astrotune.ui.components.backdrop.backdrops.snapshotBackdropSource
+import com.music.astrotune.ui.components.isGlassSupported
+import com.music.astrotune.data.sources.SourceConfig
+import com.music.astrotune.data.sources.SourceKind
+import com.music.astrotune.data.sources.SourceRegistry
+import com.music.astrotune.ui.components.ListenBrainzTokenAlert
+import com.music.astrotune.ui.components.MiniPlayer
+import com.music.astrotune.ui.components.QueueActionNotice
+import com.music.astrotune.ui.components.QueueActionNoticeHost
+import com.music.astrotune.ui.components.TopBarAccountButton
+import com.music.astrotune.ui.screens.SegmentedControl
+import com.music.astrotune.ui.components.SearchField
+import com.music.astrotune.sharedui.resources.Res as SharedRes
+import com.music.astrotune.sharedui.resources.search_hint
+import com.music.astrotune.sharedui.resources.search_addons_hint
+import com.music.astrotune.sharedui.resources.search_library_hint
+import com.music.astrotune.ui.components.TopBarDownloadButton
+import com.music.astrotune.ui.components.optimizedHazeEffect
+import com.music.astrotune.ui.components.topBarContentPadding
+import com.music.astrotune.ui.components.topBarHeight
+import com.music.astrotune.ui.components.AppLanguageDialog
+import com.music.astrotune.ui.components.TranslationLanguageDialog
+import com.music.astrotune.ui.components.LyricsSourcesDialog
+import com.music.astrotune.ui.components.ServerEditorHost
+import com.music.astrotune.ui.components.UpdateAvailableDialog
+import com.music.astrotune.ui.components.WebDavConflictAlert
+import com.music.astrotune.ui.components.FieldConfig
+import com.music.astrotune.ui.icons.BitChordIcons
 import androidx.media3.common.Player
-import com.music.bitchord.data.YtMusicRepository
-import com.music.bitchord.data.TopPicks
-import com.music.bitchord.data.model.TopPick
-import com.music.bitchord.data.model.TopPickKind
-import com.music.bitchord.data.model.TopPickMood
-import com.music.bitchord.ui.screens.MoodGridPage
-import com.music.bitchord.ui.player.NowPlayingScreen
-import com.music.bitchord.ui.player.MusicVideoEngine
-import com.music.bitchord.ui.player.PlayerSheetMotion
+import com.music.astrotune.data.YtMusicRepository
+import com.music.astrotune.data.TopPicks
+import com.music.astrotune.data.model.TopPick
+import com.music.astrotune.data.model.TopPickKind
+import com.music.astrotune.data.model.TopPickMood
+import com.music.astrotune.ui.screens.MoodGridPage
+import com.music.astrotune.ui.player.NowPlayingScreen
+import com.music.astrotune.ui.player.MusicVideoEngine
+import com.music.astrotune.ui.player.PlayerSheetMotion
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.window.DialogWindowProvider
@@ -319,48 +319,48 @@ import androidx.compose.material3.BottomSheetDefaults
 import androidx.compose.ui.platform.LocalWindowInfo
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.foundation.layout.offset
-import com.music.bitchord.ui.components.MiniPlayerPull
+import com.music.astrotune.ui.components.MiniPlayerPull
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.ui.layout.onSizeChanged
-import com.music.bitchord.ui.player.LocalPlayerDock
-import com.music.bitchord.ui.player.PlayerDock
-import com.music.bitchord.ui.screens.DetailScreen
-import com.music.bitchord.ui.screens.sortedForDetail
-import com.music.bitchord.ui.screens.ExploreScreen
-import com.music.bitchord.ui.screens.LocalFolder
-import com.music.bitchord.ui.screens.LocalFolderState
-import com.music.bitchord.ui.screens.LocalFolderTab
+import com.music.astrotune.ui.player.LocalPlayerDock
+import com.music.astrotune.ui.player.PlayerDock
+import com.music.astrotune.ui.screens.DetailScreen
+import com.music.astrotune.ui.screens.sortedForDetail
+import com.music.astrotune.ui.screens.ExploreScreen
+import com.music.astrotune.ui.screens.LocalFolder
+import com.music.astrotune.ui.screens.LocalFolderState
+import com.music.astrotune.ui.screens.LocalFolderTab
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.ui.graphics.vector.ImageVector
-import com.music.bitchord.ui.screens.localizedLabel
-import com.music.bitchord.data.LocalGroups
-import com.music.bitchord.data.OfflinePlaylists
-import com.music.bitchord.data.toGroup
-import com.music.bitchord.data.settings.LibraryViewType
-import com.music.bitchord.data.settings.LocalMusicSort
-import com.music.bitchord.ui.screens.HomeScreen
-import com.music.bitchord.ui.screens.LibraryGridPage
-import com.music.bitchord.ui.screens.LibraryScreen
-import com.music.bitchord.ui.screens.MoodGenrePlaylistsScreen
-import com.music.bitchord.ui.screens.SearchScreen
-import com.music.bitchord.data.settings.SongSort
-import com.music.bitchord.ui.onboarding.OnboardingScreen
-import com.music.bitchord.ui.replay.ReplayScreen
-import com.music.bitchord.ui.replay.cards
-import com.music.bitchord.ui.replay.ReplayShareSheet
-import com.music.bitchord.ui.replay.ReplayStories
-import com.music.bitchord.ui.replay.ReplayStoryPage
-import com.music.bitchord.ui.replay.rememberReplayState
-import com.music.bitchord.ui.theme.BitChordTheme
-import com.music.bitchord.ui.theme.rememberArtworkPalette
-import com.music.bitchord.data.canvas.AppleArtistArtRepository
-import com.music.bitchord.data.canvas.keyColors
-import com.music.bitchord.ui.theme.SystemBarIcons
-import com.music.bitchord.ui.utils.guardSheetFromContentTouches
-import com.music.bitchord.ui.utils.rememberIosOverscrollFactory
-import com.music.bitchord.ui.performance.resolvePerformanceRefreshRate
+import com.music.astrotune.ui.screens.localizedLabel
+import com.music.astrotune.data.LocalGroups
+import com.music.astrotune.data.OfflinePlaylists
+import com.music.astrotune.data.toGroup
+import com.music.astrotune.data.settings.LibraryViewType
+import com.music.astrotune.data.settings.LocalMusicSort
+import com.music.astrotune.ui.screens.HomeScreen
+import com.music.astrotune.ui.screens.LibraryGridPage
+import com.music.astrotune.ui.screens.LibraryScreen
+import com.music.astrotune.ui.screens.MoodGenrePlaylistsScreen
+import com.music.astrotune.ui.screens.SearchScreen
+import com.music.astrotune.data.settings.SongSort
+import com.music.astrotune.ui.onboarding.OnboardingScreen
+import com.music.astrotune.ui.replay.ReplayScreen
+import com.music.astrotune.ui.replay.cards
+import com.music.astrotune.ui.replay.ReplayShareSheet
+import com.music.astrotune.ui.replay.ReplayStories
+import com.music.astrotune.ui.replay.ReplayStoryPage
+import com.music.astrotune.ui.replay.rememberReplayState
+import com.music.astrotune.ui.theme.BitChordTheme
+import com.music.astrotune.ui.theme.rememberArtworkPalette
+import com.music.astrotune.data.canvas.AppleArtistArtRepository
+import com.music.astrotune.data.canvas.keyColors
+import com.music.astrotune.ui.theme.SystemBarIcons
+import com.music.astrotune.ui.utils.guardSheetFromContentTouches
+import com.music.astrotune.ui.utils.rememberIosOverscrollFactory
+import com.music.astrotune.ui.performance.resolvePerformanceRefreshRate
 import dev.chrisbanes.haze.HazeState
 import dev.chrisbanes.haze.hazeSource
 import dev.chrisbanes.haze.materials.ExperimentalHazeMaterialsApi
@@ -559,7 +559,7 @@ private fun BitChordApp(
     androidx.compose.runtime.SideEffect { VolumeHud.suppressed = showNowPlaying }
     // The Top Picks and mood artwork loop forever; nobody sees it with the
     // app in the background or Now Playing pulled up over the page.
-    val appForeground = com.music.bitchord.ui.rememberIsForeground()
+    val appForeground = com.music.astrotune.ui.rememberIsForeground()
     val artworkMotion = appForeground && !showNowPlaying
     // Top Picks turns over each hour; coming back to the app after a
     // turn-over is an open too.
@@ -644,7 +644,7 @@ private fun BitChordApp(
     var confirmBitPerfect by remember { mutableStateOf<BitPerfectMode?>(null) }
     var confirmFixedVolume by remember { mutableStateOf(false) }
     /** An addon search row tapped while the quality setting skips its addon; see [AddonBlockedAlert]. */
-    var blockedAddonSong by remember { mutableStateOf<com.music.bitchord.data.model.Song?>(null) }
+    var blockedAddonSong by remember { mutableStateOf<com.music.astrotune.data.model.Song?>(null) }
     /** An addon a download just went ahead without, and why; see [SourceRegistry.addonsLeftOutOfDownloads]. */
     var addonLeftOutOfDownload by remember {
         mutableStateOf<Pair<String, SourceRegistry.DownloadExclusion>?>(null)
@@ -994,7 +994,7 @@ private fun BitChordApp(
     }
     // Playlists imported without (or instead of) a YouTube Music account live
     // in the app's own store, and sit on the same shelf as the downloaded ones.
-    val localPlaylists by com.music.bitchord.data.spotify.LocalPlaylistStore.playlists.collectAsStateWithLifecycle()
+    val localPlaylists by com.music.astrotune.data.spotify.LocalPlaylistStore.playlists.collectAsStateWithLifecycle()
     val localPlaylistItems = localPlaylists.map { playlist ->
         ShelfItem(
             title = playlist.title,
@@ -1023,7 +1023,7 @@ private fun BitChordApp(
         val folder = LocalGroups.folderOf(open) ?: open
         if (openPage.songs !is UiState.Loading &&
             (folder == "local:downloads" || folder == CACHE_FOLDER_BROWSE_ID || Downloads.recordIdOf(open) != null ||
-                com.music.bitchord.data.spotify.LocalPlaylistStore.getPlaylist(open) != null)
+                com.music.astrotune.data.spotify.LocalPlaylistStore.getPlaylist(open) != null)
         ) {
             viewModel.reloadLocalDetail(open)
         }
@@ -1044,13 +1044,13 @@ private fun BitChordApp(
         }
     }
     LaunchedEffect(webdavUrl) {
-        if (topDetail?.browseId == com.music.bitchord.data.webdav.WebDavConfig.BROWSE_ID) {
-            viewModel.reloadLocalDetail(com.music.bitchord.data.webdav.WebDavConfig.BROWSE_ID)
+        if (topDetail?.browseId == com.music.astrotune.data.webdav.WebDavConfig.BROWSE_ID) {
+            viewModel.reloadLocalDetail(com.music.astrotune.data.webdav.WebDavConfig.BROWSE_ID)
         }
     }
     LaunchedEffect(smbHost) {
-        if (topDetail?.browseId == com.music.bitchord.data.smb.SmbConfig.BROWSE_ID) {
-            viewModel.reloadLocalDetail(com.music.bitchord.data.smb.SmbConfig.BROWSE_ID)
+        if (topDetail?.browseId == com.music.astrotune.data.smb.SmbConfig.BROWSE_ID) {
+            viewModel.reloadLocalDetail(com.music.astrotune.data.smb.SmbConfig.BROWSE_ID)
         }
     }
     val controller = rememberMediaController()
@@ -1319,7 +1319,7 @@ private fun BitChordApp(
     // above answers it, so this needs nothing more than the summary.
     fun uploadToWebDav(songs: List<Song>) {
         scope.launch {
-            val summary = com.music.bitchord.data.webdav.WebDavUploads.upload(context, songs)
+            val summary = com.music.astrotune.data.webdav.WebDavUploads.upload(context, songs)
             if (summary.total > 0) {
                 showQueueNotice(
                     context.getString(
@@ -1331,9 +1331,9 @@ private fun BitChordApp(
                 )
             }
             if (summary.uploaded > 0 &&
-                topDetail?.browseId == com.music.bitchord.data.webdav.WebDavConfig.BROWSE_ID
+                topDetail?.browseId == com.music.astrotune.data.webdav.WebDavConfig.BROWSE_ID
             ) {
-                viewModel.reloadLocalDetail(com.music.bitchord.data.webdav.WebDavConfig.BROWSE_ID)
+                viewModel.reloadLocalDetail(com.music.astrotune.data.webdav.WebDavConfig.BROWSE_ID)
             }
         }
     }
@@ -3143,7 +3143,7 @@ private fun BitChordApp(
                                         null
                                     },
                                     onUpload = if (isDownloads &&
-                                        com.music.bitchord.data.webdav.WebDavConfig.isConfigured(webdavUrl)
+                                        com.music.astrotune.data.webdav.WebDavConfig.isConfigured(webdavUrl)
                                     ) {
                                         { selected -> uploadToWebDav(selected) }
                                     } else {
@@ -3529,7 +3529,7 @@ private fun BitChordApp(
                                         EntityType.TRACK -> {
                                             // Play the track by its video id
                                             playRadio(
-                                                com.music.bitchord.data.model.Song(
+                                                com.music.astrotune.data.model.Song(
                                                     videoId = entity.id,
                                                     title = entity.title,
                                                     artist = entity.subtitle,
@@ -4411,8 +4411,8 @@ private fun BitChordApp(
                 // server. Closed first, unlike a download — progress and
                 // the summary notice live outside the sheet.
                 onUploadToWebDav =
-                    if (com.music.bitchord.data.webdav.WebDavConfig.isConfigured(webdavUrl) &&
-                        com.music.bitchord.data.webdav.WebDavUploads.isUploadable(song)
+                    if (com.music.astrotune.data.webdav.WebDavConfig.isConfigured(webdavUrl) &&
+                        com.music.astrotune.data.webdav.WebDavUploads.isUploadable(song)
                     ) {
                         {
                             songActions = null
@@ -5564,7 +5564,7 @@ private fun BitChordApp(
                 canSubmit = { it[0].isNotBlank() },
                 testFailedRes = R.string.webdav_test_failed,
                 onTest = { (url, username, password) ->
-                    com.music.bitchord.data.webdav.WebDavRepository.testConnection(
+                    com.music.astrotune.data.webdav.WebDavRepository.testConnection(
                         url.trim(),
                         username.trim(),
                         password,
@@ -5614,7 +5614,7 @@ private fun BitChordApp(
                 canSubmit = { it[0].isNotBlank() && it[1].isNotBlank() },
                 testFailedRes = R.string.smb_test_failed,
                 onTest = { (host, share, folder, username, password) ->
-                    com.music.bitchord.data.smb.SmbRepository.testConnection(
+                    com.music.astrotune.data.smb.SmbRepository.testConnection(
                         host.trim(),
                         share.trim(),
                         folder.trim(),
@@ -5638,25 +5638,25 @@ private fun BitChordApp(
         // and mini player like every other alert. Backing out is a skip —
         // leaving the batch suspended on a dismissed dialog would hang the
         // upload with no way to reach the question again.
-        val uploadConflict by com.music.bitchord.data.webdav.WebDavUploads.conflict.collectAsStateWithLifecycle()
+        val uploadConflict by com.music.astrotune.data.webdav.WebDavUploads.conflict.collectAsStateWithLifecycle()
         uploadConflict?.let { req ->
             var applyToAll by remember(req) { mutableStateOf(false) }
-            val answer: (com.music.bitchord.data.webdav.WebDavUploads.Choice) -> Unit = { choice ->
+            val answer: (com.music.astrotune.data.webdav.WebDavUploads.Choice) -> Unit = { choice ->
                 req.answer.complete(
-                    com.music.bitchord.data.webdav.WebDavUploads.Resolution(choice, applyToAll),
+                    com.music.astrotune.data.webdav.WebDavUploads.Resolution(choice, applyToAll),
                 )
             }
-            BackHandler { answer(com.music.bitchord.data.webdav.WebDavUploads.Choice.SKIP) }
+            BackHandler { answer(com.music.astrotune.data.webdav.WebDavUploads.Choice.SKIP) }
             WebDavConflictAlert(
                 hazeState = hazeState,
                 fileName = req.fileName,
                 showApplyToAll = req.remaining > 0,
                 applyToAll = applyToAll,
                 onApplyToAllChange = { applyToAll = it },
-                onOverwrite = { answer(com.music.bitchord.data.webdav.WebDavUploads.Choice.OVERWRITE) },
-                onKeepBoth = { answer(com.music.bitchord.data.webdav.WebDavUploads.Choice.KEEP_BOTH) },
-                onSkip = { answer(com.music.bitchord.data.webdav.WebDavUploads.Choice.SKIP) },
-                onDismiss = { answer(com.music.bitchord.data.webdav.WebDavUploads.Choice.SKIP) },
+                onOverwrite = { answer(com.music.astrotune.data.webdav.WebDavUploads.Choice.OVERWRITE) },
+                onKeepBoth = { answer(com.music.astrotune.data.webdav.WebDavUploads.Choice.KEEP_BOTH) },
+                onSkip = { answer(com.music.astrotune.data.webdav.WebDavUploads.Choice.SKIP) },
+                onDismiss = { answer(com.music.astrotune.data.webdav.WebDavUploads.Choice.SKIP) },
             )
         }
 

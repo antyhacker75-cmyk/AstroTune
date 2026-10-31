@@ -1,4 +1,4 @@
-package com.music.bitchord.playback
+package com.music.astrotune.playback
 
 import android.content.Context
 import android.media.MediaDataSource
@@ -6,9 +6,9 @@ import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.net.Uri
 import android.os.SystemClock
-import com.music.bitchord.R
-import com.music.bitchord.data.TrackLog
-import com.music.bitchord.playback.smart.AutomixAnalysisSource
+import com.music.astrotune.R
+import com.music.astrotune.data.TrackLog
+import com.music.astrotune.playback.smart.AutomixAnalysisSource
 import androidx.media3.common.C
 import androidx.media3.common.util.UnstableApi
 import androidx.media3.database.StandaloneDatabaseProvider
@@ -22,16 +22,16 @@ import androidx.media3.datasource.cache.ContentMetadata
 import androidx.media3.datasource.cache.ContentMetadataMutations
 import androidx.media3.datasource.cache.SimpleCache
 import java.io.IOException
-import com.music.bitchord.data.innertube.StreamResolver
-import com.music.bitchord.data.model.Song
-import com.music.bitchord.data.settings.AppSettings
-import com.music.bitchord.data.sources.DeviceCodecs
-import com.music.bitchord.data.sources.SourceKind
-import com.music.bitchord.data.sources.SourceRegistry
-import com.music.bitchord.data.sources.SourceResolver
-import com.music.bitchord.data.sources.SourceStream
-import com.music.bitchord.data.sources.TrackMatcher
-import com.music.bitchord.download.Downloads
+import com.music.astrotune.data.innertube.StreamResolver
+import com.music.astrotune.data.model.Song
+import com.music.astrotune.data.settings.AppSettings
+import com.music.astrotune.data.sources.DeviceCodecs
+import com.music.astrotune.data.sources.SourceKind
+import com.music.astrotune.data.sources.SourceRegistry
+import com.music.astrotune.data.sources.SourceResolver
+import com.music.astrotune.data.sources.SourceStream
+import com.music.astrotune.data.sources.TrackMatcher
+import com.music.astrotune.download.Downloads
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -186,7 +186,7 @@ object AudioCache {
      * flight. Warming three tracks ahead therefore did not cost three cheap
      * resolves in the background, it cost the track the listener was waiting on
      * a thirty-second start. See
-     * [StreamResolver][com.music.bitchord.data.innertube.StreamResolver]'s
+     * [StreamResolver][com.music.astrotune.data.innertube.StreamResolver]'s
      * extraction gate, which serialises what is left of that.
      */
     private const val QUEUE_LOOKAHEAD = 1
@@ -1548,7 +1548,7 @@ object AudioCache {
      * so the session's metadata is the wrong track's, and the plain
      * `bitchord://watch?v=…` URI it builds for itself carries an id and nothing
      * else. It rides along from the queue instead — see
-     * [PlaybackService.prefetchAround][com.music.bitchord.playback.PlaybackService].
+     * [PlaybackService.prefetchAround][com.music.astrotune.playback.PlaybackService].
      */
     data class Upcoming(val mediaId: String, val target: TrackMatcher.Target)
 
@@ -1625,7 +1625,7 @@ object AudioCache {
      * own key rather than the plain videoId.
      *
      * For the opening of a rendition that is about to be swapped in — see
-     * [PlaybackService][com.music.bitchord.playback.PlaybackService]'s audition.
+     * [PlaybackService][com.music.astrotune.playback.PlaybackService]'s audition.
      * A player preparing a progressive source has to parse the container from
      * byte zero before it can seek anywhere, and for a FLAC that is not a few
      * bytes: STREAMINFO, the seek table, the tags and an embedded cover can run
@@ -1740,7 +1740,7 @@ object AudioCache {
      */
     /**
      * Enough of a YouTube Opus head to decode the opening window
-     * [com.music.bitchord.playback.smart.VersionAudioAligner] measures.
+     * [com.music.astrotune.playback.smart.VersionAudioAligner] measures.
      */
     const val MIN_ALIGNMENT_PREFIX_BYTES = 800L * 1024
 

@@ -1,4 +1,4 @@
-package com.music.bitchord.wear
+package com.music.astrotune.wear
 
 import android.content.ComponentName
 import android.content.Context
@@ -31,31 +31,31 @@ import com.google.android.gms.wearable.PutDataMapRequest
 import com.google.android.gms.wearable.Wearable
 import com.google.android.gms.wearable.WearableListenerService
 import com.google.common.util.concurrent.ListenableFuture
-import com.music.bitchord.data.model.NOTIFICATION_ART_PX
-import com.music.bitchord.data.model.ROW_ART_PX
-import com.music.bitchord.data.model.artworkAt
-import com.music.bitchord.data.settings.AppSettings
-import com.music.bitchord.playback.ACTION_TOGGLE_FAVORITE
-import com.music.bitchord.playback.ACTION_TOGGLE_SHUFFLE
-import com.music.bitchord.playback.PlaybackService
-import com.music.bitchord.ui.player.artworkMeshColors
-import com.music.bitchord.widget.MediaWidgetSnapshot
+import com.music.astrotune.data.model.NOTIFICATION_ART_PX
+import com.music.astrotune.data.model.ROW_ART_PX
+import com.music.astrotune.data.model.artworkAt
+import com.music.astrotune.data.settings.AppSettings
+import com.music.astrotune.playback.ACTION_TOGGLE_FAVORITE
+import com.music.astrotune.playback.ACTION_TOGGLE_SHUFFLE
+import com.music.astrotune.playback.PlaybackService
+import com.music.astrotune.ui.player.artworkMeshColors
+import com.music.astrotune.widget.MediaWidgetSnapshot
 import android.net.Uri
 import androidx.media3.common.C
 import androidx.media3.datasource.DataSource
 import androidx.media3.datasource.DataSpec
 import com.google.android.gms.wearable.ChannelClient
-import com.music.bitchord.data.settings.AudioQuality
-import com.music.bitchord.playback.AudioCache
-import com.music.bitchord.playback.AudioRouting
-import com.music.bitchord.playback.DirectSourceGate
-import com.music.bitchord.playback.toMediaItem
-import com.music.bitchord.playback.toSong
+import com.music.astrotune.data.settings.AudioQuality
+import com.music.astrotune.playback.AudioCache
+import com.music.astrotune.playback.AudioRouting
+import com.music.astrotune.playback.DirectSourceGate
+import com.music.astrotune.playback.toMediaItem
+import com.music.astrotune.playback.toSong
 import android.os.SystemClock
 import androidx.media3.common.MediaItem
 import androidx.media3.exoplayer.ExoPlayer
-import com.music.bitchord.playback.cast.CastSink
-import com.music.bitchord.playback.cast.RemoteSpeaker
+import com.music.astrotune.playback.cast.CastSink
+import com.music.astrotune.playback.cast.RemoteSpeaker
 import kotlin.math.roundToInt
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -74,7 +74,7 @@ import kotlinx.coroutines.runBlocking
 import java.io.ByteArrayOutputStream
 import java.util.concurrent.CountDownLatch
 import java.util.concurrent.TimeUnit
-import com.music.bitchord.wear.WearProtocol as P
+import com.music.astrotune.wear.WearProtocol as P
 
 /**
  * Tells the watch app what is playing.
@@ -794,7 +794,7 @@ class WearCommandService : WearableListenerService() {
 }
 
 /**
- * The watch as the speaker — [CastPlayback][com.music.bitchord.playback.cast.CastPlayback]'s
+ * The watch as the speaker — [CastPlayback][com.music.astrotune.playback.cast.CastPlayback]'s
  * model with the watch app as the receiver.
  *
  * The phone's player keeps the queue and is held paused; the watch plays the

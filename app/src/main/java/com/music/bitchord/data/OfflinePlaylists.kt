@@ -1,8 +1,8 @@
-package com.music.bitchord.data
+package com.music.astrotune.data
 
 import android.content.Context
 import android.content.SharedPreferences
-import com.music.bitchord.data.model.Song
+import com.music.astrotune.data.model.Song
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -284,6 +284,6 @@ fun OfflinePlaylist.toGroup(): LocalGroup = LocalGroup(
     title = title,
     subtitle = "",
     thumbnailUrl = if (isLiked) null else songs.firstNotNullOfOrNull { it.thumbnailUrl },
-    type = com.music.bitchord.data.model.BrowseType.PLAYLIST,
+    type = com.music.astrotune.data.model.BrowseType.PLAYLIST,
     songs = songs,
 )

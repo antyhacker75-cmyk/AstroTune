@@ -1,13 +1,13 @@
-package com.music.bitchord.playback
+package com.music.astrotune.playback
 
 import android.util.Log
 import androidx.media3.common.C
 import androidx.media3.common.audio.AudioProcessor
 import androidx.media3.common.audio.BaseAudioProcessor
 import androidx.media3.common.util.UnstableApi
-import com.music.bitchord.playback.audio.AudioBlock
-import com.music.bitchord.playback.audio.FloatAudioProcessor
-import com.music.bitchord.playback.audio.PcmBoundary
+import com.music.astrotune.playback.audio.AudioBlock
+import com.music.astrotune.playback.audio.FloatAudioProcessor
+import com.music.astrotune.playback.audio.PcmBoundary
 import java.nio.ByteBuffer
 import java.nio.ByteOrder
 import kotlin.math.abs

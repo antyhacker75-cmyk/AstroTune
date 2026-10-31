@@ -8,13 +8,13 @@
  *      http://www.apache.org/licenses/LICENSE-2.0
  */
 
-package com.music.bitchord.playback.audio
+package com.music.astrotune.playback.audio
 
 import android.media.AudioFormat
-import com.music.bitchord.data.settings.OutputPcmMode
-import com.music.bitchord.playback.AudioOutputPolicy
-import com.music.bitchord.playback.AudioRouting
-import com.music.bitchord.playback.audio.bluetooth.BluetoothTelemetry
+import com.music.astrotune.data.settings.OutputPcmMode
+import com.music.astrotune.playback.AudioOutputPolicy
+import com.music.astrotune.playback.AudioRouting
+import com.music.astrotune.playback.audio.bluetooth.BluetoothTelemetry
 
 /**
  * Output transport mechanism selected by the universal best-path engine.
@@ -102,9 +102,9 @@ data class OutputNegotiationResult(
  * 4. Safe fallback.
  *
  * This describes the ordinary sink only. A track on the bit-perfect output
- * ([com.music.bitchord.playback.audio.bitperfect.BitPerfectRoutingSink])
+ * ([com.music.astrotune.playback.audio.bitperfect.BitPerfectRoutingSink])
  * never reaches it, and reports through
- * [com.music.bitchord.playback.audio.bitperfect.BitPerfectOutput.status].
+ * [com.music.astrotune.playback.audio.bitperfect.BitPerfectOutput.status].
  *
  * Core Rules:
  * - Internal DSP is ALWAYS canonical Float32.

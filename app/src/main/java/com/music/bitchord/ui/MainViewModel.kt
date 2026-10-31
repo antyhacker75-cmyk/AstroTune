@@ -1,26 +1,26 @@
-package com.music.bitchord.ui
+package com.music.astrotune.ui
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
-import com.music.bitchord.R
-import com.music.bitchord.auth.AuthStore
-import com.music.bitchord.auth.SignedIn
-import com.music.bitchord.auth.GoogleAccountSession
-import com.music.bitchord.auth.YouTubeProfile
-import com.music.bitchord.auth.profileId
-import com.music.bitchord.auth.sessionId
-import com.music.bitchord.auth.adjacentProfile
-import com.music.bitchord.data.AppUpdateChecker
-import com.music.bitchord.data.LocalMediaRepository
-import com.music.bitchord.data.LikeState
-import com.music.bitchord.data.YtMusicRepository
-import com.music.bitchord.data.TopPicks
-import com.music.bitchord.data.AppleArtistPhotos
-import com.music.bitchord.data.model.ArtistRef
-import com.music.bitchord.data.model.TopPick
-import com.music.bitchord.data.stats.ListeningStats
-import com.music.bitchord.data.stats.ReplayPeriod
+import com.music.astrotune.R
+import com.music.astrotune.auth.AuthStore
+import com.music.astrotune.auth.SignedIn
+import com.music.astrotune.auth.GoogleAccountSession
+import com.music.astrotune.auth.YouTubeProfile
+import com.music.astrotune.auth.profileId
+import com.music.astrotune.auth.sessionId
+import com.music.astrotune.auth.adjacentProfile
+import com.music.astrotune.data.AppUpdateChecker
+import com.music.astrotune.data.LocalMediaRepository
+import com.music.astrotune.data.LikeState
+import com.music.astrotune.data.YtMusicRepository
+import com.music.astrotune.data.TopPicks
+import com.music.astrotune.data.AppleArtistPhotos
+import com.music.astrotune.data.model.ArtistRef
+import com.music.astrotune.data.model.TopPick
+import com.music.astrotune.data.stats.ListeningStats
+import com.music.astrotune.data.stats.ReplayPeriod
 import android.util.Log
 import java.io.File
 import java.time.LocalDate
@@ -28,47 +28,47 @@ import java.time.LocalDateTime
 import kotlinx.coroutines.withContext
 import kotlinx.coroutines.flow.first
 import kotlin.coroutines.cancellation.CancellationException
-import com.music.bitchord.data.model.SPOTIFY_MISSING_PREFIX
-import com.music.bitchord.data.model.SPOTIFY_PENDING_PREFIX
-import com.music.bitchord.data.spotify.SPOTIFY_PAGE_PREFIX
-import com.music.bitchord.data.spotify.SpotifyImporter
-import com.music.bitchord.data.spotify.SpotifyLibrary
-import com.music.bitchord.data.spotify.SpotifyTrack
-import com.music.bitchord.data.lyrics.EmbeddedLyrics
-import com.music.bitchord.data.lyrics.LyricLine
-import com.music.bitchord.data.lyrics.LyricsRepository
-import com.music.bitchord.data.lyrics.LyricsSource
-import com.music.bitchord.data.settings.AppSettings
-import com.music.bitchord.ui.navigation.AppNavigator
-import com.music.bitchord.data.innertube.Innertube
-import com.music.bitchord.data.innertube.PlaybackTracker
-import com.music.bitchord.data.innertube.StreamResolver
-import com.music.bitchord.auth.CapturedSession
-import com.music.bitchord.auth.WebSessionMode
-import com.music.bitchord.data.model.Account
-import com.music.bitchord.data.model.AccountChannel
-import com.music.bitchord.data.model.BrowseType
-import com.music.bitchord.data.model.DetailPage
-import com.music.bitchord.data.model.HomeShelf
-import com.music.bitchord.data.model.withoutRepeatsOf
-import com.music.bitchord.data.model.LibraryPage
-import com.music.bitchord.data.model.LibraryState
-import com.music.bitchord.data.model.LikeStatus
-import com.music.bitchord.data.model.MoodGenre
-import com.music.bitchord.data.model.MoodGenreSection
-import com.music.bitchord.data.model.PlaylistPrivacy
-import com.music.bitchord.data.model.SearchFilter
-import com.music.bitchord.data.model.SearchResult
-import com.music.bitchord.data.model.ShelfItem
-import com.music.bitchord.data.model.Song
-import com.music.bitchord.data.model.SongMenu
-import com.music.bitchord.data.model.SubscriptionState
-import com.music.bitchord.data.model.UiState
-import com.music.bitchord.data.model.UserPlaylist
-import com.music.bitchord.data.model.SearchHistoryEntity
-import com.music.bitchord.data.model.EntityType
-import com.music.bitchord.data.settings.SearchHistory
-import com.music.bitchord.download.Downloads
+import com.music.astrotune.data.model.SPOTIFY_MISSING_PREFIX
+import com.music.astrotune.data.model.SPOTIFY_PENDING_PREFIX
+import com.music.astrotune.data.spotify.SPOTIFY_PAGE_PREFIX
+import com.music.astrotune.data.spotify.SpotifyImporter
+import com.music.astrotune.data.spotify.SpotifyLibrary
+import com.music.astrotune.data.spotify.SpotifyTrack
+import com.music.astrotune.data.lyrics.EmbeddedLyrics
+import com.music.astrotune.data.lyrics.LyricLine
+import com.music.astrotune.data.lyrics.LyricsRepository
+import com.music.astrotune.data.lyrics.LyricsSource
+import com.music.astrotune.data.settings.AppSettings
+import com.music.astrotune.ui.navigation.AppNavigator
+import com.music.astrotune.data.innertube.Innertube
+import com.music.astrotune.data.innertube.PlaybackTracker
+import com.music.astrotune.data.innertube.StreamResolver
+import com.music.astrotune.auth.CapturedSession
+import com.music.astrotune.auth.WebSessionMode
+import com.music.astrotune.data.model.Account
+import com.music.astrotune.data.model.AccountChannel
+import com.music.astrotune.data.model.BrowseType
+import com.music.astrotune.data.model.DetailPage
+import com.music.astrotune.data.model.HomeShelf
+import com.music.astrotune.data.model.withoutRepeatsOf
+import com.music.astrotune.data.model.LibraryPage
+import com.music.astrotune.data.model.LibraryState
+import com.music.astrotune.data.model.LikeStatus
+import com.music.astrotune.data.model.MoodGenre
+import com.music.astrotune.data.model.MoodGenreSection
+import com.music.astrotune.data.model.PlaylistPrivacy
+import com.music.astrotune.data.model.SearchFilter
+import com.music.astrotune.data.model.SearchResult
+import com.music.astrotune.data.model.ShelfItem
+import com.music.astrotune.data.model.Song
+import com.music.astrotune.data.model.SongMenu
+import com.music.astrotune.data.model.SubscriptionState
+import com.music.astrotune.data.model.UiState
+import com.music.astrotune.data.model.UserPlaylist
+import com.music.astrotune.data.model.SearchHistoryEntity
+import com.music.astrotune.data.model.EntityType
+import com.music.astrotune.data.settings.SearchHistory
+import com.music.astrotune.download.Downloads
 import android.util.LruCache
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.FlowPreview
@@ -96,21 +96,21 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.sync.Semaphore
 import kotlinx.coroutines.sync.withPermit
-import com.music.bitchord.data.sources.AddonSource
-import com.music.bitchord.data.sources.SourceKind
-import com.music.bitchord.data.sources.SourceRegistry
-import com.music.bitchord.data.sources.SourceResolver
-import com.music.bitchord.data.sources.TrackMatcher
-import com.music.bitchord.playback.AudioCache
-import com.music.bitchord.playback.BoundedContextRequests
-import com.music.bitchord.playback.DirectSourceGate
-import com.music.bitchord.playback.contextEntryKey
-import com.music.bitchord.playback.StreamChoice
-import com.music.bitchord.ui.screens.CACHE_FOLDER_BROWSE_ID
-import com.music.bitchord.data.LocalGroup
-import com.music.bitchord.data.LocalGroups
-import com.music.bitchord.data.OfflinePlaylists
-import com.music.bitchord.data.matchesSearch
+import com.music.astrotune.data.sources.AddonSource
+import com.music.astrotune.data.sources.SourceKind
+import com.music.astrotune.data.sources.SourceRegistry
+import com.music.astrotune.data.sources.SourceResolver
+import com.music.astrotune.data.sources.TrackMatcher
+import com.music.astrotune.playback.AudioCache
+import com.music.astrotune.playback.BoundedContextRequests
+import com.music.astrotune.playback.DirectSourceGate
+import com.music.astrotune.playback.contextEntryKey
+import com.music.astrotune.playback.StreamChoice
+import com.music.astrotune.ui.screens.CACHE_FOLDER_BROWSE_ID
+import com.music.astrotune.data.LocalGroup
+import com.music.astrotune.data.LocalGroups
+import com.music.astrotune.data.OfflinePlaylists
+import com.music.astrotune.data.matchesSearch
 import java.util.Locale
 import java.util.concurrent.ConcurrentHashMap
 import java.util.concurrent.atomic.AtomicLong
@@ -1145,12 +1145,12 @@ class MainViewModel(app: Application) : AndroidViewModel(app) {
                         onResult?.invoke(created.browseId, created.title, false)
                     },
                     onFailure = {
-                        val local = com.music.bitchord.data.spotify.LocalPlaylistStore.savePlaylist(name, songs)
+                        val local = com.music.astrotune.data.spotify.LocalPlaylistStore.savePlaylist(name, songs)
                         onResult?.invoke(local.browseId, local.title, true)
                     },
                 )
             } else {
-                val local = com.music.bitchord.data.spotify.LocalPlaylistStore.savePlaylist(name, songs)
+                val local = com.music.astrotune.data.spotify.LocalPlaylistStore.savePlaylist(name, songs)
                 onResult?.invoke(local.browseId, local.title, true)
             }
         }
@@ -1384,7 +1384,7 @@ class MainViewModel(app: Application) : AndroidViewModel(app) {
     /**
      * Which playlists in this account's library the account actually made, by
      * browse id — see
-     * [com.music.bitchord.data.innertube.InnertubeParser.parsePlaylistOwned].
+     * [com.music.astrotune.data.innertube.InnertubeParser.parsePlaylistOwned].
      * An id absent from the map is one nothing has asked about yet, which is not
      * the same as a no.
      *
@@ -1494,7 +1494,7 @@ class MainViewModel(app: Application) : AndroidViewModel(app) {
         }
         viewModelScope.launch {
             AppSettings.webdavUrl.drop(1).collect {
-                reloadRemoteDetail(com.music.bitchord.data.webdav.WebDavConfig.BROWSE_ID)
+                reloadRemoteDetail(com.music.astrotune.data.webdav.WebDavConfig.BROWSE_ID)
             }
         }
         viewModelScope.launch {
@@ -1507,7 +1507,7 @@ class MainViewModel(app: Application) : AndroidViewModel(app) {
             ) { fields -> fields.toList() }
                 .drop(1)
                 .debounce(300)
-                .collect { reloadRemoteDetail(com.music.bitchord.data.smb.SmbConfig.BROWSE_ID) }
+                .collect { reloadRemoteDetail(com.music.astrotune.data.smb.SmbConfig.BROWSE_ID) }
         }
         viewModelScope.launch {
             // A leftover APK only means "Install Now" for the session that
@@ -2671,21 +2671,21 @@ class MainViewModel(app: Application) : AndroidViewModel(app) {
     )
 
     private fun remoteLibrary(browseId: String): RemoteLibrary? = when (browseId) {
-        com.music.bitchord.data.webdav.WebDavConfig.BROWSE_ID ->
+        com.music.astrotune.data.webdav.WebDavConfig.BROWSE_ID ->
             RemoteLibrary(
                 R.string.webdav_empty,
-                com.music.bitchord.data.webdav.WebDavRepository::getSongs,
+                com.music.astrotune.data.webdav.WebDavRepository::getSongs,
             )
-        com.music.bitchord.data.smb.SmbConfig.BROWSE_ID ->
+        com.music.astrotune.data.smb.SmbConfig.BROWSE_ID ->
             RemoteLibrary(
                 R.string.smb_empty,
-                com.music.bitchord.data.smb.SmbRepository::getSongs,
+                com.music.astrotune.data.smb.SmbRepository::getSongs,
             )
         else -> null
     }
 
     private suspend fun remoteSongsState(remote: RemoteLibrary): UiState<List<Song>> =
-        com.music.bitchord.data.remote.RemoteListing.state(runCatching { remote.songs() }, text(remote.emptyRes))
+        com.music.astrotune.data.remote.RemoteListing.state(runCatching { remote.songs() }, text(remote.emptyRes))
 
     /**
      * Re-reads an open remote-library page after its server settings change.
@@ -2738,7 +2738,7 @@ class MainViewModel(app: Application) : AndroidViewModel(app) {
              * The credit line, when the page had to supply its own.
              *
              * Only a link tapped outside the app arrives with neither — see
-             * [com.music.bitchord.playback.MusicLink]. Every other caller was
+             * [com.music.astrotune.playback.MusicLink]. Every other caller was
              * looking at a card that already said this.
              */
             var credit: String? = null
@@ -2755,7 +2755,7 @@ class MainViewModel(app: Application) : AndroidViewModel(app) {
             var monthlyListenerCount: String? = null
             /** Whether this artist is subscribed to — see [DetailPage.subscription]. */
             var subscription: SubscriptionState? = null
-            val localPlaylist = com.music.bitchord.data.spotify.LocalPlaylistStore.getPlaylist(browseId)
+            val localPlaylist = com.music.astrotune.data.spotify.LocalPlaylistStore.getPlaylist(browseId)
             val remote = remoteLibrary(browseId)
             // A release downloaded whole and opened by its YouTube id — the
             // Playlists shelf, a search hit — used to wait on the network for
@@ -3018,7 +3018,7 @@ class MainViewModel(app: Application) : AndroidViewModel(app) {
                 text(if (playlist.isLiked) R.string.offline_liked_empty else R.string.offline_playlist_empty)
             }
         }
-        com.music.bitchord.data.spotify.LocalPlaylistStore.getPlaylist(browseId)?.let { playlist ->
+        com.music.astrotune.data.spotify.LocalPlaylistStore.getPlaylist(browseId)?.let { playlist ->
             return nonEmpty(playlist.songs) { text(R.string.spotify_import_empty_playlist) }
         }
         remoteLibrary(browseId)?.let { return remoteSongsState(it) }

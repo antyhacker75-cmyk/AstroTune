@@ -1,4 +1,4 @@
-package com.music.bitchord.auth
+package com.music.astrotune.auth
 
 import android.annotation.SuppressLint
 import android.net.Uri

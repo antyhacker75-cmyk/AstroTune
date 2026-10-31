@@ -1,4 +1,4 @@
-package com.music.bitchord.ui.components
+package com.music.astrotune.ui.components
 
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.background
@@ -53,13 +53,13 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
 import coil3.compose.AsyncImage
-import com.music.bitchord.R
-import com.music.bitchord.data.model.ROW_ART_PX
-import com.music.bitchord.data.model.Song
-import com.music.bitchord.data.model.UiState
-import com.music.bitchord.data.model.UserPlaylist
-import com.music.bitchord.data.model.artworkAt
-import com.music.bitchord.ui.theme.ArtworkPalette
+import com.music.astrotune.R
+import com.music.astrotune.data.model.ROW_ART_PX
+import com.music.astrotune.data.model.Song
+import com.music.astrotune.data.model.UiState
+import com.music.astrotune.data.model.UserPlaylist
+import com.music.astrotune.data.model.artworkAt
+import com.music.astrotune.ui.theme.ArtworkPalette
 
 /**
  * Rearranges one of the account's playlists: every entry with a handle to drag

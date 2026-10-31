@@ -1,6 +1,6 @@
-package com.music.bitchord.data.canvas
+package com.music.astrotune.data.canvas
 
-import com.music.bitchord.data.Http
+import com.music.astrotune.data.Http
 import okhttp3.Request
 
 /**

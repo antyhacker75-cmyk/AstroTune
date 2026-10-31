@@ -1,13 +1,13 @@
-package com.music.bitchord.data.scrobbling
+package com.music.astrotune.data.scrobbling
 
-import com.music.bitchord.data.DebugLog as Log
-import com.music.bitchord.data.model.Song
+import com.music.astrotune.data.DebugLog as Log
+import com.music.astrotune.data.model.Song
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.Request
 import okhttp3.RequestBody.Companion.toRequestBody
-import com.music.bitchord.data.Http
+import com.music.astrotune.data.Http
 
 object ListenBrainzManager {
     private const val TAG = "ListenBrainzManager"

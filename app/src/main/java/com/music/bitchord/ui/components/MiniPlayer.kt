@@ -1,6 +1,6 @@
-package com.music.bitchord.ui.components
+package com.music.astrotune.ui.components
 
-import com.music.bitchord.R
+import com.music.astrotune.R
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -52,17 +52,17 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil3.compose.AsyncImage
-import com.music.bitchord.data.model.ROW_ART_PX
-import com.music.bitchord.data.model.Song
-import com.music.bitchord.data.model.artworkAt
-import com.music.bitchord.data.settings.AppSettings
-import com.music.bitchord.sharedui.resources.Res as SharedRes
-import com.music.bitchord.sharedui.resources.ic_player_next
-import com.music.bitchord.ui.components.thumbnailBorder
-import com.music.bitchord.ui.haptics.Haptic
-import com.music.bitchord.ui.haptics.rememberHaptics
-import com.music.bitchord.ui.player.PlayerDock
-import com.music.bitchord.ui.player.AndroidMusicVideo
+import com.music.astrotune.data.model.ROW_ART_PX
+import com.music.astrotune.data.model.Song
+import com.music.astrotune.data.model.artworkAt
+import com.music.astrotune.data.settings.AppSettings
+import com.music.astrotune.sharedui.resources.Res as SharedRes
+import com.music.astrotune.sharedui.resources.ic_player_next
+import com.music.astrotune.ui.components.thumbnailBorder
+import com.music.astrotune.ui.haptics.Haptic
+import com.music.astrotune.ui.haptics.rememberHaptics
+import com.music.astrotune.ui.player.PlayerDock
+import com.music.astrotune.ui.player.AndroidMusicVideo
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.animation.core.animateDpAsState
@@ -356,7 +356,7 @@ fun MiniPlayer(
     onNext: () -> Unit,
     onPrevious: () -> Unit,
     onExpand: () -> Unit,
-    /** @see com.music.bitchord.data.listentogether.ListenTogether.State.controlsLocked */
+    /** @see com.music.astrotune.data.listentogether.ListenTogether.State.controlsLocked */
     controlsLocked: Boolean = false,
     onBlockedControl: () -> Unit = {},
     /** Where the player's artwork lands when it closes into this bar. */

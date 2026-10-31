@@ -1,9 +1,9 @@
-package com.music.bitchord.playback
+package com.music.astrotune.playback
 
 import androidx.media3.common.Player
-import com.music.bitchord.data.listentogether.PartyTrack
-import com.music.bitchord.data.model.QueueTier
-import com.music.bitchord.data.model.Song
+import com.music.astrotune.data.listentogether.PartyTrack
+import com.music.astrotune.data.model.QueueTier
+import com.music.astrotune.data.model.Song
 
 /**
  * The tier of the queue row at [index]. The functions below take this as a

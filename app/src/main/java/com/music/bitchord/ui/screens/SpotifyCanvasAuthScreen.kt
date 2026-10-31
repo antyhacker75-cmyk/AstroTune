@@ -1,4 +1,4 @@
-package com.music.bitchord.ui.screens
+package com.music.astrotune.ui.screens
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
@@ -8,7 +8,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import com.music.bitchord.ui.icons.SfIcons
+import com.music.astrotune.ui.icons.SfIcons
 import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -16,8 +16,8 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
-import com.music.bitchord.ui.components.IosSwitch
-import com.music.bitchord.ui.theme.stableStatusBarInsets
+import com.music.astrotune.ui.components.IosSwitch
+import com.music.astrotune.ui.theme.stableStatusBarInsets
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
@@ -30,8 +30,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.music.bitchord.data.settings.AppSettings
-import com.music.bitchord.R
+import com.music.astrotune.data.settings.AppSettings
+import com.music.astrotune.R
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

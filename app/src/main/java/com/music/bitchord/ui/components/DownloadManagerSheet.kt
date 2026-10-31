@@ -1,4 +1,4 @@
-package com.music.bitchord.ui.components
+package com.music.astrotune.ui.components
 
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.AnimatedVisibility
@@ -56,14 +56,14 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil3.compose.AsyncImage
-import com.music.bitchord.R
-import com.music.bitchord.data.model.ROW_ART_PX
-import com.music.bitchord.data.model.artworkAt
-import com.music.bitchord.download.DownloadProgress
-import com.music.bitchord.download.DownloadSession
-import com.music.bitchord.download.Downloads
-import com.music.bitchord.ui.haptics.Haptic
-import com.music.bitchord.ui.haptics.rememberHaptics
+import com.music.astrotune.R
+import com.music.astrotune.data.model.ROW_ART_PX
+import com.music.astrotune.data.model.artworkAt
+import com.music.astrotune.download.DownloadProgress
+import com.music.astrotune.download.DownloadSession
+import com.music.astrotune.download.Downloads
+import com.music.astrotune.ui.haptics.Haptic
+import com.music.astrotune.ui.haptics.rememberHaptics
 
 /**
  * The download indicator in the top bar, beside the account photo.

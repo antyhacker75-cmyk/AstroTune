@@ -1,6 +1,6 @@
-package com.music.bitchord.ui.components
+package com.music.astrotune.ui.components
 
-import com.music.bitchord.ui.icons.SfIcons
+import com.music.astrotune.ui.icons.SfIcons
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.foundation.layout.Column
@@ -15,20 +15,20 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.music.bitchord.R
-import com.music.bitchord.data.model.BrowseType
-import com.music.bitchord.data.model.Song
-import com.music.bitchord.data.model.UserPlaylist
-import com.music.bitchord.download.DownloadState
-import com.music.bitchord.download.Downloads
+import com.music.astrotune.R
+import com.music.astrotune.data.model.BrowseType
+import com.music.astrotune.data.model.Song
+import com.music.astrotune.data.model.UserPlaylist
+import com.music.astrotune.download.DownloadState
+import com.music.astrotune.download.Downloads
 
 /**
  * The album or playlist a long-press is acting on.
  *
  * Deliberately not one of the browse models: every surface in the app describes
- * a release with a different type — a [com.music.bitchord.data.model.ShelfItem]
- * on the home feed, a [com.music.bitchord.data.model.BrowseItem] in search, a
- * [com.music.bitchord.data.model.DetailPage] on the page itself, a plain album
+ * a release with a different type — a [com.music.astrotune.data.model.ShelfItem]
+ * on the home feed, a [com.music.astrotune.data.model.BrowseItem] in search, a
+ * [com.music.astrotune.data.model.DetailPage] on the page itself, a plain album
  * name on the Local Music tab — and the menu needs the same five things from
  * all of them.
  */
@@ -67,7 +67,7 @@ data class BrowseTarget(
      */
     val fromCard: Boolean = true,
     /**
-     * The id this release is recorded under in [com.music.bitchord.download.Downloads.collections],
+     * The id this release is recorded under in [com.music.astrotune.download.Downloads.collections],
      * when it was downloaded whole — set so [onDelete] in the caller can offer
      * "Delete download" alongside (or instead of) deleting the account's own
      * copy.

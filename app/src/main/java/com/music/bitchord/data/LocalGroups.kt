@@ -1,10 +1,10 @@
-package com.music.bitchord.data
+package com.music.astrotune.data
 
-import com.music.bitchord.data.model.BrowseType
-import com.music.bitchord.data.model.Song
-import com.music.bitchord.data.settings.LocalMusicSort
-import com.music.bitchord.download.DownloadedCollection
-import com.music.bitchord.download.Downloads
+import com.music.astrotune.data.model.BrowseType
+import com.music.astrotune.data.model.Song
+import com.music.astrotune.data.settings.LocalMusicSort
+import com.music.astrotune.download.DownloadedCollection
+import com.music.astrotune.download.Downloads
 import java.util.Locale
 
 /**

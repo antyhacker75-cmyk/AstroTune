@@ -1,11 +1,11 @@
-package com.music.bitchord.playback.audio
+package com.music.astrotune.playback.audio
 
 import android.util.Log
-import com.music.bitchord.BuildConfig
-import com.music.bitchord.playback.EqualizerProcessor
-import com.music.bitchord.playback.LoudnessProcessor
-import com.music.bitchord.playback.SpatialAudioProcessor
-import com.music.bitchord.playback.TransitionFilterProcessor
+import com.music.astrotune.BuildConfig
+import com.music.astrotune.playback.EqualizerProcessor
+import com.music.astrotune.playback.LoudnessProcessor
+import com.music.astrotune.playback.SpatialAudioProcessor
+import com.music.astrotune.playback.TransitionFilterProcessor
 
 /**
  * Composite DSP chain executing BitChord's custom audio processors in their canonical sequence:

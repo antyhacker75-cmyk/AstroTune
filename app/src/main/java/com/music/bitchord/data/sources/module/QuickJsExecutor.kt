@@ -1,7 +1,7 @@
-package com.music.bitchord.data.sources.module
+package com.music.astrotune.data.sources.module
 
 import android.util.Log
-import com.music.bitchord.data.TrackLog
+import com.music.astrotune.data.TrackLog
 import com.dokar.quickjs.QuickJs
 import com.dokar.quickjs.binding.AsyncFunctionBinding
 import com.dokar.quickjs.binding.FunctionBinding

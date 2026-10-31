@@ -1,12 +1,12 @@
-package com.music.bitchord.data.canvas
+package com.music.astrotune.data.canvas
 
-import com.music.bitchord.data.DebugLog as Log
-import com.music.bitchord.data.AppleCatalogue
-import com.music.bitchord.data.Http
-import com.music.bitchord.data.model.DetailPage
-import com.music.bitchord.data.model.UiState
+import com.music.astrotune.data.DebugLog as Log
+import com.music.astrotune.data.AppleCatalogue
+import com.music.astrotune.data.Http
+import com.music.astrotune.data.model.DetailPage
+import com.music.astrotune.data.model.UiState
 import androidx.compose.ui.graphics.Color
-import com.music.bitchord.ui.theme.ArtworkKeyColors
+import com.music.astrotune.ui.theme.ArtworkKeyColors
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

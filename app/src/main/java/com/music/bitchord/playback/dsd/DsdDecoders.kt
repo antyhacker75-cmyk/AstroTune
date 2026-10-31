@@ -1,4 +1,4 @@
-package com.music.bitchord.playback.dsd
+package com.music.astrotune.playback.dsd
 
 /**
  * Reads a DSD stream's bytes in the container's own layout and hands them on

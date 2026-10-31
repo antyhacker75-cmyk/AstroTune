@@ -8,7 +8,7 @@
  *      http://www.apache.org/licenses/LICENSE-2.0
  */
 
-package com.music.bitchord.playback.audio.bluetooth
+package com.music.astrotune.playback.audio.bluetooth
 
 import android.annotation.SuppressLint
 import android.bluetooth.BluetoothA2dp

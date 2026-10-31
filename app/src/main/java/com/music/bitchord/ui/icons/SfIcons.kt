@@ -1,4 +1,4 @@
-package com.music.bitchord.ui.icons
+package com.music.astrotune.ui.icons
 
 import androidx.compose.ui.graphics.StrokeJoin
 import androidx.compose.ui.graphics.vector.ImageVector

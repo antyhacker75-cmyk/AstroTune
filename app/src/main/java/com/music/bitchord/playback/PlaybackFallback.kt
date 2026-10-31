@@ -1,4 +1,4 @@
-package com.music.bitchord.playback
+package com.music.astrotune.playback
 
 import android.os.Bundle
 import androidx.media3.common.MediaItem
