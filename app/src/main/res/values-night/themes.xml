@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <style name="Theme.AstroTune" parent="Theme.AppCompat.DayNight.NoActionBar">
+    <style name="Theme.AstroTune" parent="@android:style/Theme.Material.NoActionBar">
         <item name="android:windowBackground">@android:color/black</item>
     </style>
 </resources>
